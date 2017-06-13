@@ -1,0 +1,106 @@
+<html>
+  <title>Решение нелинейных уравнений методом Ньютона</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <style> 
+      body {
+        background: #CCCCFF;      
+      }
+      #name {
+      width: 1000px;
+      margin:0 auto;
+      }
+      .formula {
+        font: italic 19px "Times New Roman";     
+      }
+      h2 {
+        color: #330066;
+      }    
+    </style>
+  
+  </head>
+  <body>
+  <div id="name">
+    <div align="center"><h2>Решение нелинейных уравнений методом Ньютона</h2></div>
+    <a href="#p1">Теоретическая часть</a><br>
+    <a href="#p2">Практическая часть</a><br>
+    
+    <h3 id="p1">Теоретическая часть</h3>
+      Метод пригоден для решения алгебраических и трансцендентных уравнений. Пусть <span class="formula">f(х)=0</span> имеет на <span class="formula">[a,b]</span> единственный корень <img src="it1.png" align="middle">.
+      На отрезке <span class="formula">[a,b]</span> функция удовлетворяет следующим условиям:
+      <ul>
+      <li>она непрерывна вместе со своими производными до второго порядка включительно;</li>
+      <li>на концах интервала функция принимает значения разных знаков;</li>
+      <li>производные, не равные нулю, сохраняют определённый знак.</li>      
+      </ul>
+      За первое приближение корня принимается такое значение <span class="formula">x<sub>1</sub></span>, при котором знаки 
+      функции <span class="formula">f(x)</span> и второй производной <span class="formula">f"(x)</span> совпадут. Точку соприкосновения 
+      касательной и кривой обозначим <span class="formula">M<sub>1</sub></span>.
+      <div align="center"><img src="n1.png">-уравнение касательной</div>
+      Далее находится <span class="formula">x<sub>2</sub></span> – пересечение этой касательной с осью <span class="formula">OX</span>
+      (<span class="formula">y<sub>2</sub></span> в точке пересечения равно <span class="formula">0</span>).
+      В результате получается:
+      <div align="center"><img src="n2.png"></div>
+      Выразив <span class="formula">x<sub>2</sub></span> получим:
+      <div align="center"><img src="n3.png" align="middle">-угол наклона касательной</div>
+      Проектируем <span class="formula">x<sub>2</sub></span> на нашу кривую, получаем точку <span class="formula">M<sub>2</sub></span>. Через точку <span class="formula">M<sub>2</sub></span> 
+      проводим касательную к нашей кривой, точка пересечения которой с осью <span class="formula">OX</span> даёт нам третье приближение корня и т.д.
+      Продолжив описанный процесс построения касательных и вычисления точек их пересечения с осью <span class="formula">OX</span>. 
+      В результате получим формулу метода Ньютона:
+      <div align="center"><img src="n4.png" align="middle"> <span class="formula">n=1,2,3, ...</span></div>
+      <div><u>Достаточное условие сходимости:</u></div>
+      Пусть <img src="n5.png" align="middle"> и сохраняют определённые знаки на отрезке <span class="formula">[a,b]</span>. 
+      Тогда для любого <span class="formula">x</span>, принадлежащего <span class="formula">[a,b]</span> и удовлетворяющего условию <span class="formula">f'(x)*f"(x)>0</span>, метод Ньютона сходится.
+      При выполнении этого условия, приближение <span class="formula">x<sub>n+1</sub></span> будет лежать между <span class="formula">x<sub>n</sub></span> и 
+      <span class="formula">x<sub>0</sub></span>, т.е. ближе к корню. При возрастании <span class="formula">n</span> приближений, <span class="formula">x<sub>n</sub></span> 
+      монотонно стремится к точному решению.
+      
+    <h3 id="p2">Практическая часть</h3>
+    
+    <table>
+      
+        <tr>
+          <td><div align="center"><h4>Пошаговые действия</h4></div></td>
+          <td><div align="center"><h4>Пояснения к действиям</h4></div></td>
+        </tr>
+      
+        <tr>
+          <td><img src="n6.png"></td>
+          <td valign="top">1. Заходим в программу. Появляется окно, на котором выбираем категорию методов "Методы решения нелинейных уравнений"
+          Выбираем метод "Метод Ньютона". Нажимаем кнопку "PUSH". </td>
+        </tr>
+      
+        <tr>
+          <td><img src="n7.png"></td>
+          <td valign="top">2. Появляется окно, показанное на рисунке слева. Записываем в поле <span class="formula">f(х)</span> уравнение, которое нужно решить. Задаем интервал <span class="formula">[a,b]</span> с помошью кнопок "+", "-".
+          Если нажать "+" появятся поля для ввода интервала.</td>
+        </tr>
+      
+        <tr>
+          <td><img src="n8.png"></td>
+          <td valign="top">3. После выполнения всех действий, внизу, в поле "Решение" появится ответ.</td>
+        </tr>
+      
+        <tr>
+          <td><img src="n9.png"></td>
+          <td valign="top">4. Чтобы просмотреть график уравнения, нужно нажать кнопку "Просмотреть график". Появится график, как на рисунке слева.</td>
+        </tr>
+        
+        <tr>
+          <td><img src="n10.png"></td>
+          <td valign="top">5. После того, как вы получили ответ, можно просмотреть отчет, где предоставлено поэтапное решение. Для этого необходимо
+          в главном меню программы, расположенном на верху экранной формы выбрать пункт "Отчет/Просмотр отчета". Вы увидите окно, расположенное
+          слева. Также можно сохранить этот отчет нажав кнопку главного меню "Отчет/Сохранить отчет".</td>
+        </tr>
+      
+        <tr>
+          <td><img src="g10.png"></td>
+          <td valign="top">6. Если решение примера может пригодится вам в будущем, вы можете сохранить его с помощью конпки меню "Файл/Сохранить".
+          В окне, которое появится(оно показано на рисунке слева) необходимо выбрать папку, в которую он сохранится и написать название. </td>
+          
+        </tr>
+        </table>
+      <div align="right"><a href="Contents.html" title="Вернуться к содержанию"><img src="hmm.jpg" border="3" bordercolor="#000000"></a></div> 
+  </div>
+  </body>
+</html>

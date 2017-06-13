@@ -5,6 +5,7 @@ import graphbuilder.math.ExpressionTree;
 import gui.Graf;
 import gui.PanelG;
 import gui.methodsObjects.*;
+import gui.resources.MethodNames;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -22,10 +23,6 @@ import java.util.StringTokenizer;
  */
 public class Layer3 extends JLayeredPane {
     private int var;
-    private math.Simpson simpson;
-    private math.Iterations iterations;
-    private math.Progonka progonka;
-    private math.Trapezium trap;
     private JTable table2;
 
     private IntegralPane integralPane = new IntegralPane();
@@ -74,292 +71,15 @@ public class Layer3 extends JLayeredPane {
         add(panel_1);
         panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        JButton btnSum = new JButton("+");
-        panel_1.add(btnSum);
-        btnSum.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "+");
-            }
-        });
-        btnSum.setPreferredSize(new Dimension(90, 25));
 
-        JButton btnDifference = new JButton("-");
-        btnDifference.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "-");
-            }
-        });
-        btnDifference.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnDifference);
-
-        JButton btnMultiplication = new JButton("*");
-        btnMultiplication.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "*");
-            }
-        });
-        btnMultiplication.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnMultiplication);
-
-        JButton btnDivision = new JButton("/");
-        btnDivision.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "/");
-            }
-        });
-        btnDivision.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnDivision);
-
-        JButton btnSqrt = new JButton("\u221A");
-        btnSqrt.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "sqrt()");
-            }
-        });
-        btnSqrt.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnSqrt);
-
-
-        JButton btnExp = new JButton("exp");
-        panel_1.add(btnExp);
-        btnExp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "e");
-            }
-        });
-        btnExp.setPreferredSize(new Dimension(90, 25));
-
-        JButton btnN = new JButton("n!");
-        btnN.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "fact()");
-            }
-        });
-        btnN.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnN);
-
-        JButton btnMod = new JButton("mod");
-        btnMod.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "mod()");
-            }
-        });
-        btnMod.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnMod);
-
-        JButton btnPi = new JButton("\u03C0");
-        btnPi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Pi");
-            }
-        });
-        btnPi.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnPi);
-        btnPi.setFont(new Font("SimSun", Font.PLAIN, 16));
-
-        JButton btnPow = new JButton("x^y");
-        btnPow.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "^");
-            }
-        });
-        btnPow.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnPow);
-
-        JButton btnLn = new JButton("ln");
-        btnLn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "ln()");
-            }
-        });
-        btnLn.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnLn);
-
-        JButton btnSin = new JButton("sin");
-        btnSin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "sin()");
-            }
-        });
-        btnSin.setPreferredSize(new Dimension(90, 25));
-        btnSin.setSize(new Dimension(50, 10));
-        panel_1.add(btnSin);
-
-        JButton btnCos = new JButton("cos");
-        btnCos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "cos()");
-            }
-        });
-        btnCos.setPreferredSize(new Dimension(90, 25));
-        btnCos.setSize(new Dimension(50, 10));
-        panel_1.add(btnCos);
-
-        JButton btnTan = new JButton("tg");
-        btnTan.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "tan()");
-            }
-        });
-        btnTan.setPreferredSize(new Dimension(90, 25));
-        btnTan.setSize(new Dimension(50, 10));
-        panel_1.add(btnTan);
-
-        JButton btnZap = new JButton(",");
-        btnZap.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, ".");
-            }
-        });
-        btnZap.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnZap);
-
-        JButton btnLog = new JButton("log(x, y)");
-        btnLog.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "log(, )");
-            }
-        });
-        btnLog.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnLog);
-
-        JButton btnSinh = new JButton("sh");
-        btnSinh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Sinh()");
-            }
-        });
-        btnSinh.setPreferredSize(new Dimension(90, 25));
-        btnSinh.setSize(new Dimension(50, 10));
-        panel_1.add(btnSinh);
-
-        JButton btnCosh = new JButton("ch");
-        btnCosh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "cosh()");
-            }
-        });
-        btnCosh.setPreferredSize(new Dimension(90, 25));
-        btnCosh.setSize(new Dimension(50, 10));
-        panel_1.add(btnCosh);
-
-        JButton btnTanh = new JButton("th");
-        btnTanh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Tanh()");
-            }
-        });
-        btnTanh.setPreferredSize(new Dimension(90, 25));
-        btnTanh.setSize(new Dimension(50, 10));
-        panel_1.add(btnTanh);
-
-        JButton btnPerem = new JButton("x");
-        btnPerem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "x");
-
-            }
-        });
-        btnPerem.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnPerem);
-
-        JButton btnLg = new JButton("lg");
-        btnLg.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "lg()");
-            }
-        });
-        btnLg.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnLg);
-
-        JButton btnAsin = new JButton("arcsin");
-        btnAsin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Asin()");
-            }
-        });
-        btnAsin.setPreferredSize(new Dimension(90, 25));
-        btnAsin.setSize(new Dimension(50, 10));
-        panel_1.add(btnAsin);
-
-        JButton btnAcos = new JButton("arccos");
-        btnAcos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Acos()");
-            }
-        });
-        btnAcos.setPreferredSize(new Dimension(90, 25));
-        btnAcos.setSize(new Dimension(50, 10));
-        panel_1.add(btnAcos);
-
-        JButton btnAtan = new JButton("arctg");
-        btnAtan.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Atan()");
-            }
-        });
-        btnAtan.setPreferredSize(new Dimension(90, 25));
-        btnAtan.setSize(new Dimension(50, 10));
-        panel_1.add(btnAtan);
-
-
-        JButton btnSkob = new JButton("(");
-        btnSkob.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "(");
-            }
-        });
-        btnSkob.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(btnSkob);
-
-        JButton button_7 = new JButton("()");
-        button_7.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setButton(progPane, newtonPane, integralPane, "()");
-            }
-        });
-        button_7.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(button_7);
-
-        JButton btnAsinh = new JButton("arcsh");
-        btnAsinh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "Asinh()");
-            }
-        });
-        btnAsinh.setPreferredSize(new Dimension(90, 25));
-        btnAsinh.setSize(new Dimension(50, 10));
-        panel_1.add(btnAsinh);
-
-        JButton btnAcosh = new JButton("arcch");
-        btnAcosh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "arcch()");
-            }
-        });
-        btnAcosh.setPreferredSize(new Dimension(90, 25));
-        btnAcosh.setSize(new Dimension(50, 10));
-        panel_1.add(btnAcosh);
-
-        JButton btnAtanh = new JButton("arcth");
-        btnAtanh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                setButton(progPane, newtonPane, integralPane, "arcth()");
-            }
-        });
-        btnAtanh.setPreferredSize(new Dimension(90, 25));
-        btnAtanh.setSize(new Dimension(50, 10));
-        panel_1.add(btnAtanh);
-
-
-        JButton buttonRightBracket = new JButton(")");
-        buttonRightBracket.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setButton(progPane, newtonPane, integralPane, ")");
-            }
-        });
-        buttonRightBracket.setPreferredSize(new Dimension(90, 25));
-        panel_1.add(buttonRightBracket);
+        JButton[] buttons = new JButton[30];
+        for (int i = 0; i < 30; i++) {
+            buttons[i] = new JButton(MethodNames.buttonLabels[i]);
+            panel_1.add(buttons[i]);
+            buttons[i].addActionListener(new ButtonActionListener(MethodNames.buttonFuntions[i]));
+            buttons[i].setPreferredSize(new Dimension(90, 25));
+            if(i==8)buttons[i].setFont(new Font("SimSun", Font.PLAIN, 16));
+        }
 
         integralPane.setBounds(0, 30, 500, 100);
         add(integralPane);
@@ -590,5 +310,16 @@ public class Layer3 extends JLayeredPane {
         }
     }
 
+    class ButtonActionListener implements ActionListener {
+        private String func;
+
+        public ButtonActionListener(String func) {
+            this.func = func;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            setButton(progPane, newtonPane, integralPane, func);
+        }
+    }
 
 }

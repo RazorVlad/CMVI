@@ -35,7 +35,7 @@ public class Layer1 extends JLayeredPane {
     final JButton button_primenit = new JButton("\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C");
     //    final JButton btnGaussZeidel = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
     final JButton btnGauss = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
-    final JButton btnDet = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
+//    final JButton btnDet = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
 
     final JLabel label_4 = new JLabel("\u0428\u0438\u0440\u0438\u043D\u0430 \u044F\u0447\u0435\u0435\u043A");
 
@@ -117,21 +117,14 @@ public class Layer1 extends JLayeredPane {
                     GaussSeidelObject gzo = new GaussSeidelObject(spinner_3, spinner_2, table, table2);
                     scrollPane_1.setViewportView(gzo.getAnswerTable());
                 }
+                if (var == 4) {
+                    DetObject detob = new DetObject(spinner_2, spinner_3, table);
+                    scrollPane_1.setViewportView(detob.getAnswertable());
+                }
             }
         });
         btnGauss.setBounds(0, 397, 105, 65);
         add(btnGauss);
-
-        btnDet.setVisible(false);
-        btnDet.addActionListener(new ActionListener() {// Запуск вычисления
-            // определителя
-            public void actionPerformed(ActionEvent arg0) {
-                DetObject detob = new DetObject(spinner_2, spinner_3, table);
-                scrollPane_1.setViewportView(detob.getAnswertable());
-            }
-        });
-        btnDet.setBounds(0, 397, 104, 65);
-        add(btnDet);
 
         slider = new
 
@@ -224,45 +217,21 @@ public class Layer1 extends JLayeredPane {
         table = new JTable(0, 0);
         table1 = new JTable(0, 0);
         table2 = new JTable(0, 0);// Создание таблицы решений
-        scrollPane_2.setVisible(true);
-        scrollPane_1.setViewportView(table1);
-        this.var = var;
-        switch (var) {
-            case 1://setTitle("Решение СЛАУ методом Гаусса");
-                btnDet.setVisible(false);// определитель
-                btnGauss.setVisible(true);// Гаусс
-                scrollPane_2.setVisible(true);
-//                scrollPane_1.setViewportView(table1);
-                break;
-            case 2://setTitle("Решение СЛАУ методом Якоби(простой итерации)");
-                btnDet.setVisible(false);// определитель
-                btnGauss.setVisible(true);// Гаусс
-//                scrollPane_1.setViewportView(table1);
-                scrollPane_2.setVisible(true);
-                break;
-            case 3://setTitle("Решение СЛАУ методом Гаусса-Зейделя");
-                btnDet.setVisible(false);// определитель
-                btnGauss.setVisible(true);// Гаусс
-//                scrollPane_1.setViewportView(table1);
-                scrollPane_2.setVisible(true);
-                break;
-            case 4://setTitle("Нахождение определителя матрицы методом Гаусса");
-//                scrollPane_1.setViewportView(table1);
-                scrollPane_2.setVisible(false);
-                btnDet.setVisible(true);// определитель
-                btnGauss.setVisible(false);// Гаусс
-                break;
+
+        if (var == 4) {
+            scrollPane_2.setVisible(false);
+        } else {
+            scrollPane_2.setVisible(true);
+            scrollPane_1.setViewportView(table1);
         }
+        this.var = var;
     }
 
     public void openData(StringTokenizer st, BufferedReader br) {
         try {
             int x = Integer.parseInt(st.nextToken());
-            // int y = Integer.parseInt(st.nextToken());
             spinner_2.setValue(x);
-//            spinner_5.setValue(x);
             table = new JTable(x, x);
-//            table9 = new JTable(x, x);
             String s;
             for (int i = 0; i < x; i++) {
                 s = br.readLine();
@@ -272,13 +241,9 @@ public class Layer1 extends JLayeredPane {
                         table.getColumnModel().getColumn(k).setMinWidth(25);
                         table.getColumnModel().getColumn(k).setMaxWidth(200);
                         table.getColumnModel().getColumn(k).setPreferredWidth(40);
-//                        table9.getColumnModel().getColumn(k).setMinWidth(25);
-//                        table9.getColumnModel().getColumn(k).setMaxWidth(200);
-//                        table9.getColumnModel().getColumn(k).setPreferredWidth(40);
                     }
                     double val = Double.parseDouble(st.nextToken());
                     table.getModel().setValueAt(val, i, j);
-//                    table9.getModel().setValueAt(val, i, j);
                 }
             }
             label_4.setEnabled(true);
@@ -291,19 +256,7 @@ public class Layer1 extends JLayeredPane {
             table.getTableHeader().resizeAndRepaint();
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.setBounds(0, 0, 438, 305);
-//            table9.getTableHeader().resizeAndRepaint();
-//            table9.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//            table9.setBounds(0, 0, 438, 305);
-//            if (var == 9)
-//                scrollPane_9.setViewportView(table9);
-//            if (scrollPane.isVisible())
             scrollPane.setViewportView(table);
-//            if (layeredPane_2.isVisible()) {
-//                spinner.setValue(x);
-//                scrollPane_3.setViewportView(table);
-//            }
-
-            // if (x != y) {
             try {
                 s = br.readLine();
                 st = new StringTokenizer(s);

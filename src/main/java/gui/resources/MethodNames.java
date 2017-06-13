@@ -1,5 +1,9 @@
 package gui.resources;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Created by razor on 10.06.2017.
  */
@@ -27,13 +31,28 @@ public interface MethodNames {
             "\u0427\u0438\u0441\u043B\u0435\u043D\u043D\u043E\u0435 \u0438\u043D\u0442\u0435\u0433\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435",//Численное интегрирование
             "\u041A\u0440\u0430\u0435\u0432\u044B\u0435 \u0437\u0430\u0434\u0430\u0447\u0438 \u0434\u043B\u044F \u043E\u0431\u044B\u043A\u043D\u043E\u0432\u0435\u043D\u043D\u044B\u0445 \u0434\u0438\u0444\u0444\u0435\u0440\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0445 \u0443\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0439"//Краевые задачи для обыкновенных дифференциальных уравнений
     };
-int[][]methodsNumbers=new int[][]{
-        {1,2,3,4,5},
-        {7,8},
-        {9},
-        {10},
-        {11,12},
-        {13}
-};
+    int[][] methodsNumbers = new int[][]{
+            {1, 2, 3, 4, 5},
+            {7, 8},
+            {9},
+            {10},
+            {11, 12},
+            {13}
+    };
 
+    String[] buttonLabels = new String[]{
+            "+", "-", "*", "/", "\u221A",
+            "exp", "n!", "mod", "\u03C0", "x^y",
+            "ln", "sin", "cos", "tg", ",",
+            "log(x, y)", "sh", "ch", "th", "x",
+            "lg", "arcsin", "arccos", "arctg", "(",
+            "()", "arcsh", "arcch", "arcth", ")"
+    };
+    String[] buttonFuntions = new String[]{
+            "+", "-", "*", "/", "sqrt()",
+            "e", "fact()", "mod()", "Pi", "^",
+            "ln()", "sin()", "cos()", "tan()", ".",
+            "log(, )", "Sinh()", "cosh()", "Tanh()", "x",
+            "lg()", "Asin()", "Acos()", "Atan()", "(",
+            "()", "Asinh()", "arcch()", "arcth()", ")"};
 }

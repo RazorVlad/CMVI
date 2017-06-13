@@ -1,9 +1,5 @@
 package gui.resources;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-
 /**
  * Created by razor on 10.06.2017.
  */

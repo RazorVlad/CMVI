@@ -92,7 +92,7 @@ public class ReverseMatrixPane extends JLayeredPane {
         button_revers_Gauss.setBounds(356, 253, 99, 23);
         add(button_revers_Gauss);
 
-        buttonApply = new JButton(bundle.getString("buttons.acceptButton"));
+        buttonApply = new JButton(bundle.getString("buttons.accept"));
         buttonApply.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 int n = Integer.parseInt(spinner.getValue().toString());// считывание

@@ -40,14 +40,16 @@ public class Gauss {
 		double det = 1, d = 0;
 		int n = a.length, count = 0;
 		String DETit = "";
-		Det = "<h2><center>Нахождение определителя методом Гаусса</center></h2> <p><h3>Дана матрица A:</h3>";
+		Det = "<h2><center>Нахождение определителя методом Гаусса</center></h2> <p><h3>Дана матрица A:</h3></p>";
 		Det+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Det += "<tr>";
 			for (int j = 0; j < n; j++) {
 				Det += "<td>";
 				Det += (a[i][j] + " ");
+				Det += "</td>";
 			}
+			Det += "</tr>";
 		}
 		Det+="</table>";
 		//проверим, надо ли менять местами строки
@@ -57,14 +59,16 @@ public class Gauss {
 				count = lineExchange(a);q++;// это теперь наша исходная матрица
 			}
 		}if(q>0){
-			Det+="<br><h3>Меняем строки таблицы:</h3>";
+			Det+="<br /><h3>Меняем строки таблицы:</h3>";
 		Det+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Det += "<tr>";
 			for (int j = 0; j < n; j++) {
 				Det += "<td>";
 				Det += (a[i][j] + " ");
+				Det += "</td>";
 			}
+			Det += "</tr>";
 		}
 		Det+="</table>";
 		}
@@ -84,13 +88,13 @@ public class Gauss {
 				DETit += " * " + (z /= 100);
 			det *= a[i][i];
 			System.out.println("Определитель = " + det);
-			Det += "<br>Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
-					+ "][" + (i + 1) + "]<br>";
+			Det += "<br />Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
+					+ "][" + (i + 1) + "]<br />";
 			if (i + 1 < n) {
 				Det += "Домножаем строку " + (i + 1) + " на элемент А["
-						+ (i + 2) + "][" + (i + 1) + "]<br>";
+						+ (i + 2) + "][" + (i + 1) + "]<br />";
 				Det += "Отнимаем от строки " + (i + 2) + " строку " + (i + 1)
-						+ "<br>";
+						+ "<br />";
 			}
 			a[i][i] = 1;
 			for (int k = i + 1; k < n; k++) {
@@ -107,13 +111,15 @@ public class Gauss {
 					Det+="<td>";
 					d = Math.round(a[k][j] * 100);
 					Det += (d / 100) + " ";
+					Det+="</td>";
 				}
+				Det+="</tr>";
 			
 			}
 			Det+="</table>";
 		}
-		Det += "<br><h3>Определитель = " + DETit + " = " + det + "</h3>";
-		Det += "<p><p>";
+		Det += "<br /><h3>Определитель = " + DETit + " = " + det + "</h3>";
+		Det += "<p></p>";
 		if (count % 2 != 0)
 			return 0 - det;
 		else
@@ -132,15 +138,16 @@ public class Gauss {
 	// обратная матрица
 	public double[][] reverseMatrix(double[][] a) {
 		int n = a.length;
-		Obr = "<h2><center>Нахождение обратной матрицы методом Гаусса</center></h2> <p><h3>Дана матрица A:</h3>";
+		Obr = "<h2><center>Нахождение обратной матрицы методом Гаусса</center></h2> <p><h3>Дана матрица A:</h3></p>";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Obr+="<tr>";
 			for (int j = 0; j < n; j++) {
 				Obr+="<td>";
 				Obr += (a[i][j] + " ");
+				Obr+="</td>";
 			}
-			//Obr += "<br>";
+			Obr+="</tr>";
 		}
 		Obr+="</table>";
 		double[] b = new double[n];
@@ -160,7 +167,7 @@ public class Gauss {
 			}
 			copy = null;
 		}
-		Obr += "<br><h3>Обратная матрица:</h3><br>";
+		Obr += "<br /><h3>Обратная матрица:</h3><br />";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Obr+="<tr>";
@@ -168,11 +175,13 @@ public class Gauss {
 				Obr+="<td>";
 				double y1 = Math.round(revA[i][j] * 10000);
 				Obr += ((y1 / 10000) + "   ");
+				Obr+="</td>";
 			}
+			Obr+="</tr>";
 		}
 		Obr+="</table>";
-		Obr += "<br><h3>Проверка:</h3>";
-		Obr += "<br>Умножим исходную матрицу<br>";
+		Obr += "<br /><h3>Проверка:</h3>";
+		Obr += "<br />Умножим исходную матрицу<br />";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Obr+="<tr>";
@@ -180,11 +189,13 @@ public class Gauss {
 				Obr+="<td>";
 				double y1 = Math.round(a[i][j] * 10000);
 				Obr += ((y1 / 10000) + "   ");
+				Obr+="</td>";
 			}
+			Obr+="</tr>";
 			//Obr += "<br>";
 		}
 		Obr+="</table>";
-		Obr += "<br>На обратную матрицу<br>";
+		Obr += "<br />На обратную матрицу<br />";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Obr+="<tr>";
@@ -192,12 +203,14 @@ public class Gauss {
 				Obr+="<td>";
 				double y1 = Math.round(revA[i][j] * 10000);
 				Obr += ((y1 / 10000) + "   ");
+				Obr+="</td>";
 			}
+			Obr+="</tr>";
 			//Obr += "<br>";
 		}
 		Obr+="</table>";
 		double[][]check = GaussSeidel.matrixMultiplication(a, revA);
-		Obr += "<br>И получим:<br>";
+		Obr += "<br />И получим:<br />";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
 			Obr+="<tr>";
@@ -205,7 +218,9 @@ public class Gauss {
 				Obr+="<td>";
 				double y1 = Math.round(check[i][j] * 10000);
 				Obr += ((y1 / 10000) + "   ");
+				Obr+="</td>";
 			}
+			Obr+="</tr>";
 			//Obr += "<br>";
 		}
 		Obr+="</table>";
@@ -509,10 +524,13 @@ public class Gauss {
 				Gauss+="<td>";
 				ishA[i][j]=a[i][j];
 				Gauss += (a[i][j] + "*X" + (j + 1) + " ");
+				Gauss+="</td>";
 			}
 			Gauss+="<td>";
 			ishB[i]=b[i];
 			Gauss += "= " + b[i];
+			Gauss+="</td>";
+			Gauss+="</tr>";
 		}
 		Gauss+="</table>";
 		
@@ -522,8 +540,8 @@ public class Gauss {
 		//получилось цифра=цифра)
 		lineExchange(a, b); // тут поменялись местами строчки, реализован выбор
 		// ведущих элементов
-		Gauss += "<br><h3>Реализуем выбор ведущих элементов</h3>\n";
-		Obr += "<br><h3>Реализуем выбор ведущих элементов</h3>\n";
+		Gauss += "<br /><h3>Реализуем выбор ведущих элементов</h3>\n";
+		Obr += "<br /><h3>Реализуем выбор ведущих элементов</h3>\n";
 		Gauss+="<table border=1>";
 		Obr+="<table border=1>";
 		for (int i = 0; i < n; i++) {
@@ -534,9 +552,14 @@ public class Gauss {
 				Obr+="<td>";
 				Gauss += (a[i][j] + "*X" + (j + 1) + " ");
 				Obr += (a[i][j] + "*X" + (j + 1) + " ");
+				Gauss+="</td>";
+				Obr+="</td>";
 			}
 			Gauss+="<td>";
 			Gauss += "= " + b[i] ;
+			Gauss+="</td>";
+			Gauss+="</tr>";
+			Obr+="</tr>";
 			//Obr += "= " + b[i];
 		}
 		Gauss+="</table>";
@@ -545,8 +568,8 @@ public class Gauss {
 		Obr += "<h3>Прямой ход</h3>";
 		for (int i = 0; i < n; i++) {
 
-			Gauss += "<i><b>Итерация № " + (i + 1) + "</b></i><br>";
-			Obr += "<i><b>Итерация № " + (i + 1) + "</b></i><br>";
+			Gauss += "<i><b>Итерация № " + (i + 1) + "</b></i><br />";
+			Obr += "<i><b>Итерация № " + (i + 1) + "</b></i><br />";
 			// Gauss+=a[i][i]+"*X1"+" ";
 			for (int j = i + 1; j < n; j++) {
 				a[i][j] /= a[i][i];
@@ -557,19 +580,19 @@ public class Gauss {
 
 			a[i][i] = 1;
 
-			Gauss += "<br>Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
-					+ "][" + (i + 1) + "]<br>";
-			Obr += "<br>Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
-					+ "][" + (i + 1) + "]<br>";
+			Gauss += "<br />Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
+					+ "][" + (i + 1) + "]<br />";
+			Obr += "<br />Делим строку " + (i + 1) + " на элемент A[" + (i + 1)
+					+ "][" + (i + 1) + "]<br />";
 			if (i + 1 < n) {
 				Gauss += "Домножаем строку " + (i + 1) + " на элемент А["
-						+ (i + 2) + "][" + (i + 1) + "]<br>";
-				Gauss += "Отнимаем от строки " + (i + 2) + " строку " + (i + 1)
-						+ "<p>";
+						+ (i + 2) + "][" + (i + 1) + "]<br />";
+				Gauss += "Отнимаем от строки " + (i + 2) + " строку " + (i + 1);
+//						+ "<p>";
 				Obr += "Домножаем строку " + (i + 1) + " на элемент А["
-						+ (i + 2) + "][" + (i + 1) + "]<br>";
-				Obr += "Отнимаем от строки " + (i + 2) + " строку " + (i + 1)
-						+ "<p>";
+						+ (i + 2) + "][" + (i + 1) + "]<br />";
+				Obr += "Отнимаем от строки " + (i + 2) + " строку " + (i + 1);
+//						+ "<p>";
 			}
 			for (int k = i + 1; k < n; k++) {
 				b[k] -= b[i] * a[k][i];
@@ -589,16 +612,21 @@ public class Gauss {
 					double k1 = Math.round(a[t][j] * 100);
 					Gauss += (k1 / 100 + "*X" + (j + 1) + " ");
 					Obr += (k1 / 100 + "*X" + (j + 1) + " ");
+					Gauss+="</td>";
+					Obr+="</td>";
 				}
 				Gauss+="<td>";
 				//Obr+="<td>";
 				double f = Math.round(b[t] * 100);
 				Gauss += "= " + f / 100;
+				Gauss+="</td>";
+				Gauss+="</tr>";
+				Obr+="</tr>";
 			}
 			Gauss+="</table>";
 			Obr+="</table>";
-			Gauss += "<br>";
-			Obr += "<br>";
+			Gauss += "<br />";
+			Obr += "<br />";
 		}
 		// обратный ход
 
@@ -622,16 +650,21 @@ public class Gauss {
 				double k1 = Math.round(a[t][j] * 100);
 				Gauss += ((k1 / 100) + "*X" + (j + 1) + " ");
 				Obr += ((k1 / 100) + "*X" + (j + 1) + " ");
+				Gauss+="</td>";
+				Obr+="</td>";
 			}
 			Gauss+="<td>";
 			//Obr+="<td>";
 			double f = Math.round(b[t] * 100);
 			Gauss += "= " + f / 100 ;
+			Gauss+="</td>";
+			Gauss+="</tr>";
+			Obr+="</tr>";
 			//Obr += "= " + f / 100 ;
 		}
 		Gauss+="</table>";
 		Obr+="</table>";
-		Gauss += "<br><h3>Матрица решений:</h3><br>";
+		Gauss += "<br /><h3>Матрица решений:</h3><br />";
 		Gauss+="<table border=1>";
 		for (int i = 0; i < n; i++)
 			x[i] = b[i];
@@ -639,12 +672,14 @@ public class Gauss {
 		for (int i = 0; i < n; i++) {
 			Gauss+="<td>";
 			Gauss += "X" + i + " = " + x[i];
+			Gauss+="</td>";
 			System.out.println("x" + i + " : " + x[i]);
 		}
+		Gauss+="</tr>";
 		Gauss+="</table>";
-		Gauss += "<br><br>";
+		Gauss += "<br /><br />";
 		this.roots = x;
-		Gauss += "<br><h3>Проверка:</h3>";
+		Gauss += "<br /><h3>Проверка:</h3>";
 		Gauss+="<table border=0>";
 		for (int i = 0; i < n; i++) {
 			Gauss+="<tr>";
@@ -653,10 +688,12 @@ public class Gauss {
 				double k1 = Math.round(x[j] * 100);
 				if(j==(n-1))Gauss += ("("+ishA[i][j] + ") * (" + (k1/100) + ") ");
 				else Gauss += ("("+ishA[i][j] + ") * (" + (k1/100) + ") + ");
-				
+				Gauss+="</td>";
 				
 			}
+			Gauss+="<td>";
 			Gauss+=" = ";
+			Gauss+="</td>";
 			for (int j = 0; j < n; j++) {
 				Gauss+="<td>";
 				double k1 = Math.round(x[j] * 100);
@@ -670,9 +707,12 @@ public class Gauss {
 					if(j==(n-1))Gauss += ((k11/1000) + " ");
 					else Gauss += ((k11/1000) + " + ");
 				}
+				Gauss+="</td>";
 			}
 			Gauss+="<td>";
 			Gauss += "= " + ishB[i];
+			Gauss+="</td>";
+			Gauss+="</tr>";
 		}
 		Gauss+="</table>";
 		// System.out.println(Gauss);

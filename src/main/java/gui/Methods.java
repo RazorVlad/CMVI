@@ -6,12 +6,14 @@ import gui.resources.MethodNames;
 import gui.resources.SwitchModule;
 import keypoint.PngEncoder;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -28,7 +30,7 @@ public class Methods extends JFrame {
     private ResourceBundle bundle;
 
     private final String HTML_START = "<html><head><title></title></head><body bgcolor=#C5D7FB><table border=0 align=center><tr><td width=800>";
-    private final String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top>&nbsp;";
+    private final String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top/>&nbsp;";
     private final String HTML_END = "</td></tr></table></body></html>";
     public static double Eps = 0.001;
     public static String methodSolution = "";
@@ -51,7 +53,7 @@ public class Methods extends JFrame {
     private JMenu menu_about;
     private JMenu menu_help;
 
-    private KrylovPane layeredPane_Krylov = new KrylovPane();
+    private KrylovPane layeredPane_Krylov;
     private GaussMethodsPane gaussMethodsPane;
     private JLayeredPane layeredPane = new JLayeredPane();
     private ReverseMatrixPane reverseMatrixPane;
@@ -97,7 +99,6 @@ public class Methods extends JFrame {
                     SetSkin();
                     Methods frame = new Methods();
                     frame.setVisible(true);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -126,7 +127,6 @@ public class Methods extends JFrame {
 
         menuClose = new JMenuItem(bundle.getString("menu.close"));
         menuFile.add(menuClose);
-//        JPanel panel = new JPanel();
 
         menuLanguage = new JMenu(bundle.getString("menu.language"));
 
@@ -135,7 +135,6 @@ public class Methods extends JFrame {
         JMenuItem menuRus = new JMenuItem(bundle.getString("menu.language.russian"));
         menuRus.addActionListener(new ActionListener() { // сохранение
             public void actionPerformed(ActionEvent arg0) {
-                Locale.setDefault(new Locale("ru", "RU"));
                 currentLocale = new Locale("ru", "RU");
                 initComponentsI18n();
             }
@@ -145,7 +144,6 @@ public class Methods extends JFrame {
         JMenuItem menuEng = new JMenuItem(bundle.getString("menu.language.english"));
         menuEng.addActionListener(new ActionListener() { // сохранение
             public void actionPerformed(ActionEvent arg0) {
-                Locale.setDefault(new Locale("en", "US"));
                 currentLocale = new Locale("en", "US");
                 initComponentsI18n();
             }
@@ -182,11 +180,12 @@ public class Methods extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 if (dlg.showSaveDialog(Methods.this) != JFileChooser.APPROVE_OPTION)
                     return;
-                String fileName = dlg.getSelectedFile().getAbsolutePath() + ".html";
-                String shortName = dlg.getSelectedFile().getName() + ".html";
+                String fileName = dlg.getSelectedFile().getAbsolutePath();
+                String shortName = dlg.getSelectedFile().getName();
                 saveReport(fileName, shortName);
             }
         });
+        menu_report.add(menuSaveReport);
 
         menuShowReport = new JMenuItem(bundle.getString("menu.showReport"));
         menuShowReport.addActionListener(new ActionListener() {
@@ -197,7 +196,7 @@ public class Methods extends JFrame {
             }
         });
         menu_report.add(menuShowReport);
-        menu_report.add(menuSaveReport);
+
 
         menu_about = new JMenu(bundle.getString("menu.about"));
         menu_about.addMouseListener(new MouseAdapter() {
@@ -297,6 +296,7 @@ public class Methods extends JFrame {
         interpolationPane.setBounds(6, 6, 499, 470);
         panel.add(interpolationPane);
 
+        layeredPane_Krylov = new KrylovPane(bundle);
         layeredPane_Krylov.setVisible(false);
         layeredPane_Krylov.setBounds(6, 6, 500, 470);
         panel.add(layeredPane_Krylov);
@@ -557,8 +557,11 @@ public class Methods extends JFrame {
     public void saveReport(String fileName, String shortName) {
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(fileName);
-            out.write(GetReportString(shortName));
+            out = new FileOutputStream(fileName + ".html");
+            out.write(GetReportStringByte(shortName + ".html"));
+            BufferedImage src = ImageIO.read(new FileInputStream("button/top1.jpg"));
+            String imagePath = fileName.substring(0, (fileName.length() - shortName.length()));
+            ImageIO.write(src, "JPG", new FileOutputStream(imagePath + "top1.jpg"));
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -575,18 +578,22 @@ public class Methods extends JFrame {
         return HTML_START + methodSolution + HTML_END;
     }
 
-    public byte[] GetReportString(String shortName) {
-        byte[] result = null;
+    public byte[] GetReportStringByte(String shortName) {
         try {
-            if (var == 10) {
-                result = (HTML_START + HTML_TOP + methodSolution
-                        + "<br><br> " + bundle.getString("graphics.functionGraph") + ":<br><img src=" + shortName + ".png>" + HTML_END)
-                        .getBytes("utf-8");
-            } else {
-                result = (HTML_START + HTML_TOP + methodSolution + HTML_END).getBytes("utf-8");
-            }
-        } catch (Exception e) {
+            return GetReportString(shortName).getBytes("utf-8");
 
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public String GetReportString(String shortName) {
+        String result;
+        if (var == 10) {
+            result = (HTML_START + HTML_TOP + methodSolution
+                    + "<br><br> " + bundle.getString("graphics.functionGraph") + ":<br><img src=" + shortName + ".png>" + HTML_END);
+        } else {
+            result = (HTML_START + HTML_TOP + methodSolution + HTML_END);
         }
         return result;
     }

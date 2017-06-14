@@ -1,6 +1,5 @@
 package gui;
 
-import graphbuilder.math.Expression;
 import gui.methodsPanes.*;
 import gui.resources.FinalTexts;
 import gui.resources.MethodNames;
@@ -14,27 +13,54 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 public class Methods extends JFrame {
 
     private int indexGroup, indexMethod, var;
-    public static double Eps = 0.001;
-    public static String methodSolution = "";
     private JTextField EpsTextField;
 
     private JPanel contentPane;
 
-    final KrylovPane layeredPane_Krylov = new KrylovPane();
-    Layer1 layeredPane_1 = new Layer1(var);
-    final JLayeredPane layeredPane = new JLayeredPane();
-    final ReverseMatrixPane reverseMatrixPane = new ReverseMatrixPane();
-    final Layer3 layeredPane_3 = new Layer3(var);
-    final InterpolationPane interpolationPane = new InterpolationPane();
-    final JScrollPane scrollPane_3 = new JScrollPane();
-    final JSpinner spinner = new JSpinner();
-    final JLabel lblEps = new JLabel("\u041F\u043E\u0433\u0440\u0435\u0448\u043D\u043E\u0441\u0442\u044C E =");
-    final JLabel lblH = new JLabel(
+    private Locale currentLocale;//=new Locale("ru", "Ru");
+    private ResourceBundle bundle;
+
+    private final String HTML_START = "<html><head><title></title></head><body bgcolor=#C5D7FB><table border=0 align=center><tr><td width=800>";
+    private final String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top>&nbsp;";
+    private final String HTML_END = "</td></tr></table></body></html>";
+    public static double Eps = 0.001;
+    public static String methodSolution = "";
+
+
+    private JFileChooser dlg = new JFileChooser(".");
+
+    private JMenuBar menuBar;
+    private JMenu menuFile;
+    private JMenuItem menuOpen;
+    private JMenuItem menuSave;
+    private JMenuItem menuClose;
+    private JMenu menu_methods;
+    private JMenu[] methodsGroups;
+    private JMenuItem[] methods;
+    private JMenu menuLanguage;
+    private JMenu menu_report;
+    private JMenuItem menuSaveReport;
+    private JMenuItem menuShowReport;
+    private JMenu menu_about;
+    private JMenu menu_help;
+
+    private KrylovPane layeredPane_Krylov = new KrylovPane();
+    private Layer1 layeredPane_1 = new Layer1(var);
+    private JLayeredPane layeredPane = new JLayeredPane();
+    private ReverseMatrixPane reverseMatrixPane = new ReverseMatrixPane();
+    private Layer3 layeredPane_3 = new Layer3(var);
+    private InterpolationPane interpolationPane = new InterpolationPane();
+
+    private JLabel labelChooseMethod;
+    private JLabel lblEps = new JLabel("\u041F\u043E\u0433\u0440\u0435\u0448\u043D\u043E\u0441\u0442\u044C E =");
+    private JLabel lblH = new JLabel(
             "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0440\u0430\u0437\u0431\u0438\u0435\u043D\u0438\u0439 ");
 
     public static void SetSkin() {
@@ -59,19 +85,6 @@ public class Methods extends JFrame {
     }
 
     Image buffer;
-    private JTable table;
-    private JTable table1;
-    int index1 = 0;
-    math.Lagrange l;
-
-    Expression k;
-    int index = 0;
-    private final String HTML_START = "<html><head><title></title></head><body bgcolor=#C5D7FB><table border=0 align=center><tr><td width=800>";
-    private final String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top>&nbsp;";
-    private final String HTML_END = "</td></tr></table></body></html>";
-
-
-    private JFileChooser dlg = new JFileChooser(".");
 
     /**
      * Launch the application.
@@ -94,78 +107,66 @@ public class Methods extends JFrame {
 
 
     public void createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
+        menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu menuFile = new JMenu("Файл");
+        menuFile = new JMenu(bundle.getString("menu.file"));
         menuBar.add(menuFile);
 
-        JMenuItem menuOpen = new JMenuItem("\u041E\u0442\u043A\u0440\u044B\u0442\u044C");
+        menuOpen = new JMenuItem(bundle.getString("menu.open"));
         menuFile.add(menuOpen);
 
-        JMenuItem menuSave = new JMenuItem("\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
+        menuSave = new JMenuItem(bundle.getString("menu.save"));
         menuFile.add(menuSave);
         menuSave.addActionListener(new ActionListener() { // сохранение
             public void actionPerformed(ActionEvent arg0) {
-
-                try {
-                    JFileChooser jFileChooser = new JFileChooser();
-                    jFileChooser.setCurrentDirectory(new File("."));
-                    jFileChooser.showSaveDialog(jFileChooser);
-                    PrintWriter pw;
-                    pw = new PrintWriter(jFileChooser.getSelectedFile().getAbsolutePath() + ".txt");
-                    String s = var + " ";
-                    pw.println(s);
-                    s = "";
-                    switch (var) {
-                        case 7:
-                        case 8:
-                        case 11:
-                        case 12:
-                        case 13:
-                            layeredPane_3.SaveData(var, pw);
-                            break;
-                        case 5:
-                            reverseMatrixPane.saveData(pw);
-                            break;
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 6:
-                            layeredPane_1.saveData(pw);
-                            break;
-                        case 9:
-                            layeredPane_Krylov.saveData(pw);
-                            break;
-                        case 10:
-                            interpolationPane.saveData(s, pw);
-                            break;
-                        default:
-                            break;
-                    }
-                    pw.close();
-                } catch (FileNotFoundException e3) {
-                    e3.printStackTrace();
-                }
+                save();
             }
         });
 
-        JMenuItem menuClose = new JMenuItem("Закрыть");
+        menuClose = new JMenuItem(bundle.getString("menu.close"));
         menuFile.add(menuClose);
 //        JPanel panel = new JPanel();
-        JMenu menu_metods = new JMenu("Методы");
-        menuBar.add(menu_metods);
 
-        JMenu[] methodsGroups = new JMenu[MethodNames.methodGroupsNames.length];
+        menuLanguage = new JMenu(bundle.getString("menu.language"));
 
-        JMenuItem[] methods = new JMenuItem[12];
+        menuBar.add(menuLanguage);
+
+        JMenuItem menuRus = new JMenuItem(bundle.getString("menu.language.russian"));
+        menuRus.addActionListener(new ActionListener() { // сохранение
+            public void actionPerformed(ActionEvent arg0) {
+                Locale.setDefault(new Locale("ru", "RU"));
+                currentLocale = new Locale("ru", "RU");
+                initComponentsI18n();
+            }
+        });
+        menuLanguage.add(menuRus);
+
+        JMenuItem menuEng = new JMenuItem(bundle.getString("menu.language.english"));
+        menuEng.addActionListener(new ActionListener() { // сохранение
+            public void actionPerformed(ActionEvent arg0) {
+                Locale.setDefault(new Locale("en", "US"));
+                currentLocale = new Locale("en", "US");
+                initComponentsI18n();
+            }
+        });
+        menuLanguage.add(menuEng);
+
+        menu_methods = new JMenu(bundle.getString("menu.methods"));
+        menuBar.add(menu_methods);
+
+        methodsGroups = new JMenu[MethodNames.methodGroupsNames.length];
+
+        methods = new JMenuItem[12];
+        String methodName;
         int k = 0;
+
         for (int i = 0; i < methodsGroups.length; i++) {
-            methodsGroups[i] = new JMenu(MethodNames.methodGroupsNames[i]);
-            menu_metods.add(methodsGroups[i]);
+            methodsGroups[i] = new JMenu(bundle.getString(MethodNames.methodGroupsNames[i]));
+            menu_methods.add(methodsGroups[i]);
             for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
-                methods[k] = new JMenuItem(MethodNames.methodNames[MethodNames.methodsNumbers[i][j]]);
+                methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
+                methods[k] = new JMenuItem(bundle.getString(methodName));
                 methodsGroups[i].add(methods[k]);
                 methods[k].addActionListener(new MenuActionListener(i, j));
                 k++;
@@ -173,41 +174,21 @@ public class Methods extends JFrame {
         }
 
 
-        JMenu menu_report = new JMenu("Отчет");
+        menu_report = new JMenu(bundle.getString("menu.report"));
         menuBar.add(menu_report);
-        JMenuItem menuSaveReport = new JMenuItem(
-                "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043E\u0442\u0447\u0451\u0442");
+
+        menuSaveReport = new JMenuItem(bundle.getString("menu.saveReport"));
         menuSaveReport.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 if (dlg.showSaveDialog(Methods.this) != JFileChooser.APPROVE_OPTION)
                     return;
-
                 String fileName = dlg.getSelectedFile().getAbsolutePath() + ".html";
                 String shortName = dlg.getSelectedFile().getName() + ".html";
                 saveReport(fileName, shortName);
-                /*
-                 * String from = ".../button/Top1.jpg"; String to =
-				 * dlg.getSelectedFile().getParent()+"Top1.jpg";
-				 *
-				 * File From = new File(from); if (!From.exists()) {
-				 * System.out.println(From + " does not exist!");
-				 *
-				 * }
-				 *
-				 * File To = new File(to); if (!To.delete()){
-				 * System.out.println("You can't move!");
-				 *
-				 * }
-				 *
-				 * From.renameTo(To);
-				 */
-
-
             }
         });
 
-        JMenuItem menuShowReport = new JMenuItem(
-                "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u043E\u0442\u0447\u0451\u0442\u0430");
+        menuShowReport = new JMenuItem(bundle.getString("menu.showReport"));
         menuShowReport.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Report r = new Report();
@@ -218,7 +199,7 @@ public class Methods extends JFrame {
         menu_report.add(menuShowReport);
         menu_report.add(menuSaveReport);
 
-        JMenu menu_about = new JMenu("О программе");
+        menu_about = new JMenu(bundle.getString("menu.about"));
         menu_about.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(null, FinalTexts.aboutText, FinalTexts.aboutLabel,
@@ -228,7 +209,7 @@ public class Methods extends JFrame {
         });
         menuBar.add(menu_about);
 
-        JMenu menu_help = new JMenu("Помощь");
+        menu_help = new JMenu(bundle.getString("menu.help"));
         menu_help.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -288,8 +269,11 @@ public class Methods extends JFrame {
             }
         });
 
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("\u0427\u0438\u0441\u043B\u0435\u043D\u043D\u044B\u0435 \u043C\u0435\u0442\u043E\u0434\u044B");
+
+        bundle = ResourceBundle.getBundle("MethodsBundle");
+        setTitle(bundle.getString("title"));
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage(
                 Methods.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
@@ -373,33 +357,22 @@ public class Methods extends JFrame {
         panel.setLayout(null);
         final JComboBox comboBoxMethod = new JComboBox();// выбор группы методов
 
-        comboBoxMethod.setModel(new
-
-                DefaultComboBoxModel(
-                new String[]{
-                        "\u041C\u0435\u0442\u043E\u0434\u044B \u043B\u0438\u043D\u0435\u0439\u043D\u043E\u0439 \u0430\u043B\u0433\u0435\u0431\u0440\u044B",
-                        "\u041C\u0435\u0442\u043E\u0434\u044B \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043D\u0435\u043B\u0438\u043D\u0435\u0439\u043D\u044B\u0445 \u0443\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0439",
-                        "\u041D\u0430\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u0438 \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0432\u0435\u043A\u0442\u043E\u0440\u0430 \u043C\u0430\u0442\u0440\u0438\u0446\u044B",
-                        "\u0418\u043D\u0442\u0435\u0440\u043F\u043E\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0443\u043D\u043A\u0446\u0438\u0439",
-                        "\u0427\u0438\u0441\u043B\u0435\u043D\u043D\u043E\u0435 \u0438\u043D\u0442\u0435\u0433\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435",
-                        "\u041A\u0440\u0430\u0435\u0432\u044B\u0435 \u0437\u0430\u0434\u0430\u0447\u0438 \u0434\u043B\u044F \u043E\u0431\u044B\u043A\u043D\u043E\u0432\u0435\u043D\u043D\u044B\u0445 \u0434\u0438\u0444\u0444\u0435\u0440\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0445 \u0443\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0439"
-                }));
+        String[] model = new String[MethodNames.methodGroupsNames.length];
+        for (int i = 0; i < model.length; i++) {
+            model[i] = bundle.getString(MethodNames.methodGroupsNames[i]);
+        }
+        comboBoxMethod.setModel(new DefaultComboBoxModel(model));
         comboBoxMethod.setSelectedIndex(0);
         comboBoxMethod.setBounds(11, 56, 477, 32);
         layeredPane.add(comboBoxMethod);
         comboBoxMethod.setToolTipText("");
+
         final JButton PUSH = new JButton("");
-        PUSH.setRolloverIcon(new
-
-                ImageIcon("button/move.jpg"));
-        PUSH.setPressedIcon(new
-
-                ImageIcon("button/press.jpg"));
+        PUSH.setRolloverIcon(new ImageIcon("button/move.jpg"));
+        PUSH.setPressedIcon(new ImageIcon("button/press.jpg"));
         PUSH.setDebugGraphicsOptions(DebugGraphics.NONE_OPTION);
         PUSH.setBorder(null);
-        PUSH.setIcon(new
-
-                ImageIcon("button/main.jpg"));
+        PUSH.setIcon(new ImageIcon("button/main.jpg"));
 
         final JComboBox comboBoxGroup = new JComboBox();// выбор метода
         comboBoxGroup.addMouseListener(new MouseAdapter() {
@@ -413,12 +386,12 @@ public class Methods extends JFrame {
         layeredPane.add(comboBoxGroup);
         comboBoxGroup.setModel(new DefaultComboBoxModel(getComboBoxModel(0)));
         comboBoxGroup.setSelectedIndex(0);
+
         comboBoxMethod.addItemListener(new ItemListener() {// считывание выбранной
             // группыметодов
             public void itemStateChanged(ItemEvent arg0) {
                 int selectedIndex = comboBoxMethod.getSelectedIndex();
                 comboBoxGroup.setModel(new DefaultComboBoxModel(getComboBoxModel(selectedIndex)));
-
             }
         });
 
@@ -430,33 +403,26 @@ public class Methods extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 EpsTextField.setVisible(true);
                 lblEps.setVisible(true);
-                indexGroup = comboBoxMethod.getSelectedIndex();// индекс выбранной группы
-                // методов
-                indexMethod = comboBoxGroup.getSelectedIndex();// индекс выбранного
-                // метода
+                indexGroup = comboBoxMethod.getSelectedIndex();// индекс выбранной группы методов
+                indexMethod = comboBoxGroup.getSelectedIndex();// индекс выбранного метода
 
                 SetFunctionVisible(SwitchModule.getMethodNumber(indexGroup, indexMethod));
 
                 layeredPane.setVisible(false);
-                // var=14;
             }
         });
-        /*
-         * btnNewButton.addItemListener(new ItemListener() { public void
-		 * itemStateChanged(ItemEvent arg0) { } });
-		 */
+
         PUSH.setBounds(173, 300, 155, 121);
         layeredPane.add(PUSH);
 
-        JLabel label = new JLabel(
-                "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E \u043C\u0435\u0442\u043E\u0434\u043E\u0432");
-        label.setBounds(21, 30, 201, 14);
-        layeredPane.add(label);
+        JLabel labelChooseMethodGroup = new JLabel(bundle.getString("labels.chooseMethodGroup"));
+        labelChooseMethodGroup.setBounds(21, 30, 201, 14);
+        layeredPane.add(labelChooseMethodGroup);
 
-        JLabel label_1 = new JLabel(
-                "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u0435\u0442\u043E\u0434");
-        label_1.setBounds(21, 100, 155, 20);
-        layeredPane.add(label_1);
+        labelChooseMethod = new JLabel(
+                bundle.getString("labels.chooseMethod"));
+        labelChooseMethod.setBounds(21, 100, 155, 20);
+        layeredPane.add(labelChooseMethod);
 
     }
 
@@ -527,14 +493,9 @@ public class Methods extends JFrame {
         }
     }
 
-
-//    public math.Simpson getSimp() {
-//        return simp;
-//    }
-
     public void menuOpen() {
         JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Чтение данных из файла");
+        chooser.setDialogTitle(bundle.getString("choose.readData"));
         chooser.setCurrentDirectory(new File("."));
         chooser.showOpenDialog(chooser);
         FileReader fr;
@@ -590,7 +551,7 @@ public class Methods extends JFrame {
         int methodsNumber = MethodNames.methodsNumbers[index].length;
         String[] model = new String[methodsNumber];
         for (int j = 0; j < methodsNumber; j++) {
-            model[j] = MethodNames.methodNames[MethodNames.methodsNumbers[index][j]];
+            model[j] = bundle.getString(MethodNames.methodNames[MethodNames.methodsNumbers[index][j]]);
         }
 
         return model;
@@ -622,7 +583,7 @@ public class Methods extends JFrame {
         try {
             if (var == 10) {
                 result = (HTML_START + HTML_TOP + methodSolution
-                        + "<br><br> График функции:<br><img src=" + shortName + ".png>" + HTML_END)
+                        + "<br><br> " + bundle.getString("graphics.functionGraph") + ":<br><img src=" + shortName + ".png>" + HTML_END)
                         .getBytes("utf-8");
             } else {
                 result = (HTML_START + HTML_TOP + methodSolution + HTML_END).getBytes("utf-8");
@@ -643,13 +604,88 @@ public class Methods extends JFrame {
         return result;
     }
 
+    private void initComponentsI18n() {
+        try {
+            bundle = ResourceBundle.getBundle("MethodsBundle", currentLocale);
+            labelChooseMethod.setText(bundle.getString("labels.chooseMethod"));
+            System.out.println(bundle.getString("labels.chooseMethod"));
+            menuFile.setText(bundle.getString("menu.file"));
+            menuOpen.setText(bundle.getString("menu.open"));
+            menuSave.setText(bundle.getString("menu.save"));
+            menuClose.setText(bundle.getString("menu.close"));
+            menuLanguage.setText(bundle.getString("menu.language"));
+            menu_report.setText(bundle.getString("menu.report"));
+            menuSaveReport.setText(bundle.getString("menu.saveReport"));
+            menuShowReport.setText(bundle.getString("menu.showReport"));
+            menu_about.setText(bundle.getString("menu.about"));
+            menu_help.setText(bundle.getString("menu.help"));
+
+            int k = 0;
+            String methodName;
+            for (int i = 0; i < methodsGroups.length; i++) {
+                methodsGroups[i].setText(bundle.getString(MethodNames.methodGroupsNames[i]));
+                for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
+                    methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
+                    methods[k].setText(bundle.getString(methodName));
+                    k++;
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void save() {
+        try {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.setCurrentDirectory(new File("."));
+            jFileChooser.showSaveDialog(jFileChooser);
+            PrintWriter pw;
+            pw = new PrintWriter(jFileChooser.getSelectedFile().getAbsolutePath() + ".txt");
+            String s = var + " ";
+            pw.println(s);
+            s = "";
+            switch (var) {
+                case 7:
+                case 8:
+                case 11:
+                case 12:
+                case 13:
+                    layeredPane_3.SaveData(var, pw);
+                    break;
+                case 5:
+                    reverseMatrixPane.saveData(pw);
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 6:
+                    layeredPane_1.saveData(pw);
+                    break;
+                case 9:
+                    layeredPane_Krylov.saveData(pw);
+                    break;
+                case 10:
+                    interpolationPane.saveData(s, pw);
+                    break;
+                default:
+                    break;
+            }
+            pw.close();
+        } catch (FileNotFoundException e3) {
+            e3.printStackTrace();
+        }
+    }
+
     class MenuActionListener implements ActionListener {
         private int i;
         private int j;
+
         public MenuActionListener(int methodGroupIndex, int methodIndex) {
             this.i = methodGroupIndex;
             this.j = methodIndex;
         }
+
         public void actionPerformed(ActionEvent e) {
             SetFunctionVisible(MethodNames.methodsNumbers[i][j]);
         }

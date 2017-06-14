@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 /**
@@ -16,8 +17,10 @@ import java.util.StringTokenizer;
  */
 public class KrylovPane extends JLayeredPane {
 
-    final JSpinner spinner_5 = new JSpinner();
-    final JSlider slider_1 = new JSlider();
+    private final JSpinner spinner_5 = new JSpinner();
+
+    private final JSlider slider_1 = new JSlider();
+
     private JTable table9;
     private JTable table;
 
@@ -25,19 +28,33 @@ public class KrylovPane extends JLayeredPane {
         return krylov;
     }
 
+    private JButton button_solveKrylov;
+    private JButton buttonAccept;
+
+    private JLabel labelCellWidth;
+    private JLabel labelEigenvalues;
+    private JLabel labelInput;
+    private JLabel labelSize;
+    private JLabel labelMatrix;
+    private JLabel labelNumsCount;
+    private JLabel labelAfterComa;
+    private JLabel labelMatrixEquation;
+    private JLabel labelEigenVectors;
+
     private String krylov;
+    private ResourceBundle bundle;
 
     final JScrollPane scrollPane_9 = new JScrollPane();
     final JScrollPane scrollPane = new JScrollPane();
     final JScrollPane scrollPane_2 = new JScrollPane();
+
     private JTable table2;
     private JTable table1;
+
     private JTextField textField_3;
-    JLabel lblNewLabel_3 = new JLabel(
-            "\u0421\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u0432\u0435\u043A\u0442\u043E\u0440\u044B");
 
-
-    public KrylovPane() {
+    public KrylovPane(ResourceBundle bundle) {
+        this.bundle = bundle;
         spinner_5.setModel(new
 
                 SpinnerNumberModel(new Integer(2), new
@@ -87,40 +104,21 @@ public class KrylovPane extends JLayeredPane {
         add(textField_3);
         textField_3.setColumns(10);
 
-        final JLabel label_9 = new JLabel(
-                "\u0428\u0438\u0440\u0438\u043D\u0430 \u044F\u0447\u0435\u0435\u043A");
-        label_9.setEnabled(false);
-        label_9.setBounds(16, 131, 94, 23);
-        add(label_9);
+        labelCellWidth = new JLabel(bundle.getString("labels.cellWidth"));
+        labelCellWidth.setEnabled(false);
+        labelCellWidth.setBounds(16, 131, 94, 23);
+        add(labelCellWidth);
 
-        JButton button_10 = new JButton("\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C");
-        button_10.addActionListener(new
+        buttonAccept = new JButton(bundle.getString("buttons.accept"));
+        buttonAccept.addActionListener(new
 
-                                            ActionListener() {
-                                                public void actionPerformed(ActionEvent e) {
-                                                    label_9.setEnabled(true);
-                                                    slider_1.setEnabled(true);
-                                                    final int n = Integer.parseInt(spinner_5.getValue().toString());// считывание
-                                                    // размерности
-                                                    // матрицы
-                                                    table9 = new JTable(n, n);
-                                                    for (int i = 0; i < n; i++) {
-                                                        table9.getColumnModel().getColumn(i).setMinWidth(25);
-                                                        table9.getColumnModel().getColumn(i).setMaxWidth(200);
-                                                        table9.getColumnModel().getColumn(i).setPreferredWidth(40);
-                                                    }
-                                                    for (int i = 0; i < n; i++)
-                                                        table9.getColumnModel().getColumn(i).setHeaderValue("x" + (i + 1));// выставление
-                                                    // заглавий
-                                                    // колонок матрицы Х
-                                                    table9.getTableHeader().resizeAndRepaint();
-                                                    table9.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                                                    table9.setBounds(141, 12, 438, 305);
-                                                    scrollPane_9.setViewportView(table9);
-                                                }
-                                            });
-        button_10.setBounds(5, 91, 105, 28);
-        add(button_10);
+                                               ActionListener() {
+                                                   public void actionPerformed(ActionEvent e) {
+                                                       setTable();
+                                                   }
+                                               });
+        buttonAccept.setBounds(5, 91, 105, 28);
+        add(buttonAccept);
 
         final JSpinner spinner_6 = new JSpinner();
         spinner_6.setModel(new
@@ -145,7 +143,7 @@ public class KrylovPane extends JLayeredPane {
         scrollPane_11.setBounds(197, 291, 297, 179);
         add(scrollPane_11);
 
-        JButton button_solveKrylov = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
+        button_solveKrylov = new JButton(bundle.getString("buttons.solve"));
         button_solveKrylov.addActionListener(new
 
                                                      ActionListener() {
@@ -161,40 +159,37 @@ public class KrylovPane extends JLayeredPane {
         button_solveKrylov.setBounds(128, 229, 71, 28);
         add(button_solveKrylov);
 
-        JLabel lblNewLabel_2 = new JLabel(
-                "\u0421\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F");
-        lblNewLabel_2.setBounds(22, 269, 141, 16);
-        add(lblNewLabel_2);
+        labelEigenvalues = new JLabel(bundle.getString("labels.eigenvalues"));
+        labelEigenvalues.setBounds(22, 269, 141, 16);
+        add(labelEigenvalues);
 
-        lblNewLabel_3.setBounds(277, 269, 141, 16);
-        add(lblNewLabel_3);
+        labelEigenVectors = new JLabel(bundle.getString("labels.eigenVectors"));
+        labelEigenVectors.setBounds(277, 269, 141, 16);
+        add(labelEigenVectors);
 
-        JLabel label_16 = new JLabel("\u0412\u0432\u0435\u0434\u0438\u0442\u0435");
-        label_16.setBounds(6, 6, 55, 16);
-        add(label_16);
+        labelInput = new JLabel(bundle.getString("labels.input"));
+        labelInput.setBounds(6, 6, 55, 16);
+        add(labelInput);
 
-        JLabel label_17 = new JLabel("\u0440\u0430\u0437\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u044C");
-        label_17.setBounds(6, 25, 105, 16);
-        add(label_17);
+        labelSize = new JLabel(bundle.getString("labels.size"));
+        labelSize.setBounds(6, 25, 105, 16);
+        add(labelSize);
 
-        JLabel label_18 = new JLabel("\u043C\u0430\u0442\u0440\u0438\u0446\u044B");
-        label_18.setBounds(6, 43, 55, 16);
-        add(label_18);
+        labelMatrix = new JLabel(bundle.getString("labels.matrix"));
+        labelMatrix.setBounds(6, 43, 55, 16);
+        add(labelMatrix);
 
-        JLabel label_19 = new JLabel(
-                "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0437\u043D\u0430\u043A\u043E\u0432");
-        label_19.setBounds(6, 184, 116, 16);
-        add(label_19);
+        labelNumsCount = new JLabel(bundle.getString("labels.numsCount"));
+        labelNumsCount.setBounds(6, 184, 116, 16);
+        add(labelNumsCount);
 
-        JLabel label_20 = new JLabel(
-                "\u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u044F\u0442\u043E\u0439:");
-        label_20.setBounds(6, 201, 104, 16);
-        add(label_20);
+        labelAfterComa = new JLabel(bundle.getString("labels.afterComa") + ":");
+        labelAfterComa.setBounds(6, 201, 104, 16);
+        add(labelAfterComa);
 
-        JLabel label_21 = new JLabel(
-                "\u0425\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u0443\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0435 \u043C\u0430\u0442\u0440\u0438\u0446\u044B:");
-        label_21.setBounds(212, 212, 288, 16);
-        add(label_21);
+        labelMatrixEquation = new JLabel(bundle.getString("labels.characteristicMatrixEquation"));
+        labelMatrixEquation.setBounds(212, 212, 288, 16);
+        add(labelMatrixEquation);
     }
 
     public void saveData(PrintWriter pw) {
@@ -222,13 +217,14 @@ public class KrylovPane extends JLayeredPane {
     public void OpenData(StringTokenizer st, BufferedReader br) {
         String s;
         try {
-
+//TODO переделать сохранение и считывание матрицв
             int x = Integer.parseInt(st.nextToken());
             // int y = Integer.parseInt(st.nextToken());
 //            spinner_2.setValue(x);
             spinner_5.setValue(x);
             table = new JTable(x, x);
             table9 = new JTable(x, x);
+
             for (int i = 0; i < x; i++) {
                 s = br.readLine();
                 st = new StringTokenizer(s);
@@ -237,6 +233,7 @@ public class KrylovPane extends JLayeredPane {
                         table.getColumnModel().getColumn(k).setMinWidth(25);
                         table.getColumnModel().getColumn(k).setMaxWidth(200);
                         table.getColumnModel().getColumn(k).setPreferredWidth(40);
+
                         table9.getColumnModel().getColumn(k).setMinWidth(25);
                         table9.getColumnModel().getColumn(k).setMaxWidth(200);
                         table9.getColumnModel().getColumn(k).setPreferredWidth(40);
@@ -256,6 +253,7 @@ public class KrylovPane extends JLayeredPane {
             table.getTableHeader().resizeAndRepaint();
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.setBounds(0, 0, 438, 305);
+
             table9.getTableHeader().resizeAndRepaint();
             table9.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table9.setBounds(0, 0, 438, 305);
@@ -285,4 +283,40 @@ public class KrylovPane extends JLayeredPane {
         } catch (Exception ee) {
         }
     }
+
+    private void setTable() {
+        labelCellWidth.setEnabled(true);
+        slider_1.setEnabled(true);
+        final int n = Integer.parseInt(spinner_5.getValue().toString());// считывание размерности матрицы
+        table9 = new JTable(n, n);
+        for (int i = 0; i < n; i++) {
+            table9.getColumnModel().getColumn(i).setMinWidth(25);
+            table9.getColumnModel().getColumn(i).setMaxWidth(200);
+            table9.getColumnModel().getColumn(i).setPreferredWidth(40);
+            table9.getColumnModel().getColumn(i).setHeaderValue("x" + (i + 1));// выставлениезаглавий колонок матрицы Х
+        }
+        table9.getTableHeader().resizeAndRepaint();
+        table9.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table9.setBounds(141, 12, 438, 305);
+        scrollPane_9.setViewportView(table9);
+    }
+
+    private void setTableData() {
+
+    }
+
+
+    public void initComponentsI18n(ResourceBundle bundle) {
+        this.bundle = bundle;
+        button_solveKrylov.setText(bundle.getString("buttons.solve"));
+        labelEigenvalues.setText(bundle.getString("labels.eigenvalues"));
+        labelEigenVectors.setText(bundle.getString("labels.eigenVectors"));
+        labelInput.setText(bundle.getString("labels.input"));
+        labelSize.setText(bundle.getString("labels.size"));
+        labelMatrix.setText(bundle.getString("labels.matrix"));
+        labelNumsCount.setText(bundle.getString("labels.numsCount"));
+        labelAfterComa.setText(bundle.getString("labels.afterComa") + ":");
+        labelMatrixEquation.setText(bundle.getString("labels.characteristicMatrixEquation"));
+    }
+
 }

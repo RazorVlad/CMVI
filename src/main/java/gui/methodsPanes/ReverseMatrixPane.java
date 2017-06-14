@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 /**
@@ -16,27 +17,34 @@ import java.util.StringTokenizer;
  */
 public class ReverseMatrixPane extends JLayeredPane {
 
-    final JButton button_revers_Gauss = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
-    final JScrollPane scrollPane_3 = new JScrollPane();
-    final JScrollPane scrollPane_4 = new JScrollPane();
-    final JSpinner spinner = new JSpinner();
-    JTable table;
-    JTable table2;
+    private final JScrollPane scrollPane_3 = new JScrollPane();
+    private final JScrollPane scrollPane_4 = new JScrollPane();
+    private final JSpinner spinner = new JSpinner();
 
-    public ReverseMatrixPane() {
+    private JLabel labelInputNumsCountAfterComa;
+    private JLabel labelInputMatrixSize;
+
+    private JButton button_revers_Gauss;
+    private JButton buttonApply;
+
+    private JTable table;
+    private JTable table2;
+
+    private ResourceBundle bundle;
+
+    public ReverseMatrixPane(ResourceBundle bundle) {
+        this.bundle=bundle;
         setBounds(6, 6, 499, 470);
         setLayout(null);
-
 
         scrollPane_3.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane_3.setBounds(20, 57, 435, 185);
         add(scrollPane_3);
 
-        JLabel label_3 = new JLabel(
-                "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0437\u043D\u0430\u043A\u043E\u0432 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u044F\u0442\u043E\u0439");
-        label_3.setBounds(0, 256, 234, 14);
-        add(label_3);
+        labelInputNumsCountAfterComa = new JLabel(bundle.getString("labels.inputNumsCountAfterComa"));
+        labelInputNumsCountAfterComa.setBounds(0, 256, 234, 14);
+        add(labelInputNumsCountAfterComa);
 
         spinner.setModel(new SpinnerNumberModel(new Integer(2), new Integer(2), null, new Integer(1)));
         spinner.setBounds(193, 20, 41, 28);
@@ -73,6 +81,7 @@ public class ReverseMatrixPane extends JLayeredPane {
             }
         });
 
+        button_revers_Gauss = new JButton(bundle.getString("buttons.solve"));
         button_revers_Gauss.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 ReverseGaussObject rgo = new ReverseGaussObject(spinner, spinner_1, table);
@@ -83,7 +92,7 @@ public class ReverseMatrixPane extends JLayeredPane {
         button_revers_Gauss.setBounds(356, 253, 99, 23);
         add(button_revers_Gauss);
 
-        JButton buttonApply = new JButton("\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C");
+        buttonApply = new JButton(bundle.getString("buttons.acceptButton"));
         buttonApply.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 int n = Integer.parseInt(spinner.getValue().toString());// считывание
@@ -111,10 +120,9 @@ public class ReverseMatrixPane extends JLayeredPane {
         buttonApply.setBounds(356, 23, 99, 23);
         add(buttonApply);
 
-        JLabel label_10 = new JLabel(
-                "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u044C \u043C\u0430\u0442\u0440\u0438\u0446\u044B");
-        label_10.setBounds(0, 27, 191, 14);
-        add(label_10);
+        labelInputMatrixSize = new JLabel(bundle.getString("labels.inputMatrixSize"));
+        labelInputMatrixSize.setBounds(0, 27, 191, 14);
+        add(labelInputMatrixSize);
     }
 
     public void load(StringTokenizer st, BufferedReader br) {
@@ -131,7 +139,6 @@ public class ReverseMatrixPane extends JLayeredPane {
             scrollPane_4.setViewportView(table2);
 
         } catch (Exception ee) {
-            System.out.println("Data load error");
         }
     }
 
@@ -178,10 +185,15 @@ public class ReverseMatrixPane extends JLayeredPane {
         pw.println(x + " ");// + y);
 
         printTable(table, pw);
-        System.out.println("table1 ok");
         if (table2 != null) {
             System.out.println(table2 != null);
             printTable(table2, pw);
         }
+    }
+    public void initComponentsI18n(ResourceBundle bundle) {
+        this.bundle = bundle;
+        button_revers_Gauss.setText(bundle.getString("buttons.solve"));
+        labelInputNumsCountAfterComa.setText(bundle.getString("labels.inputNumsCountAfterComa"));
+        labelInputMatrixSize.setText(bundle.getString("labels.inputMatrixSize"));
     }
 }

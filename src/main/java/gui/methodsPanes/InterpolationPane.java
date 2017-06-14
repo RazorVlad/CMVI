@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 /**
@@ -19,14 +20,22 @@ import java.util.StringTokenizer;
  */
 public class InterpolationPane extends JLayeredPane {
     private JFileChooser dlg = new JFileChooser(".");
-    final JScrollPane interpScroll= new JScrollPane();
-    private JTextField textField_8;
-    private JTextField textField_9;
-    JTable table;
-    int index;
-    Image buffer;
-    math.Lagrange l;
-    public InterpolationPane() {
+    private final JScrollPane interpScroll = new JScrollPane();
+    private JTextField textFieldValueX;
+    private JTextField textFieldValueY;
+    private JTable table;
+    private int index;
+    private Image buffer;
+    private math.Lagrange l;
+    private JButton btnGraph;
+    private JButton buttonYxValue;
+    private JButton buttonSaveGraph;
+    private JLabel labelInputX;
+    private JLabel labelDots;
+    private ResourceBundle bundle;
+
+    public InterpolationPane(ResourceBundle bundleValue) {
+        this.bundle = bundleValue;
         setBounds(6, 6, 499, 470);
 
         interpScroll.setBorder(new LineBorder(Color.GRAY, 2, true));
@@ -43,32 +52,7 @@ public class InterpolationPane extends JLayeredPane {
         add(btnPlus);
         btnPlus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final int n = index + 1;
-                double[][] m = new double[n][2];
-                for (int i = 0; i < n - 1; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        m[i][j] = Double.parseDouble(table.getValueAt(i, j).toString());
-
-                    }
-                }
-                table = new JTable(n, 2);
-                for (int i = 0; i < 2; i++) {
-                    table.getColumnModel().getColumn(i).setMinWidth(50);
-                    table.getColumnModel().getColumn(i).setMaxWidth(200);
-                    table.getColumnModel().getColumn(i).setPreferredWidth(60);
-                }
-
-                table.getColumnModel().getColumn(0).setHeaderValue("x");
-                table.getColumnModel().getColumn(1).setHeaderValue("y");
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        table.setValueAt(m[i][j], i, j);
-                    }
-                }
-                table.getTableHeader().resizeAndRepaint();
-                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                table.revalidate();
-                table.repaint();
+                table = changeNumsCount(table, index, +1);
                 interpScroll.setViewportView(table);
                 index++;
 
@@ -82,34 +66,9 @@ public class InterpolationPane extends JLayeredPane {
             public void actionPerformed(ActionEvent e) {
                 final int n = index;
                 if (n > 1) {
-                    double[][] m = new double[n][2];
-                    for (int i = 0; i < n; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            m[i][j] = Double.parseDouble(table.getValueAt(i, j).toString());
-
-                        }
-                    }
-                    table = new JTable(n - 1, 2);
-                    for (int i = 0; i < 2; i++) {
-                        table.getColumnModel().getColumn(i).setMinWidth(50);
-                        table.getColumnModel().getColumn(i).setMaxWidth(200);
-                        table.getColumnModel().getColumn(i).setPreferredWidth(60);
-                    }
-
-                    table.getColumnModel().getColumn(0).setHeaderValue("x");
-                    table.getColumnModel().getColumn(1).setHeaderValue("y");
-                    for (int i = 0; i < n - 1; i++) {
-                        for (int j = 0; j < 2; j++) {
-                            table.setValueAt(m[i][j], i, j);
-                        }
-                    }
-                    table.getTableHeader().resizeAndRepaint();
-                    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                    table.revalidate();
-                    table.repaint();
+                    table = changeNumsCount(table, index, -1);
                     interpScroll.setViewportView(table);
                     index--;
-
                 }
             }
         });
@@ -127,7 +86,7 @@ public class InterpolationPane extends JLayeredPane {
         textPane_3.setEditable(false);
         scrollPane_8.setViewportView(textPane_3);
 
-        JButton btnGraph = new JButton("\u041F\u043E\u0441\u0442\u0440\u043E\u0438\u0442\u044C");
+        btnGraph = new JButton(bundle.getString("buttons.buildGraph"));
         btnGraph.addActionListener(new ActionListener() {// Интерполяция
             // Лагранжа
             public void actionPerformed(ActionEvent e) {
@@ -162,8 +121,8 @@ public class InterpolationPane extends JLayeredPane {
                     // Graphics g = panelGraph.getGraphics();
                     panelGraph.setXY(x);
                     panelGraph.setYX(y);
-                    textPane_3.setText("Упрощенный вид:<br>L = " + l.PolToString(l.eqInfo())
-                            + "<br>Не упрощенный вид:<br>L = " + l.getLagrString());
+                    textPane_3.setText(bundle.getString("labels.shortType") + "<br>L = " + l.PolToString(l.eqInfo())
+                            + "<br>" + bundle.getString("labels.longType") + "<br>L = " + l.getLagrString());
                     Graphics g = buffer.getGraphics();
                     panelGraph.Graf_paint(g);
 
@@ -186,8 +145,8 @@ public class InterpolationPane extends JLayeredPane {
         btnGraph.setBounds(6, 293, 127, 28);
         add(btnGraph);
 
-        JButton btnNewButton = new JButton("\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
-        btnNewButton.addActionListener(new ActionListener() {
+        buttonSaveGraph = new JButton(bundle.getString("buttons.save"));
+        buttonSaveGraph.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (dlg.showSaveDialog(InterpolationPane.this) != JFileChooser.APPROVE_OPTION)
@@ -199,54 +158,51 @@ public class InterpolationPane extends JLayeredPane {
                 }
             }
         });
-        btnNewButton.setBounds(6, 322, 127, 28);
-        add(btnNewButton);
+        buttonSaveGraph.setBounds(6, 322, 127, 28);
+        add(buttonSaveGraph);
 
-        JLabel label_5 = new JLabel("\u0422\u043E\u0447\u043A\u0438:");
-        label_5.setBounds(49, 6, 55, 16);
-        add(label_5);
+        labelDots = new JLabel(bundle.getString("labels.dots"));
+        labelDots.setBounds(49, 6, 55, 16);
+        add(labelDots);
 
-        textField_8 = new JTextField();
-        textField_8.setBounds(6, 405, 64, 28);
-        add(textField_8);
-        textField_8.setColumns(10);
+        textFieldValueX = new JTextField();
+        textFieldValueX.setBounds(6, 405, 64, 28);
+        add(textFieldValueX);
+        textFieldValueX.setColumns(10);
 
-        JButton btnNewButton_1 = new JButton("\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435 y(x)");
-        btnNewButton_1.addActionListener(new ActionListener() {
+        buttonYxValue = new JButton(bundle.getString("buttons.valueYx"));
+        buttonYxValue.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 double y = 0;
                 try {
-                    y = l.getLagrY(Double.parseDouble(textField_8.getText().toString()));
+                    y = l.getLagrY(Double.parseDouble(textFieldValueX.getText().toString()));
                     y = Math.round(y * 1000);
-                    textField_9.setText(Double.toString(y / 1000));
-                } catch (Exception eee) {
-                    JOptionPane.showMessageDialog(null, "Введены некорректные символы!", "Ошибка",// нарушены
-                            // условия
-                            // сходимости
-                            // метода
+                    textFieldValueY.setText(Double.toString(y / 1000));
+                } catch (Exception exc) {
+                    JOptionPane.showMessageDialog(null, bundle.getString("errors.incorrectSymbol"), bundle.getString("errors.error"),// нарушены
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
-        btnNewButton_1.setBounds(6, 436, 127, 28);
-        add(btnNewButton_1);
+        buttonYxValue.setBounds(6, 436, 127, 28);
+        add(buttonYxValue);
 
-        textField_9 = new JTextField();
-        textField_9.setEditable(false);
-        textField_9.setBounds(69, 405, 64, 28);
-        add(textField_9);
-        textField_9.setColumns(10);
+        textFieldValueY = new JTextField();
+        textFieldValueY.setEditable(false);
+        textFieldValueY.setBounds(69, 405, 64, 28);
+        add(textFieldValueY);
+        textFieldValueY.setColumns(10);
 
-        JLabel lblNewLabel_4 = new JLabel("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 x");
-        lblNewLabel_4.setBounds(39, 364, 68, 16);
-        add(lblNewLabel_4);
+        labelInputX = new JLabel(bundle.getString("labels.inputX"));
+        labelInputX.setBounds(39, 364, 68, 16);
+        add(labelInputX);
 
         JLabel lblXYx = new JLabel("x:                y(x):");
         lblXYx.setBounds(36, 390, 89, 16);
         add(lblXYx);
     }
 
-    public void load(StringTokenizer st){
+    public void load(StringTokenizer st) {
         try {
             index = Integer.parseInt(st.nextToken());
             table = new JTable(index, 2);
@@ -270,7 +226,7 @@ public class InterpolationPane extends JLayeredPane {
         }
     }
 
-    public void saveData(String s, PrintWriter pw){
+    public void saveData(String s, PrintWriter pw) {
         s += index + " ";
         for (int i = 0; i < index; i++)
             for (int j = 0; j < 2; j++)
@@ -284,5 +240,43 @@ public class InterpolationPane extends JLayeredPane {
         FileOutputStream fw = new FileOutputStream(fileName);
         fw.write(enc.pngEncode());
         fw.close();
+    }
+
+    public JTable changeNumsCount(JTable table, int n, int type) {
+        double[][] m;
+        if (type > 0) m = new double[n + 1][2];
+        else m = new double[n][2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 2; j++) {
+                m[i][j] = Double.parseDouble(table.getValueAt(i, j).toString());
+
+            }
+        }
+        table = new JTable(n + type, 2);
+        for (int i = 0; i < 2; i++) {
+            table.getColumnModel().getColumn(i).setMinWidth(50);
+            table.getColumnModel().getColumn(i).setMaxWidth(200);
+            table.getColumnModel().getColumn(i).setPreferredWidth(60);
+        }
+
+        table.getColumnModel().getColumn(0).setHeaderValue("x");
+        table.getColumnModel().getColumn(1).setHeaderValue("y");
+        for (int i = 0; i < n + type; i++) {
+            for (int j = 0; j < 2; j++) {
+                table.setValueAt(m[i][j], i, j);
+            }
+        }
+        table.getTableHeader().resizeAndRepaint();
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.revalidate();
+        table.repaint();
+        return table;
+    }
+
+    public void initComponentsI18n(ResourceBundle bundle) {
+        this.bundle = bundle;
+        btnGraph.setText(bundle.getString("buttons.buildGraph"));
+        labelInputX.setText(bundle.getString("labels.inputX"));
+        buttonYxValue.setText(bundle.getString("buttons.valueYx"));
     }
 }

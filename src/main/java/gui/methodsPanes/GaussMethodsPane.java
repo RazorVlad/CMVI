@@ -14,83 +14,91 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 /**
  * Created by razor on 12.06.2017.
  */
-public class Layer1 extends JLayeredPane {
-    int var;
+public class GaussMethodsPane extends JLayeredPane {
+    private int var;
+    private ResourceBundle bundle;
     private JTable table;
     private JTable table1;
     private JTable table2;
-    final JScrollPane scrollPane = new JScrollPane();
-    final JScrollPane scrollPane_1 = new JScrollPane();
-    final JScrollPane scrollPane_2 = new JScrollPane();
-    final JSpinner spinnerMatrixSize = new JSpinner();
-    final JSpinner spinnerNumsCount = new JSpinner();
+    private JLabel labelInput;
+    private JLabel labelSize;
+    private JLabel labelMatrix;
+    private JLabel labelNumsCount;
+    private JLabel labelAfterComa;
+    private JLabel labelSolve;
+    private final JScrollPane scrollPane = new JScrollPane();
+    private final JScrollPane scrollPane_1 = new JScrollPane();
+    private final JScrollPane scrollPane_2 = new JScrollPane();
+    private final JSpinner spinnerMatrixSize = new JSpinner();
+    private final JSpinner spinnerNumsCount = new JSpinner();
     private JSlider slider;
-    final JButton buttonSetTable = new JButton("\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C");
-    final JButton buttonSolve = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
-    final JLabel labelCellWidth = new JLabel("\u0428\u0438\u0440\u0438\u043D\u0430 \u044F\u0447\u0435\u0435\u043A");
+    private JButton buttonSetTable;
+    private JButton buttonSolve;
+    private JLabel labelCellWidth;
 
-    public Layer1(int var1) {
-        setLayout(new BorderLayout());
+    public GaussMethodsPane(int var1, ResourceBundle bundle) {
+        this.bundle = bundle;
         this.var = var1;
+        setLayout(new BorderLayout());
         //TODO
         JPanel leftPanel = new JPanel();
 //        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.setLayout(null);
-        leftPanel.setPreferredSize(new Dimension(115,500));
+        leftPanel.setPreferredSize(new Dimension(115, 500));
         leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         leftPanel.setBounds(0, 0, 120, 500);
-        add(leftPanel,BorderLayout.LINE_START);
+        add(leftPanel, BorderLayout.LINE_START);
 
-        JPanel centerPanel=new JPanel();
+        JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
-        add(centerPanel,BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
 
-        JPanel rightPanel=new JPanel();
+        JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        add(rightPanel,BorderLayout.LINE_END);
-        leftPanel.add(Box.createRigidArea(new Dimension(5,25)));
+        add(rightPanel, BorderLayout.LINE_END);
+        leftPanel.add(Box.createRigidArea(new Dimension(5, 25)));
 
-        JLabel labelInput = new JLabel("\u0412\u0432\u0435\u0434\u0438\u0442\u0435",SwingConstants.LEFT);
+        labelInput = new JLabel(bundle.getString("labels.input"), SwingConstants.LEFT);
         labelInput.setBounds(6, 28, 84, 16);
-        labelInput.setPreferredSize(new Dimension(105,16));
-        labelInput.setMaximumSize(new Dimension(150,16));
+        labelInput.setPreferredSize(new Dimension(105, 16));
+        labelInput.setMaximumSize(new Dimension(150, 16));
         labelInput.setAlignmentX(Component.LEFT_ALIGNMENT);
         leftPanel.add(labelInput);
 
-        JLabel labelSize = new JLabel("\u0440\u0430\u0437\u043C\u0435\u0440\u043D\u043E\u0441\u0442\u044C",SwingConstants.LEFT);
+        labelSize = new JLabel(bundle.getString("labels.size"), SwingConstants.LEFT);
         labelSize.setBounds(6, 47, 84, 16);
-        labelSize.setPreferredSize(new Dimension(105,16));
-        labelSize.setMaximumSize(new Dimension(150,16));
+        labelSize.setPreferredSize(new Dimension(105, 16));
+        labelSize.setMaximumSize(new Dimension(150, 16));
         labelSize.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-
         leftPanel.add(labelSize);
 
-        JLabel labelMatrix = new JLabel("\u043C\u0430\u0442\u0440\u0438\u0446\u044B",SwingConstants.LEFT);
+        labelMatrix = new JLabel(bundle.getString("labels.matrix"), SwingConstants.LEFT);
         labelMatrix.setBounds(6, 66, 55, 16);
-        labelMatrix.setPreferredSize(new Dimension(105,16));
-        labelMatrix.setMaximumSize(new Dimension(150,16));
+        labelMatrix.setPreferredSize(new Dimension(105, 16));
+        labelMatrix.setMaximumSize(new Dimension(150, 16));
         labelMatrix.setAlignmentX(Component.LEFT_ALIGNMENT);
         labelMatrix.setHorizontalAlignment(SwingConstants.LEFT);
         leftPanel.add(labelMatrix);
 
-        leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
+        leftPanel.add(Box.createRigidArea(new Dimension(5, 10)));
 
         spinnerMatrixSize.setModel(new SpinnerNumberModel(new Integer(2), new
                 Integer(2), null, new Integer(1)));
         spinnerMatrixSize.setBounds(0, 94, 105, 26);
-        spinnerMatrixSize.setPreferredSize(new Dimension(105,26));
-        spinnerMatrixSize.setMaximumSize(new Dimension(150,26));
+        spinnerMatrixSize.setPreferredSize(new Dimension(105, 26));
+        spinnerMatrixSize.setMaximumSize(new Dimension(150, 26));
         spinnerMatrixSize.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(spinnerMatrixSize);
 
-        leftPanel.add(Box.createRigidArea(new Dimension(0,20)));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+        buttonSetTable = new JButton(bundle.getString("buttons.accept"));
         buttonSetTable.addActionListener(new ActionListener() {// Создание
             // таблиц X и B
             public void actionPerformed(ActionEvent arg0) {
@@ -124,14 +132,15 @@ public class Layer1 extends JLayeredPane {
             }
         });
         buttonSetTable.setBounds(0, 144, 105, 48);
-        buttonSetTable.setPreferredSize(new Dimension(105,48));
-        buttonSetTable.setMaximumSize(new Dimension(150,48));
+        buttonSetTable.setPreferredSize(new Dimension(105, 48));
+        buttonSetTable.setMaximumSize(new Dimension(150, 48));
         buttonSetTable.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(buttonSetTable);
 
 
-        leftPanel.add(Box.createRigidArea(new Dimension(0,20)));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+        labelCellWidth = new JLabel(bundle.getString("labels.cellWidth"));
         labelCellWidth.setEnabled(false);
         labelCellWidth.setBounds(10, 221, 94, 23);
         leftPanel.add(labelCellWidth);
@@ -142,8 +151,8 @@ public class Layer1 extends JLayeredPane {
         slider.setValue(40);
         slider.setMinimum(25);
         slider.setBounds(0, 256, 104, 23);
-        slider.setPreferredSize(new Dimension(105,23));
-        slider.setMaximumSize(new Dimension(150,23));
+        slider.setPreferredSize(new Dimension(105, 23));
+        slider.setMaximumSize(new Dimension(150, 23));
         leftPanel.add(slider);
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
@@ -168,13 +177,11 @@ public class Layer1 extends JLayeredPane {
 
         leftPanel.add(Box.createVerticalGlue());
 
-        JLabel labelNumsCount = new JLabel(
-                "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0437\u043D\u0430\u043A\u043E\u0432");
+        labelNumsCount = new JLabel(bundle.getString("labels.numsCount"));
         labelNumsCount.setBounds(0, 312, 116, 16);
         leftPanel.add(labelNumsCount);
 
-        JLabel labelAfterComa = new JLabel(
-                "\u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u044F\u0442\u043E\u0439:");
+        labelAfterComa = new JLabel(bundle.getString("labels.afterComa") + ":");
         labelAfterComa.setBounds(0, 329, 104, 16);
         leftPanel.add(labelAfterComa);
 
@@ -182,10 +189,11 @@ public class Layer1 extends JLayeredPane {
 
                 SpinnerNumberModel(4, 4, 30, 1));
         spinnerNumsCount.setBounds(0, 357, 104, 28);
-        spinnerNumsCount.setPreferredSize(new Dimension(105,28));
-        spinnerNumsCount.setMaximumSize(new Dimension(150,28));
+        spinnerNumsCount.setPreferredSize(new Dimension(105, 28));
+        spinnerNumsCount.setMaximumSize(new Dimension(150, 28));
         leftPanel.add(spinnerNumsCount);
 
+        buttonSolve = new JButton("\u0420\u0435\u0448\u0438\u0442\u044C");
         buttonSolve.addActionListener(new ActionListener() {// Запуск
             // вычисление
             // решения
@@ -210,8 +218,8 @@ public class Layer1 extends JLayeredPane {
             }
         });
         buttonSolve.setBounds(0, 397, 105, 65);
-        buttonSolve.setPreferredSize(new Dimension(105,65));
-        buttonSolve.setMaximumSize(new Dimension(150,65));
+        buttonSolve.setPreferredSize(new Dimension(105, 65));
+        buttonSolve.setMaximumSize(new Dimension(150, 65));
         buttonSolve.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(buttonSolve);
 
@@ -219,26 +227,24 @@ public class Layer1 extends JLayeredPane {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(116, 25, 288, 360);
-        centerPanel.add(scrollPane,BorderLayout.CENTER);
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
 
         scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane_2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_2.setBounds(416, 25, 84, 345);
-        scrollPane_2.setPreferredSize(new Dimension(84,345));
-        rightPanel.add(scrollPane_2,BorderLayout.CENTER);
+        scrollPane_2.setPreferredSize(new Dimension(84, 345));
+        rightPanel.add(scrollPane_2, BorderLayout.CENTER);
 
 
         scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane_1.setBounds(116, 397, 288, 65);
-        scrollPane_1.setPreferredSize(new Dimension(288,75));
-        centerPanel.add(scrollPane_1,BorderLayout.PAGE_END);
+        scrollPane_1.setPreferredSize(new Dimension(288, 75));
+        centerPanel.add(scrollPane_1, BorderLayout.PAGE_END);
 
-        JLabel labelSolve = new JLabel("\u0420\u0435\u0448\u0435\u043D\u0438\u0435",SwingConstants.CENTER);
-        labelSolve.setPreferredSize(new Dimension(100,75));
+        labelSolve = new JLabel(bundle.getString("labels.solution") + ":", SwingConstants.CENTER);
+        labelSolve.setPreferredSize(new Dimension(100, 75));
         labelSolve.setBounds(427, 426, 61, 14);
-        rightPanel.add(labelSolve,BorderLayout.PAGE_END);
-
-
+        rightPanel.add(labelSolve, BorderLayout.PAGE_END);
 
 
     }
@@ -331,4 +337,15 @@ public class Layer1 extends JLayeredPane {
         }
     }
 
+    public void initComponentsI18n(ResourceBundle bundle) {
+        this.bundle = bundle;
+        labelCellWidth.setText(bundle.getString("labels.cellWidth"));
+        labelInput.setText(bundle.getString("labels.input"));
+        labelSize.setText(bundle.getString("labels.size"));
+        labelMatrix.setText(bundle.getString("labels.matrix"));
+        labelNumsCount.setText(bundle.getString("labels.numsCount"));
+        labelAfterComa = new JLabel(bundle.getString("labels.afterComa") + ":");
+        labelSolve.setText(bundle.getString("labels.solution") + ":");
+        buttonSetTable.setText(bundle.getString("buttons.accept"));
+    }
 }

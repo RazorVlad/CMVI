@@ -52,16 +52,16 @@ public class Methods extends JFrame {
     private JMenu menu_help;
 
     private KrylovPane layeredPane_Krylov = new KrylovPane();
-    private Layer1 layeredPane_1 = new Layer1(var);
+    private GaussMethodsPane gaussMethodsPane;
     private JLayeredPane layeredPane = new JLayeredPane();
-    private ReverseMatrixPane reverseMatrixPane = new ReverseMatrixPane();
-    private Layer3 layeredPane_3 = new Layer3(var);
-    private InterpolationPane interpolationPane = new InterpolationPane();
+    private ReverseMatrixPane reverseMatrixPane;
+    private CalcMethodsPane calcMethodsPane;
+    private InterpolationPane interpolationPane;
 
+    private JLabel labelChooseMethodGroup;
     private JLabel labelChooseMethod;
-    private JLabel lblEps = new JLabel("\u041F\u043E\u0433\u0440\u0435\u0448\u043D\u043E\u0441\u0442\u044C E =");
-    private JLabel lblH = new JLabel(
-            "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0440\u0430\u0437\u0431\u0438\u0435\u043D\u0438\u0439 ");
+    private JLabel lblEps;
+    private JLabel lblH;
 
     public static void SetSkin() {
         try {
@@ -279,9 +279,15 @@ public class Methods extends JFrame {
                 Methods.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
         setBounds(100, 100, 529, 570);
 
+
+        lblEps = new JLabel(bundle.getString("labels.epsilon"));
+        lblH = new JLabel(bundle.getString("labels.epsilon"));
         createMenuBar();
 
-        layeredPane_3.setVisible(false);
+        calcMethodsPane = new CalcMethodsPane(var, bundle);
+        calcMethodsPane.setVisible(false);
+
+        interpolationPane = new InterpolationPane(bundle);
         interpolationPane.setVisible(false);
         JPanel panel = new JPanel();
 
@@ -296,15 +302,11 @@ public class Methods extends JFrame {
         panel.add(layeredPane_Krylov);
 
 
-        layeredPane_3.setBounds(6, 6, 500, 470);
-        panel.add(layeredPane_3);
+        calcMethodsPane.setBounds(6, 6, 500, 470);
+        panel.add(calcMethodsPane);
 
-        contentPane = new
-
-                JPanel();
-        contentPane.setBorder(new
-
-                EmptyBorder(5, 5, 5, 5));
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -327,24 +329,19 @@ public class Methods extends JFrame {
         contentPane.add(EpsTextField);
         EpsTextField.setColumns(10);
 
-        layeredPane_1.setVisible(false);
-
-        layeredPane_1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent arg0) {
-
-            }
-        });
-
-        layeredPane_1.setBounds(6, 6, 499, 470);
-        panel.add(layeredPane_1);
+        gaussMethodsPane = new GaussMethodsPane(var, bundle);
+        gaussMethodsPane.setVisible(false);
+        gaussMethodsPane.setBounds(6, 6, 499, 470);
+        panel.add(gaussMethodsPane);
 
         lblH.setVisible(false);
         lblH.setBounds(107, 12, 139, 16);
         contentPane.add(lblH);
 
+        reverseMatrixPane = new ReverseMatrixPane(bundle);
         reverseMatrixPane.setVisible(false);
         panel.add(reverseMatrixPane);
+
         layeredPane.setDoubleBuffered(true);
         layeredPane.setOpaque(true);
         layeredPane.setPreferredSize(new
@@ -415,7 +412,7 @@ public class Methods extends JFrame {
         PUSH.setBounds(173, 300, 155, 121);
         layeredPane.add(PUSH);
 
-        JLabel labelChooseMethodGroup = new JLabel(bundle.getString("labels.chooseMethodGroup"));
+        labelChooseMethodGroup = new JLabel(bundle.getString("labels.chooseMethodGroup"));
         labelChooseMethodGroup.setBounds(21, 30, 201, 14);
         layeredPane.add(labelChooseMethodGroup);
 
@@ -439,7 +436,7 @@ public class Methods extends JFrame {
         this.var = var;
         setTitle(MethodNames.methodNames[var]);
         EpsTextField.setVisible(false);
-        layeredPane_1.setVisible(false);
+        gaussMethodsPane.setVisible(false);
         reverseMatrixPane.setVisible(false);
         layeredPane.setVisible(false);
         interpolationPane.setVisible(false);
@@ -457,8 +454,8 @@ public class Methods extends JFrame {
             case 1:
             case 4:
 
-                layeredPane_1.SetVisible(var);
-                layeredPane_1.setVisible(true);
+                gaussMethodsPane.SetVisible(var);
+                gaussMethodsPane.setVisible(true);
                 break;
             case 5:
                 reverseMatrixPane.setVisible(true);
@@ -471,8 +468,8 @@ public class Methods extends JFrame {
                 EpsTextField.setVisible(true);
                 lblEps.setVisible(true);
                 lblH.setVisible(false);
-                layeredPane_3.setVisible(true);
-                layeredPane_3.setVisible(this.var);
+                calcMethodsPane.setVisible(true);
+                calcMethodsPane.setVisible(this.var);
                 break;
 
             case 9://setTitle("Метод Крылова");
@@ -486,8 +483,8 @@ public class Methods extends JFrame {
                 lblH.setVisible(true);
                 EpsTextField.setText("10");
                 EpsTextField.setVisible(true);
-                layeredPane_3.setVisible(true);
-                layeredPane_3.setVisible(this.var);
+                calcMethodsPane.setVisible(true);
+                calcMethodsPane.setVisible(this.var);
                 break;
             case 14:
         }
@@ -514,7 +511,7 @@ public class Methods extends JFrame {
                 case 11:
                 case 12:
                 case 13:
-                    layeredPane_3.Open(var, br, st);
+                    calcMethodsPane.Open(var, br, st);
                     break;
                 case 10:
                     try {
@@ -534,7 +531,7 @@ public class Methods extends JFrame {
                 case 2:
                 case 3:
                 case 4:
-                    layeredPane_1.openData(st, br);
+                    gaussMethodsPane.openData(st, br);
                 case 6:
                 case 9:
                     layeredPane_Krylov.OpenData(st, br);
@@ -608,7 +605,8 @@ public class Methods extends JFrame {
         try {
             bundle = ResourceBundle.getBundle("MethodsBundle", currentLocale);
             labelChooseMethod.setText(bundle.getString("labels.chooseMethod"));
-            System.out.println(bundle.getString("labels.chooseMethod"));
+            lblEps.setText(bundle.getString("labels.epsilon"));
+            lblH.setText(bundle.getString("labels.epsilon"));
             menuFile.setText(bundle.getString("menu.file"));
             menuOpen.setText(bundle.getString("menu.open"));
             menuSave.setText(bundle.getString("menu.save"));
@@ -630,6 +628,13 @@ public class Methods extends JFrame {
                     k++;
                 }
             }
+
+            calcMethodsPane.initComponentsI18n(bundle);
+            gaussMethodsPane.initComponentsI18n(bundle);
+            interpolationPane.initComponentsI18n(bundle);
+            layeredPane_Krylov.initComponentsI18n(bundle);
+            reverseMatrixPane.initComponentsI18n(bundle);
+
         } catch (Exception e) {
         }
     }
@@ -650,7 +655,7 @@ public class Methods extends JFrame {
                 case 11:
                 case 12:
                 case 13:
-                    layeredPane_3.SaveData(var, pw);
+                    calcMethodsPane.SaveData(var, pw);
                     break;
                 case 5:
                     reverseMatrixPane.saveData(pw);
@@ -660,7 +665,7 @@ public class Methods extends JFrame {
                 case 3:
                 case 4:
                 case 6:
-                    layeredPane_1.saveData(pw);
+                    gaussMethodsPane.saveData(pw);
                     break;
                 case 9:
                     layeredPane_Krylov.saveData(pw);

@@ -19,12 +19,10 @@ public class IntegralPane extends JLayeredPane {
     }
 
     public String getTextField_1Text() {
-
         return textField_1.getText();
     }
 
     public void setTextField_1Text(String text) {
-
         textField_1.setText(text);
     }
 

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 /**
@@ -16,6 +17,7 @@ public class NewtonPane extends JLayeredPane {
     }
 
     private int intervalsCount;
+    private ResourceBundle bundle;
 
     public String getTextFieldS() {
         return textFieldS.getText();
@@ -26,13 +28,11 @@ public class NewtonPane extends JLayeredPane {
     }
 
     private JTextField textFieldS;
-    private final JLabel lblNewLabel = new JLabel(
-            "\u041A\u043E\u0440\u043D\u0438 \u043D\u0430\u0445\u043E\u0434\u044F\u0442\u0441\u044F \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0445 \u0438\u043D\u0442\u0435\u0440\u0432\u0430\u043B\u0430\u0445:");
+    private JLabel labelRootIntervals;
     private final JLabel labelFx = new JLabel(" f(x)=");
-    private final JLabel lblB = new JLabel("b");
-    private final JLabel label_7 = new JLabel("\u0430");
-    private final JLabel labelInputData = new JLabel(
-            "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0430\u043D\u043D\u044B\u0435:");
+    private final JLabel label_b = new JLabel("b");
+    private final JLabel label_a = new JLabel("a");
+    private JLabel labelInputData;
     private final JButton button_plus = new JButton("+");
     private final JButton button_minus = new JButton("-");
     private final JScrollPane scrollPane_5 = new JScrollPane();
@@ -56,7 +56,8 @@ public class NewtonPane extends JLayeredPane {
 
     private JTable table;
 
-    public NewtonPane() {
+    public NewtonPane(ResourceBundle bundle) {
+        this.bundle = bundle;
 
         textFieldS = new JTextField();
         textFieldS.setBounds(63, 30, 380, 33);
@@ -65,25 +66,26 @@ public class NewtonPane extends JLayeredPane {
 
         scrollPane_5.setBounds(73, 88, 360, 80);
         add(scrollPane_5);
-        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblNewLabel.setBounds(120, 66, 380, 23);
-        add(lblNewLabel);
+
+        labelRootIntervals = new JLabel(bundle.getString("labels.rootIntervals"));
+        labelRootIntervals.setFont(new Font("SansSerif", Font.BOLD, 14));
+        labelRootIntervals.setBounds(120, 66, 380, 23);
+        add(labelRootIntervals);
 
         labelFx.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
         labelFx.setBounds(12, 25, 76, 38);
         add(labelFx);
 
-        label_7.setFont(new Font("SansSerif", Font.BOLD, 14));
-        label_7.setBounds(63, 106, 18, 16);
-        add(label_7);
+        label_a.setFont(new Font("SansSerif", Font.BOLD, 14));
+        label_a.setBounds(63, 106, 18, 16);
+        add(label_a);
 
-        lblB.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblB.setBounds(63, 131, 18, 16);
-        add(lblB);
+        label_b.setFont(new Font("SansSerif", Font.BOLD, 14));
+        label_b.setBounds(63, 131, 18, 16);
+        add(label_b);
 
-        labelInputData.setFont(new
-
-                Font("SansSerif", Font.BOLD, 12));
+        labelInputData = new JLabel(bundle.getString("labels.inputData"));
+        labelInputData.setFont(new Font("SansSerif", Font.BOLD, 12));
         labelInputData.setBounds(25, 8, 215, 16);
         add(labelInputData);
 
@@ -179,5 +181,11 @@ public class NewtonPane extends JLayeredPane {
         table.repaint();
         scrollPane_5.setViewportView(table);
         textFieldS.setText(st.nextToken());
+    }
+
+    public void initComponentsI18n(ResourceBundle bundle) {
+        this.bundle = bundle;
+        labelRootIntervals.setText(bundle.getString("labels.rootIntervals"));
+        labelInputData.setText(bundle.getString("labels.inputData"));
     }
 }

@@ -434,7 +434,7 @@ public class Methods extends JFrame {
 
     public void SetFunctionVisible(int var) {
         this.var = var;
-        setTitle(MethodNames.methodNames[var]);
+        setTitle(bundle.getString(MethodNames.methodNames[var]));
         EpsTextField.setVisible(false);
         gaussMethodsPane.setVisible(false);
         reverseMatrixPane.setVisible(false);

@@ -1,4 +1,4 @@
-package gui;
+package gui.resources;
 
 import static java.awt.Color.*;
 
@@ -16,7 +16,7 @@ import math.Lagrange;
 
 
 
-public class JPanelGraph extends JPanel {
+public class InterpolationGraphPane extends JPanel {
 	//Expression z;
 	double[] xy;
 	double[] yx;
@@ -34,7 +34,7 @@ public class JPanelGraph extends JPanel {
 		this.yx = yx;
 	}
 
-	public JPanelGraph() {
+	public InterpolationGraphPane() {
 		setBounds(100, 100, 521, 582);
 		JPanel panel = new JPanel();
 		panel.setLayout(null);

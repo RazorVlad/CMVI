@@ -1,4 +1,4 @@
-package gui;
+package gui.resources;
 
 import graphbuilder.math.*;
 import org.jdesktop.swingx.JXGraph;
@@ -11,7 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D.Double;
 
-public class Graf extends JFrame {
+public class NewtonAndIntegralGraphFrame extends JFrame {
 	Expression z;
 	double Xmin=-5;
 	double Xmax=10;
@@ -35,7 +35,7 @@ public class Graf extends JFrame {
 	public void setZ(Expression z) {
 		this.z = z;
 	}	
-	public Graf() {
+	public NewtonAndIntegralGraphFrame() {
 		
 		setTitle("\u0413\u0440\u0430\u0444\u0438\u043A");
 		setBounds(100, 100, 572, 582);
@@ -90,7 +90,7 @@ public class Graf extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Graf frame = new Graf();
+					NewtonAndIntegralGraphFrame frame = new NewtonAndIntegralGraphFrame();
 					frame.setVisible(true);
 				} 
 				catch (Exception e) {

@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.Methods;
 import gui.methodsPanes.NewtonPane;
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class IterationsObject {
                 table.getModel().setValueAt(iterations.getBi(i), 1, i);
             }
 
-            iterations.setH(gui.Methods.Eps);
+            iterations.setH(Methods.Eps);
             try {
                 c = iterations.solve();
                 isSolved = true;

@@ -1,6 +1,5 @@
 package gui.methodsPanes;
 
-import gui.JPanelGraph;
 import gui.methodsObjects.DetObject;
 import gui.methodsObjects.GaussObject;
 import gui.methodsObjects.GaussSeidelObject;

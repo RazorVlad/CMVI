@@ -1,9 +1,8 @@
-package gui;
+package gui.mainPane;
 
 import gui.methodsPanes.*;
 import gui.resources.FinalTexts;
 import gui.resources.MethodNames;
-import gui.resources.SwitchModule;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -19,7 +18,7 @@ import java.util.StringTokenizer;
 public class Methods extends JFrame {
 
     private int indexGroup, indexMethod, var;
-    private JTextField EpsTextField;
+    protected JTextField EpsTextField;
 
     private Locale currentLocale;
     private ResourceBundle bundle;
@@ -32,17 +31,17 @@ public class Methods extends JFrame {
 
     private JFileChooser dlg = new JFileChooser(".");
 
-    private KrylovPane layeredPane_Krylov;
-    private GaussMethodsPane gaussMethodsPane;
-    private JLayeredPane layeredPane = new JLayeredPane();
-    private ReverseMatrixPane reverseMatrixPane;
-    private CalcMethodsPane calcMethodsPane;
-    private InterpolationPane interpolationPane;
+    protected KrylovPane layeredPane_Krylov;
+    protected GaussMethodsPane gaussMethodsPane;
+    protected JLayeredPane layeredPane = new JLayeredPane();
+    protected ReverseMatrixPane reverseMatrixPane;
+    protected CalcMethodsPane calcMethodsPane;
+    protected InterpolationPane interpolationPane;
 
     private JLabel labelChooseMethodGroup;
     private JLabel labelChooseMethod;
-    private JLabel lblEps;
-    private JLabel lblH;
+    protected JLabel lblEps;
+    protected JLabel lblH;
 
     public static void SetSkin() {
         try {
@@ -55,17 +54,6 @@ public class Methods extends JFrame {
         } catch (Exception e) {
         }
     }
-
-
-//    public void saveToFile(String fileName) throws IOException {
-//        PngEncoder enc = new PngEncoder(buffer);
-//        enc.setCompressionLevel(9);
-//        FileOutputStream fw = new FileOutputStream(fileName);
-//        fw.write(enc.pngEncode());
-//        fw.close();
-//    }
-
-//    Image buffer;
 
     /**
      * Launch the application.
@@ -250,8 +238,7 @@ public class Methods extends JFrame {
                 indexGroup = comboBoxMethod.getSelectedIndex();// индекс выбранной группы методов
                 indexMethod = comboBoxGroup.getSelectedIndex();// индекс выбранного метода
 
-                SetFunctionVisible(SwitchModule.getMethodNumber(indexGroup, indexMethod));
-
+                VisibleDispetcher.SetFunctionVisible(Methods.this,MethodNames.methodsNumbers[indexGroup][indexMethod]);
                 layeredPane.setVisible(false);
             }
         });
@@ -279,64 +266,6 @@ public class Methods extends JFrame {
         g.drawString("Loading " + comps[(frame / 5) % 3] + "...", 120, 150);
     }
 
-    public void SetFunctionVisible(int var) {
-        this.var = var;
-        setTitle(bundle.getString(MethodNames.methodNames[var]));
-        EpsTextField.setVisible(false);
-        gaussMethodsPane.setVisible(false);
-        reverseMatrixPane.setVisible(false);
-        layeredPane.setVisible(false);
-        interpolationPane.setVisible(false);
-        layeredPane_Krylov.setVisible(false);
-        EpsTextField.setVisible(false);
-        lblEps.setVisible(false);
-        lblH.setVisible(false);
-        switch (var) {
-
-            case 2:
-            case 3:
-                EpsTextField.setText("0.0001");
-                EpsTextField.setVisible(true);
-                lblEps.setVisible(true);
-            case 1:
-            case 4:
-
-                gaussMethodsPane.SetVisible(var);
-                gaussMethodsPane.setVisible(true);
-                break;
-            case 5:
-                reverseMatrixPane.setVisible(true);
-                break;
-            case 7:
-            case 8:
-            case 11:
-            case 12:
-                EpsTextField.setText("0.0001");
-                EpsTextField.setVisible(true);
-                lblEps.setVisible(true);
-                lblH.setVisible(false);
-                calcMethodsPane.setVisible(true);
-                calcMethodsPane.setVisible(this.var);
-                break;
-
-            case 9://setTitle("Метод Крылова");
-                layeredPane_Krylov.setVisible(true);
-                break;
-            case 10://setTitle("Интерполяция Лагранжа");
-                interpolationPane.setVisible(true);
-                break;
-
-            case 13://setTitle("Метод прогонки");
-                lblH.setVisible(true);
-                EpsTextField.setText("10");
-                EpsTextField.setVisible(true);
-                calcMethodsPane.setVisible(true);
-                calcMethodsPane.setVisible(this.var);
-                break;
-            case 14:
-        }
-    }
-
     public void menuOpen() {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle(bundle.getString("choose.readData"));
@@ -348,7 +277,7 @@ public class Methods extends JFrame {
             BufferedReader br = new BufferedReader(fr);
             String s = br.readLine();
             StringTokenizer st = new StringTokenizer(s);
-            SetFunctionVisible(Integer.parseInt(st.nextToken()));
+//            SetFunctionVisible(Integer.parseInt(st.nextToken()));
             s = br.readLine();
             st = new StringTokenizer(s);
 
@@ -541,7 +470,7 @@ public class Methods extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            SetFunctionVisible(MethodNames.methodsNumbers[i][j]);
+            VisibleDispetcher.SetFunctionVisible(Methods.this,MethodNames.methodsNumbers[i][j]);
         }
     }
 }

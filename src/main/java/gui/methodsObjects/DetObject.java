@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.Methods;
+import gui.mainPane.Methods;
 
 import javax.swing.*;
 import java.math.BigDecimal;

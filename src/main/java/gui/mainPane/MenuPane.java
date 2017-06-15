@@ -1,4 +1,4 @@
-package gui;
+package gui.mainPane;
 
 import gui.resources.MethodNames;
 
@@ -158,18 +158,6 @@ public class MenuPane extends JMenuBar {
         return null;
     }
 
-    public byte[] reportString(String s) {
-        byte[] result = null;
-        try {
-            result = (MethodNames.HTML_START
-                    + MethodNames.HTML_TOP
-                    + s
-                    + MethodNames.HTML_END).getBytes("utf-8");
-        } catch (Exception e) {
-
-        }
-        return result;
-    }
 
     public void initComponentI18n(ResourceBundle bundle) {
         this.bundle = bundle;

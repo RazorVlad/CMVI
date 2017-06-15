@@ -1,4 +1,4 @@
-package gui;
+package gui.resources;
 
 import graphbuilder.math.*;
 
@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 
 import static java.awt.Color.*;
 
-public class PanelG extends JFrame {
+public class ProgonkaGraphFrame extends JFrame {
 	Expression z;
 
 	/**
@@ -52,7 +52,7 @@ public class PanelG extends JFrame {
 	final JSlider slider = new JSlider();
 	final JSlider slider_1 = new JSlider();
 	final JPanel panel_1 = new JPanel();
-	public PanelG() {
+	public ProgonkaGraphFrame() {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -206,17 +206,17 @@ public class PanelG extends JFrame {
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					// CopyOf
-					Graf frame = new Graf();// CopyOfGraf();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					// CopyOf
+//					NewtonAndIntegralGraphFrame frame = new NewtonAndIntegralGraphFrame();// CopyOfGraf();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }

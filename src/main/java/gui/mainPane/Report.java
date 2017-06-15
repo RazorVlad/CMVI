@@ -1,4 +1,4 @@
-package gui;
+package gui.mainPane;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

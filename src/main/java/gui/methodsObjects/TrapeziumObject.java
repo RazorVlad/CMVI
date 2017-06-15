@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.Methods;
 import gui.methodsPanes.IntegralPane;
 
 import javax.swing.*;
@@ -32,7 +32,7 @@ public class TrapeziumObject {
         }
         Expression z = ExpressionTree.parse(integralPane.getTextFieldS());
         trap = new math.Trapezium(z, a, b);
-        trap.setEps(gui.Methods.Eps);
+        trap.setEps(Methods.Eps);
         c = trap.integral();
         JTable table2 = new JTable(1, 1);
         table2.getColumnModel().getColumn(0).setHeaderValue("\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435\u0020\u0438\u043D\u0442\u0435\u0433\u0440\u0430\u043B\u0430");// выставление

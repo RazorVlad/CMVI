@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.Methods;
 import gui.methodsPanes.IntegralPane;
 
 import javax.swing.*;

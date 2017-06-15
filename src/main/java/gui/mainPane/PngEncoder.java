@@ -1,4 +1,4 @@
-package gui;
+package gui.mainPane;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;

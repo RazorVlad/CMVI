@@ -1,6 +1,6 @@
 package gui.methodsPanes;
 
-import gui.JPanelGraph;
+import gui.resources.InterpolationGraphPane;
 import keypoint.PngEncoder;
 
 import javax.swing.*;
@@ -42,7 +42,7 @@ public class InterpolationPane extends JLayeredPane {
 
         interpScroll.setBounds(6, 25, 127, 238);
 
-        final JPanelGraph panelGraph = new JPanelGraph();
+        final InterpolationGraphPane panelGraph = new InterpolationGraphPane();
         panelGraph.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
         panelGraph.setBounds(145, 6, 340, 344);
         add(panelGraph);

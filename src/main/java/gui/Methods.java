@@ -4,16 +4,13 @@ import gui.methodsPanes.*;
 import gui.resources.FinalTexts;
 import gui.resources.MethodNames;
 import gui.resources.SwitchModule;
-import keypoint.PngEncoder;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,34 +21,16 @@ public class Methods extends JFrame {
     private int indexGroup, indexMethod, var;
     private JTextField EpsTextField;
 
-    private JPanel contentPane;
-
-    private Locale currentLocale;//=new Locale("ru", "Ru");
+    private Locale currentLocale;
     private ResourceBundle bundle;
+    private MenuPane menuBar;
 
-    private final String HTML_START = "<html><head><title></title></head><body bgcolor=#C5D7FB><table border=0 align=center><tr><td width=800>";
-    private final String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top/>&nbsp;";
-    private final String HTML_END = "</td></tr></table></body></html>";
+
     public static double Eps = 0.001;
     public static String methodSolution = "";
 
 
     private JFileChooser dlg = new JFileChooser(".");
-
-    private JMenuBar menuBar;
-    private JMenu menuFile;
-    private JMenuItem menuOpen;
-    private JMenuItem menuSave;
-    private JMenuItem menuClose;
-    private JMenu menu_methods;
-    private JMenu[] methodsGroups;
-    private JMenuItem[] methods;
-    private JMenu menuLanguage;
-    private JMenu menu_report;
-    private JMenuItem menuSaveReport;
-    private JMenuItem menuShowReport;
-    private JMenu menu_about;
-    private JMenu menu_help;
 
     private KrylovPane layeredPane_Krylov;
     private GaussMethodsPane gaussMethodsPane;
@@ -78,15 +57,15 @@ public class Methods extends JFrame {
     }
 
 
-    public void saveToFile(String fileName) throws IOException {
-        PngEncoder enc = new PngEncoder(buffer);
-        enc.setCompressionLevel(9);
-        FileOutputStream fw = new FileOutputStream(fileName);
-        fw.write(enc.pngEncode());
-        fw.close();
-    }
+//    public void saveToFile(String fileName) throws IOException {
+//        PngEncoder enc = new PngEncoder(buffer);
+//        enc.setCompressionLevel(9);
+//        FileOutputStream fw = new FileOutputStream(fileName);
+//        fw.write(enc.pngEncode());
+//        fw.close();
+//    }
 
-    Image buffer;
+//    Image buffer;
 
     /**
      * Launch the application.
@@ -104,138 +83,6 @@ public class Methods extends JFrame {
                 }
             }
         });
-    }
-
-
-    public void createMenuBar() {
-        menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-
-        menuFile = new JMenu(bundle.getString("menu.file"));
-        menuBar.add(menuFile);
-
-        menuOpen = new JMenuItem(bundle.getString("menu.open"));
-        menuFile.add(menuOpen);
-
-        menuSave = new JMenuItem(bundle.getString("menu.save"));
-        menuFile.add(menuSave);
-        menuSave.addActionListener(new ActionListener() { // сохранение
-            public void actionPerformed(ActionEvent arg0) {
-                save();
-            }
-        });
-
-        menuClose = new JMenuItem(bundle.getString("menu.close"));
-        menuFile.add(menuClose);
-
-        menuLanguage = new JMenu(bundle.getString("menu.language"));
-
-        menuBar.add(menuLanguage);
-
-        JMenuItem menuRus = new JMenuItem(bundle.getString("menu.language.russian"));
-        menuRus.addActionListener(new ActionListener() { // сохранение
-            public void actionPerformed(ActionEvent arg0) {
-                currentLocale = new Locale("ru", "RU");
-                initComponentsI18n();
-            }
-        });
-        menuLanguage.add(menuRus);
-
-        JMenuItem menuEng = new JMenuItem(bundle.getString("menu.language.english"));
-        menuEng.addActionListener(new ActionListener() { // сохранение
-            public void actionPerformed(ActionEvent arg0) {
-                currentLocale = new Locale("en", "US");
-                initComponentsI18n();
-            }
-        });
-        menuLanguage.add(menuEng);
-
-        menu_methods = new JMenu(bundle.getString("menu.methods"));
-        menuBar.add(menu_methods);
-
-        methodsGroups = new JMenu[MethodNames.methodGroupsNames.length];
-
-        methods = new JMenuItem[12];
-        String methodName;
-        int k = 0;
-
-        for (int i = 0; i < methodsGroups.length; i++) {
-            methodsGroups[i] = new JMenu(bundle.getString(MethodNames.methodGroupsNames[i]));
-            menu_methods.add(methodsGroups[i]);
-            for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
-                methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
-                methods[k] = new JMenuItem(bundle.getString(methodName));
-                methodsGroups[i].add(methods[k]);
-                methods[k].addActionListener(new MenuActionListener(i, j));
-                k++;
-            }
-        }
-
-
-        menu_report = new JMenu(bundle.getString("menu.report"));
-        menuBar.add(menu_report);
-
-        menuSaveReport = new JMenuItem(bundle.getString("menu.saveReport"));
-        menuSaveReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (dlg.showSaveDialog(Methods.this) != JFileChooser.APPROVE_OPTION)
-                    return;
-                String fileName = dlg.getSelectedFile().getAbsolutePath();
-                String shortName = dlg.getSelectedFile().getName();
-                saveReport(fileName, shortName);
-            }
-        });
-        menu_report.add(menuSaveReport);
-
-        menuShowReport = new JMenuItem(bundle.getString("menu.showReport"));
-        menuShowReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                Report r = new Report();
-                r.Rep(getReportHtml());
-                r.show();
-            }
-        });
-        menu_report.add(menuShowReport);
-
-
-        menu_about = new JMenu(bundle.getString("menu.about"));
-        menu_about.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, FinalTexts.aboutText, FinalTexts.aboutLabel,
-                        JOptionPane.INFORMATION_MESSAGE);
-
-            }
-        });
-        menuBar.add(menu_about);
-
-        menu_help = new JMenu(bundle.getString("menu.help"));
-        menu_help.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        menu_help.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Desktop desktop = null;
-                if (Desktop.isDesktopSupported()) {
-                    desktop = Desktop.getDesktop();
-                }
-                try {
-                    desktop.open(new File("html/Contents.html"));
-                } catch (IOException ioe) {
-                }
-            }
-        });
-        menuBar.add(menu_help);
-
-
-        menuOpen.addActionListener(new ActionListener() { // out file
-            public void actionPerformed(ActionEvent arg0) {
-                menuOpen();
-            }
-        });
-
     }
 
     public Methods() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
@@ -305,7 +152,7 @@ public class Methods extends JFrame {
         calcMethodsPane.setBounds(6, 6, 500, 470);
         panel.add(calcMethodsPane);
 
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
@@ -554,88 +401,83 @@ public class Methods extends JFrame {
         return model;
     }
 
-    public void saveReport(String fileName, String shortName) {
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(fileName + ".html");
-            out.write(GetReportStringByte(shortName + ".html"));
-            BufferedImage src = ImageIO.read(new FileInputStream("button/top1.jpg"));
-            String imagePath = fileName.substring(0, (fileName.length() - shortName.length()));
-            ImageIO.write(src, "JPG", new FileOutputStream(imagePath + "top1.jpg"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (out != null)
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+    private void createMenuBar() {
+        {
+            menuBar = new MenuPane(bundle);
+            setJMenuBar(menuBar);
+            menuBar.menuSave.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    save();
                 }
+            });
+            menuBar.menuRus.addActionListener(new ActionListener() { // сохранение
+                public void actionPerformed(ActionEvent arg0) {
+                    currentLocale = new Locale("ru", "RU");
+                    initComponentsI18n();
+                }
+            });
+
+            menuBar.menuEng.addActionListener(new ActionListener() { // сохранение
+                public void actionPerformed(ActionEvent arg0) {
+                    currentLocale = new Locale("en", "US");
+                    initComponentsI18n();
+                }
+            });
+            int k = 0;
+            for (int i = 0; i < MethodNames.methodGroupsNames.length; i++) {
+                for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
+                    menuBar.methods[k].addActionListener(new MenuActionListener(i, j));
+                    k++;
+                }
+            }
+
+            menuBar.menuSaveReport.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
+                    if (dlg.showSaveDialog(Methods.this) != JFileChooser.APPROVE_OPTION)
+                        return;
+                    String fileName = dlg.getSelectedFile().getAbsolutePath();
+                    String shortName = dlg.getSelectedFile().getName();
+                    menuBar.saveReport(fileName, shortName, var);
+                }
+            });
+
+            menuBar.menu_about.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    JOptionPane.showMessageDialog(null, FinalTexts.aboutText, FinalTexts.aboutLabel,
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            });
+
+            menuBar.menu_help.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    Desktop desktop = null;
+                    if (Desktop.isDesktopSupported()) {
+                        desktop = Desktop.getDesktop();
+                    }
+                    try {
+                        desktop.open(new File("html/Contents.html"));
+                    } catch (IOException ioe) {
+                    }
+                }
+            });
+            menuBar.menuOpen.addActionListener(new ActionListener() { // out file
+                public void actionPerformed(ActionEvent arg0) {
+                    menuOpen();
+                }
+            });
         }
-    }
-
-    public String getReportHtml() {
-        return HTML_START + methodSolution + HTML_END;
-    }
-
-    public byte[] GetReportStringByte(String shortName) {
-        try {
-            return GetReportString(shortName).getBytes("utf-8");
-
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    public String GetReportString(String shortName) {
-        String result;
-        if (var == 10) {
-            result = (HTML_START + HTML_TOP + methodSolution
-                    + "<br><br> " + bundle.getString("graphics.functionGraph") + ":<br><img src=" + shortName + ".png>" + HTML_END);
-        } else {
-            result = (HTML_START + HTML_TOP + methodSolution + HTML_END);
-        }
-        return result;
-    }
-
-    public byte[] reportString(String s) {
-        byte[] result = null;
-        try {
-            result = (HTML_START + HTML_TOP + s + HTML_END).getBytes("utf-8");
-        } catch (Exception e) {
-
-        }
-        return result;
     }
 
     private void initComponentsI18n() {
         try {
             bundle = ResourceBundle.getBundle("MethodsBundle", currentLocale);
+            labelChooseMethodGroup.setText(bundle.getString("labels.chooseMethodGroup"));
             labelChooseMethod.setText(bundle.getString("labels.chooseMethod"));
             lblEps.setText(bundle.getString("labels.epsilon"));
             lblH.setText(bundle.getString("labels.epsilon"));
-            menuFile.setText(bundle.getString("menu.file"));
-            menuOpen.setText(bundle.getString("menu.open"));
-            menuSave.setText(bundle.getString("menu.save"));
-            menuClose.setText(bundle.getString("menu.close"));
-            menuLanguage.setText(bundle.getString("menu.language"));
-            menu_report.setText(bundle.getString("menu.report"));
-            menuSaveReport.setText(bundle.getString("menu.saveReport"));
-            menuShowReport.setText(bundle.getString("menu.showReport"));
-            menu_about.setText(bundle.getString("menu.about"));
-            menu_help.setText(bundle.getString("menu.help"));
-
-            int k = 0;
-            String methodName;
-            for (int i = 0; i < methodsGroups.length; i++) {
-                methodsGroups[i].setText(bundle.getString(MethodNames.methodGroupsNames[i]));
-                for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
-                    methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
-                    methods[k].setText(bundle.getString(methodName));
-                    k++;
-                }
-            }
-
+            menuBar.initComponentI18n(bundle);
             calcMethodsPane.initComponentsI18n(bundle);
             gaussMethodsPane.initComponentsI18n(bundle);
             interpolationPane.initComponentsI18n(bundle);

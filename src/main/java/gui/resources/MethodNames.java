@@ -4,22 +4,10 @@ package gui.resources;
  * Created by razor on 10.06.2017.
  */
 public interface MethodNames {
-//    String[] methodNames = new String[]{
-//            "",//0
-//            "Решение СЛАУ методом Гаусса",//1
-//            "Решение СЛАУ методом Якоби(простой итерации)",//2
-//            "Решение СЛАУ методом Гаусса-Зейделя",//3
-//            "Нахождение определителя матрицы методом Гаусса",//4
-//            "Нахождение обратной матрицы методом Гаусса",//5
-//            "",
-//            "Метод простой итерации(нелинейные уравнения)",//7
-//            "Метод Ньютона",//8
-//            "Метод Крылова",//9
-//            "Интерполяция Лагранжа",//10
-//            "Метод трапеций",//11
-//            "Формула Симпсона (Метод парабол)",//12
-//            "Метод прогонки"//13
-//    };
+    String HTML_START = "<html><head><title></title></head><body bgcolor=#C5D7FB><table border=0 align=center><tr><td width=800>";
+    String HTML_TOP = "<img src=Top1.jpg border=0 width=800 height=200 alt=Факультет Информатики и управления align=top/>&nbsp;";
+    String HTML_END = "</td></tr></table></body></html>";
+
     String[] methodNames = new String[]{
             "",//0
             "methods.SLAU.Gauss",//1

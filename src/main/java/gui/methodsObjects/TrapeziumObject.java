@@ -31,7 +31,7 @@ public class TrapeziumObject {
                     JOptionPane.INFORMATION_MESSAGE);
         }
         Expression z = ExpressionTree.parse(integralPane.getTextFieldS());
-        trap = new math.Trapezium(z, a, b);
+        trap = new math.Trapezium(z, a, b, MainFrame.bundle);
         trap.setEps(MainFrame.Eps);
         c = trap.integral();
         JTable table2 = new JTable(1, 1);

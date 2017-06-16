@@ -1,6 +1,7 @@
 package gui.methodsObjects;
 
 import gui.mainPane.MainFrame;
+import math.gauss.ReverseMatrix;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -14,11 +15,11 @@ public class ReverseGaussObject {
         return table2;
     }
 
-    private math.Gauss g;
+    private ReverseMatrix g;
     private JTable table2;
 
     public ReverseGaussObject(JSpinner spinner, JSpinner spinner_1, JTable table) {
-        g = new math.Gauss();
+        g = new ReverseMatrix();
         int n = Integer.parseInt(spinner.getValue().toString());
         double[][] revA;
         double[][] a = new double[n][n];// Считывание значений таблицы
@@ -57,7 +58,7 @@ public class ReverseGaussObject {
         }
         table2.getTableHeader().resizeAndRepaint();
 
-        MainFrame.methodSolution = g.getReverse();
+        MainFrame.methodSolution = g.getSolveText();
         this.table2 = table2;
     }
 }

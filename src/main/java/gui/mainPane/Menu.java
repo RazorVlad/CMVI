@@ -89,7 +89,7 @@ public class Menu extends JMenuBar {
         menuShowReport = new JMenuItem(bundle.getString("menu.showReport"));
         menuShowReport.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                Report r = new Report();
+                ReportFrame r = new ReportFrame();
                 r.Rep(getReportHtml());
                 r.show();
             }

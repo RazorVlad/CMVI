@@ -69,7 +69,7 @@ public class GaussSeidelObject {
                         "Напоминалка", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        MainFrame.methodSolution = gz.getGZ();
+        MainFrame.methodSolution = gz.getSolveText();
         this.answerTable = answerTable;
     }
 }

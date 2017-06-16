@@ -1,14 +1,17 @@
 $ cat .gitignore
 *~
 *.iml
+
 .gradle
-/local.properties
+.DS_Store
+.externalNativeBuild
+
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
+/local.properties
 /build
 /captures
-.externalNativeBuild
+
 
 # Compiled class file
 *.class

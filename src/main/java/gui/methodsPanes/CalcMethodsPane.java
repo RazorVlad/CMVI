@@ -2,10 +2,10 @@ package gui.methodsPanes;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.resources.NewtonAndIntegralGraphFrame;
-import gui.resources.ProgonkaGraphFrame;
+import gui.plotDraw.NewtonAndIntegralGraphFrame;
+import gui.plotDraw.ProgonkaGraphFrame;
 import gui.methodsObjects.*;
-import gui.resources.MethodNames;
+import gui.resources.Constants;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -73,9 +73,9 @@ public class CalcMethodsPane extends JLayeredPane {
 
         JButton[] buttons = new JButton[30];
         for (int i = 0; i < 30; i++) {
-            buttons[i] = new JButton(MethodNames.buttonLabels[i]);
+            buttons[i] = new JButton(Constants.buttonLabels[i]);
             panelCalcButtons.add(buttons[i]);
-            buttons[i].addActionListener(new ButtonActionListener(MethodNames.buttonFuntions[i]));
+            buttons[i].addActionListener(new ButtonActionListener(Constants.buttonFuntions[i]));
             buttons[i].setPreferredSize(new Dimension(90, 25));
             if (i == 8) buttons[i].setFont(new Font("SimSun", Font.PLAIN, 16));
         }

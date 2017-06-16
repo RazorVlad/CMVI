@@ -1,17 +1,15 @@
 package gui.mainPane;
 
-import gui.resources.MethodNames;
-
 /**
  * Created by razor on 15.06.2017.
  */
 public class VisibleDispetcher {
-    public static void SetFunctionVisible(Methods main, int var) {
-//            main.setTitle(bundle.getString(MethodNames.methodNames[var]));
+    public static void SetFunctionVisible(MainFrame main, int var) {
+//            main.setTitle(bundle.getString(Constants.methodNames[var]));
         main.EpsTextField.setVisible(false);
         main.gaussMethodsPane.setVisible(false);
         main.reverseMatrixPane.setVisible(false);
-        main.layeredPane.setVisible(false);
+        main.frontPane.setVisible(false);
         main.interpolationPane.setVisible(false);
         main.layeredPane_Krylov.setVisible(false);
         main.calcMethodsPane.setVisible(false);

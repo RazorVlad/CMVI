@@ -1,4 +1,4 @@
-package gui.resources;
+package gui.plotDraw;
 
 import graphbuilder.math.*;
 

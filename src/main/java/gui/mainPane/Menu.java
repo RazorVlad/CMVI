@@ -1,6 +1,6 @@
 package gui.mainPane;
 
-import gui.resources.MethodNames;
+import gui.resources.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Created by razor on 15.06.2017.
  */
-public class MenuPane extends JMenuBar {
+public class Menu extends JMenuBar {
 
     private ResourceBundle bundle;
 
@@ -35,7 +35,7 @@ public class MenuPane extends JMenuBar {
     protected JMenuItem menuRus;
     protected JMenuItem menuEng;
 
-    public MenuPane(ResourceBundle bundle) {
+    public Menu(MainFrame main,ResourceBundle bundle) {
         this.bundle = bundle;
 //        JMenuBar menuBar = new JMenuBar();
 
@@ -63,16 +63,16 @@ public class MenuPane extends JMenuBar {
         menu_methods = new JMenu(bundle.getString("menu.methods"));
         add(menu_methods);
 
-        methodsGroups = new JMenu[MethodNames.methodGroupsNames.length];
+        methodsGroups = new JMenu[Constants.methodGroupsNames.length];
 
         methods = new JMenuItem[12];
         String methodName;
         int k = 0;
         for (int i = 0; i < methodsGroups.length; i++) {
-            methodsGroups[i] = new JMenu(bundle.getString(MethodNames.methodGroupsNames[i]));
+            methodsGroups[i] = new JMenu(bundle.getString(Constants.methodGroupsNames[i]));
             menu_methods.add(methodsGroups[i]);
-            for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
-                methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
+            for (int j = 0; j < Constants.methodsNumbers[i].length; j++) {
+                methodName = Constants.methodNames[Constants.methodsNumbers[i][j]];
                 methods[k] = new JMenuItem(bundle.getString(methodName));
                 methodsGroups[i].add(methods[k]);
                 k++;
@@ -128,23 +128,23 @@ public class MenuPane extends JMenuBar {
     }
 
     public String getReportHtml() {
-        return MethodNames.HTML_START
-                + Methods.methodSolution
-                + MethodNames.HTML_END;
+        return Constants.HTML_START
+                + MainFrame.methodSolution
+                + Constants.HTML_END;
     }
 
     public String GetReportString(String shortName, int var) {
         String result;
         if (var == 10) {
-            result = (MethodNames.HTML_START + MethodNames.HTML_TOP
-                    + Methods.methodSolution
+            result = (Constants.HTML_START + Constants.HTML_TOP
+                    + MainFrame.methodSolution
                     + "<br><br> "
                     + bundle.getString("graphics.functionGraph")
                     + ":<br><img src="
                     + shortName + ".png>"
-                    + MethodNames.HTML_END);
+                    + Constants.HTML_END);
         } else {
-            result = (MethodNames.HTML_START + MethodNames.HTML_TOP + Methods.methodSolution + MethodNames.HTML_END);
+            result = (Constants.HTML_START + Constants.HTML_TOP + MainFrame.methodSolution + Constants.HTML_END);
         }
         return result;
     }
@@ -176,9 +176,9 @@ public class MenuPane extends JMenuBar {
         int k = 0;
         String methodName;
         for (int i = 0; i < methodsGroups.length; i++) {
-            methodsGroups[i].setText(bundle.getString(MethodNames.methodGroupsNames[i]));
-            for (int j = 0; j < MethodNames.methodsNumbers[i].length; j++) {
-                methodName = MethodNames.methodNames[MethodNames.methodsNumbers[i][j]];
+            methodsGroups[i].setText(bundle.getString(Constants.methodGroupsNames[i]));
+            for (int j = 0; j < Constants.methodsNumbers[i].length; j++) {
+                methodName = Constants.methodNames[Constants.methodsNumbers[i][j]];
                 methods[k].setText(bundle.getString(methodName));
                 k++;
             }

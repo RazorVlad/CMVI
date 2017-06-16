@@ -1,4 +1,4 @@
-package gui.resources;
+package gui.plotDraw;
 
 import static java.awt.Color.*;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-import keypoint.PngEncoder;
+import gui.resources.PngEncoder;
 
 import math.Lagrange;
 

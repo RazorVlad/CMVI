@@ -1,7 +1,7 @@
 package gui.methodsPanes;
 
-import gui.resources.InterpolationGraphPane;
-import keypoint.PngEncoder;
+import gui.plotDraw.InterpolationGraphPane;
+import gui.resources.PngEncoder;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -116,9 +116,9 @@ public class InterpolationPane extends JLayeredPane {
                 }
                 if (acces == 0) {
                     l = new math.Lagrange(x, y);
-                    // Graphics g = panelGraph.getGraphics();
+                    // plotDraw g = panelGraph.getGraphics();
                     buffer = new BufferedImage(336, 345, BufferedImage.TYPE_INT_RGB);
-                    // Graphics g = panelGraph.getGraphics();
+                    // plotDraw g = panelGraph.getGraphics();
                     panelGraph.setXY(x);
                     panelGraph.setYX(y);
                     textPane_3.setText(bundle.getString("labels.shortType") + "<br>L = " + l.PolToString(l.eqInfo())

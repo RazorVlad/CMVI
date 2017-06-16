@@ -1,4 +1,4 @@
-package keypoint;
+package gui.resources;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;

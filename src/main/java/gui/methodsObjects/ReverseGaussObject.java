@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.mainPane.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -57,7 +57,7 @@ public class ReverseGaussObject {
         }
         table2.getTableHeader().resizeAndRepaint();
 
-        Methods.methodSolution = g.getReverse();
+        MainFrame.methodSolution = g.getReverse();
         this.table2 = table2;
     }
 }

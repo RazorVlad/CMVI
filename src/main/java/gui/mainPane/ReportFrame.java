@@ -5,7 +5,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class Report extends JFrame {
+public class ReportFrame extends JFrame {
 
     final JPanel contentPane;
     final JScrollPane scrollPane = new JScrollPane();
@@ -18,7 +18,7 @@ public class Report extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Report frame = new Report();
+                    ReportFrame frame = new ReportFrame();
 
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -36,7 +36,7 @@ public class Report extends JFrame {
     /**
      * Create the frame.
      */
-    public Report() {
+    public ReportFrame() {
         setTitle("\u041E\u0442\u0447\u0451\u0442");
         setBounds(100, 100, 600, 480);
         contentPane = new JPanel();

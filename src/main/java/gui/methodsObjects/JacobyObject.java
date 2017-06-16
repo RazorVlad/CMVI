@@ -4,13 +4,14 @@ import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
+import java.util.ResourceBundle;
 
 /**
  * Created by razor on 08.06.2017.
  */
 public class JacobyObject {
     private JTable resultTable;
-    private math.GaussSeidel gz;
+    private math.Yacoby yacoby;
 
     public JTable getResultTable() {
         return resultTable;
@@ -18,7 +19,7 @@ public class JacobyObject {
 
     public JacobyObject(JSpinner spinner_3, JSpinner spinner_2, JTable table, JTable table2) {
 
-        gz = new math.GaussSeidel();
+        yacoby = new math.Yacoby();
 
         int e = Integer.parseInt(spinner_3.getValue().toString());// считывание необходимого количества точек
         // после запятой
@@ -34,7 +35,7 @@ public class JacobyObject {
         for (int i = 0; i < n; i++) {
             a2[i][n] = Double.parseDouble(table2.getValueAt(i, 0).toString());
         }
-        x2 = gz.solveJacoby(a2, eps);
+        x2 = yacoby.solveJacoby(a2, eps, MainFrame.bundle);
         JTable resultTable = new JTable(1, table.getRowCount());// Создание таблицы
         // решений
         resultTable.setBounds(0, 0, 500, 473);
@@ -57,7 +58,7 @@ public class JacobyObject {
             JOptionPane.showMessageDialog(null, "Не забыть вставить приведение матрицы!",
                     "Напоминалка", JOptionPane.INFORMATION_MESSAGE);
         }
-        MainFrame.methodSolution = gz.getJacoby();
+        MainFrame.methodSolution = yacoby.getSolveText();
         this.resultTable = resultTable;
 
     }

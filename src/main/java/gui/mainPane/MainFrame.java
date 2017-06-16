@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
     JTextField EpsTextField;
 
     private Locale currentLocale;
-    protected ResourceBundle bundle;
+    public static ResourceBundle bundle;
     private Menu menuBar;
 
     public static double Eps = 0.001;
@@ -165,7 +165,7 @@ public class MainFrame extends JFrame {
         contentPane.add(EpsTextField);
         EpsTextField.setColumns(10);
 
-        gaussMethodsPane = new GaussMethodsPane(var, bundle);
+        gaussMethodsPane = new GaussMethodsPane(var,bundle);
         gaussMethodsPane.setVisible(false);
         gaussMethodsPane.setBounds(6, 6, 499, 470);
         panel.add(gaussMethodsPane);
@@ -281,6 +281,7 @@ public class MainFrame extends JFrame {
             interpolationPane.initComponentsI18n(bundle);
             layeredPane_Krylov.initComponentsI18n(bundle);
             reverseMatrixPane.initComponentsI18n(bundle);
+            setTitle(bundle.getString(Constants.methodNames[var]));
 
         } catch (Exception e) {
         }

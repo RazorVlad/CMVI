@@ -1,6 +1,7 @@
 package gui.methodsObjects;
 
 import gui.mainPane.MainFrame;
+import math.gauss.Gauss;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -10,14 +11,14 @@ import java.math.BigDecimal;
  */
 public class GaussObject {
     private JTable answerTable;
-    private math.Gauss g;
+    private Gauss g;
 
     public JTable getAnswerTable() {
         return answerTable;
     }
 
     public GaussObject(JSpinner spinner_3, JSpinner spinner_2, JTable table, JTable table2) {
-        g = new math.Gauss();
+        g = new Gauss();
         int e = Integer.parseInt(spinner_3.getValue().toString());// считывание необходимого количества точек после
         // запятой
         int n = Integer.parseInt(spinner_2.getValue().toString());// Считывание размерности матрицы
@@ -35,7 +36,7 @@ public class GaussObject {
             JOptionPane.showMessageDialog(null, "Проверьте вводимые данные!", "Ошибка",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        x = g.solve(a, b);
+        x = g.solve(a, b,false);
         JTable answerTable = new JTable(1, table.getRowCount());// Создание таблицы решений
         answerTable.setBounds(0, 0, 500, 473);
         answerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -51,7 +52,7 @@ public class GaussObject {
             answerTable.getModel().setValueAt(p, 0, i);// Заполнение таблицы решений
         }
         answerTable.getTableHeader().resizeAndRepaint();
-        MainFrame.methodSolution = g.getGauss();
+        MainFrame.methodSolution = g.getSolveText();
         this.answerTable = answerTable;
     }
 }

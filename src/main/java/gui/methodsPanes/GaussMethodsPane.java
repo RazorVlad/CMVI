@@ -1,5 +1,6 @@
 package gui.methodsPanes;
 
+import gui.mainPane.MainFrame;
 import gui.methodsObjects.DetObject;
 import gui.methodsObjects.GaussObject;
 import gui.methodsObjects.GaussSeidelObject;
@@ -21,7 +22,6 @@ import java.util.StringTokenizer;
  */
 public class GaussMethodsPane extends JLayeredPane {
     private int var;
-    private ResourceBundle bundle;
     private JTable table;
     private JTable table1;
     private JTable table2;
@@ -42,7 +42,6 @@ public class GaussMethodsPane extends JLayeredPane {
     private JLabel labelCellWidth;
 
     public GaussMethodsPane(int var1, ResourceBundle bundle) {
-        this.bundle = bundle;
         this.var = var1;
         setLayout(new BorderLayout());
         //TODO
@@ -279,7 +278,7 @@ public class GaussMethodsPane extends JLayeredPane {
                     }
                     double val = Double.parseDouble(st.nextToken());
                     table.getModel().setValueAt(val, i, j);
-                    System.out.println("setTable value "+val);
+                    System.out.println("setTable value " + val);
                 }
             }
             labelCellWidth.setEnabled(true);
@@ -338,7 +337,6 @@ public class GaussMethodsPane extends JLayeredPane {
     }
 
     public void initComponentsI18n(ResourceBundle bundle) {
-        this.bundle = bundle;
         labelCellWidth.setText(bundle.getString("labels.cellWidth"));
         labelInput.setText(bundle.getString("labels.input"));
         labelSize.setText(bundle.getString("labels.size"));

@@ -1,6 +1,7 @@
 package gui.methodsObjects;
 
 import gui.mainPane.MainFrame;
+import math.gauss.Determinant;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  */
 public class DetObject {
     private JTable answertable;
-    private math.Gauss g;
+    private Determinant g;
 
     public JTable getAnswertable() {
         return answertable;
@@ -18,7 +19,7 @@ public class DetObject {
 
     public DetObject(JSpinner spinner_2, JSpinner spinner_3, JTable table) {
 
-        g = new math.Gauss();
+        g = new Determinant();
 
         final int n = Integer.parseInt(spinner_2.getValue().toString());
         final int e = Integer.parseInt(spinner_3.getValue().toString());
@@ -37,7 +38,8 @@ public class DetObject {
         answerTable.getModel().setValueAt(p, 0, 0);// Выставление значения определителя в таблицу
         answerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         answerTable.getTableHeader().resizeAndRepaint();
-        MainFrame.methodSolution = g.getDet();
+
+        MainFrame.methodSolution = g.getSolveText();
         this.answertable = answerTable;
     }
 }

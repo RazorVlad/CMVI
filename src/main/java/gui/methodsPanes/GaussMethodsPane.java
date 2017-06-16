@@ -1,6 +1,5 @@
 package gui.methodsPanes;
 
-import gui.JPanelGraph;
 import gui.methodsObjects.DetObject;
 import gui.methodsObjects.GaussObject;
 import gui.methodsObjects.GaussSeidelObject;
@@ -280,6 +279,7 @@ public class GaussMethodsPane extends JLayeredPane {
                     }
                     double val = Double.parseDouble(st.nextToken());
                     table.getModel().setValueAt(val, i, j);
+                    System.out.println("setTable value "+val);
                 }
             }
             labelCellWidth.setEnabled(true);
@@ -317,7 +317,7 @@ public class GaussMethodsPane extends JLayeredPane {
         String s = "";
         x = table.getRowCount();
         pw.println(x + " ");// + y);
-
+        System.out.println("мы тут");
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < x; j++) {
                 s = s + table.getValueAt(i, j).toString() + " ";

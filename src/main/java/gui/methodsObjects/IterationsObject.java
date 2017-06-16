@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.MainFrame;
 import gui.methodsPanes.NewtonPane;
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class IterationsObject {
                 table.getModel().setValueAt(iterations.getBi(i), 1, i);
             }
 
-            iterations.setH(gui.Methods.Eps);
+            iterations.setH(MainFrame.Eps);
             try {
                 c = iterations.solve();
                 isSolved = true;
@@ -81,7 +81,7 @@ public class IterationsObject {
             table2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table2.getTableHeader().resizeAndRepaint();
 
-            Methods.methodSolution = iterations.getIterations();
+            MainFrame.methodSolution = iterations.getIterations();
             this.answerTable = table2;
             this.table = table;
         }

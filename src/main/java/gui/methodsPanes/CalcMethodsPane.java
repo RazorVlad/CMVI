@@ -2,10 +2,10 @@ package gui.methodsPanes;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Graf;
-import gui.PanelG;
+import gui.plotDraw.NewtonAndIntegralGraphFrame;
+import gui.plotDraw.ProgonkaGraphFrame;
 import gui.methodsObjects.*;
-import gui.resources.MethodNames;
+import gui.resources.Constants;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -73,9 +73,9 @@ public class CalcMethodsPane extends JLayeredPane {
 
         JButton[] buttons = new JButton[30];
         for (int i = 0; i < 30; i++) {
-            buttons[i] = new JButton(MethodNames.buttonLabels[i]);
+            buttons[i] = new JButton(Constants.buttonLabels[i]);
             panelCalcButtons.add(buttons[i]);
-            buttons[i].addActionListener(new ButtonActionListener(MethodNames.buttonFuntions[i]));
+            buttons[i].addActionListener(new ButtonActionListener(Constants.buttonFuntions[i]));
             buttons[i].setPreferredSize(new Dimension(90, 25));
             if (i == 8) buttons[i].setFont(new Font("SimSun", Font.PLAIN, 16));
         }
@@ -87,7 +87,7 @@ public class CalcMethodsPane extends JLayeredPane {
         buttonGraf.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (var == 13) {
-                    PanelG g = new PanelG();
+                    ProgonkaGraphFrame g = new ProgonkaGraphFrame();
                     double a = (Double.parseDouble(progPane.getTextField_a()));
                     double b = (Double.parseDouble(progPane.getTextField_b()));
                     int n = table2.getColumnCount() - 1;
@@ -106,12 +106,12 @@ public class CalcMethodsPane extends JLayeredPane {
                     System.out.println(XY.length);
                     g.show();
                 } else if (var == 7 || var == 8) {
-                    Graf g = new Graf();
+                    NewtonAndIntegralGraphFrame g = new NewtonAndIntegralGraphFrame();
                     Expression z = ExpressionTree.parse(newtonPane.getTextFieldS());
                     g.setZ(z);
                     g.show();
                 } else {
-                    Graf g = new Graf();
+                    NewtonAndIntegralGraphFrame g = new NewtonAndIntegralGraphFrame();
                     Expression z = ExpressionTree.parse(integralPane.getTextFieldS());
                     g.setZ(z);
                     g.show();

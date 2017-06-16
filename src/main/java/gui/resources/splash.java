@@ -41,7 +41,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class splash extends Frame implements ActionListener {
-    static void renderSplashFrame(Graphics2D g, int frame) {
+    public static void renderSplashFrame(Graphics2D g, int frame) {
         final String[] comps = {"foo", "bar", "baz"};
         g.setComposite(AlphaComposite.Clear);
         g.fillRect(120,140,200,40);

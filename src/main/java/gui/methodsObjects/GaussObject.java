@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -51,7 +51,7 @@ public class GaussObject {
             answerTable.getModel().setValueAt(p, 0, i);// Заполнение таблицы решений
         }
         answerTable.getTableHeader().resizeAndRepaint();
-        Methods.methodSolution = g.getGauss();
+        MainFrame.methodSolution = g.getGauss();
         this.answerTable = answerTable;
     }
 }

@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -69,7 +69,7 @@ public class GaussSeidelObject {
                         "Напоминалка", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        Methods.methodSolution = gz.getGZ();
+        MainFrame.methodSolution = gz.getGZ();
         this.answerTable = answerTable;
     }
 }

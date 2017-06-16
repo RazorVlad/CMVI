@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -37,7 +37,7 @@ public class DetObject {
         answerTable.getModel().setValueAt(p, 0, 0);// Выставление значения определителя в таблицу
         answerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         answerTable.getTableHeader().resizeAndRepaint();
-        Methods.methodSolution = g.getDet();
+        MainFrame.methodSolution = g.getDet();
         this.answertable = answerTable;
     }
 }

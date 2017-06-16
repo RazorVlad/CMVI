@@ -1,6 +1,6 @@
 package gui.methodsObjects;
 
-import gui.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ public class JacobyObject {
         int n = Integer.parseInt(spinner_2.getValue().toString());// Считывание размерности матрицы
         double[][] a2 = new double[n][n + 1];
         double[] x2 = new double[n];
-        double eps = Methods.Eps;
+        double eps = MainFrame.Eps;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {// Считывание значений из таблицы А
                 a2[i][j] = Double.parseDouble(table.getValueAt(i, j).toString());
@@ -57,7 +57,7 @@ public class JacobyObject {
             JOptionPane.showMessageDialog(null, "Не забыть вставить приведение матрицы!",
                     "Напоминалка", JOptionPane.INFORMATION_MESSAGE);
         }
-        Methods.methodSolution = gz.getJacoby();
+        MainFrame.methodSolution = gz.getJacoby();
         this.resultTable = resultTable;
 
     }

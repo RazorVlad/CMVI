@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.MainFrame;
 import gui.methodsPanes.ProgonkaPane;
 
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class ProgonkaObject {
     public ProgonkaObject(ProgonkaPane progonkaPane) {
         progonka = new math.Progonka();
 
-        progonka.setN((int) Methods.Eps);
+        progonka.setN((int) MainFrame.Eps);
         try {
             Expression p = ExpressionTree.parse(progonkaPane.getTableFuncValue(0));
             progonka.setP(p);
@@ -79,7 +79,7 @@ public class ProgonkaObject {
         }
         answerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         answerTable.getTableHeader().resizeAndRepaint();
-        Methods.methodSolution = progonka.getProgonka();
+        MainFrame.methodSolution = progonka.getProgonka();
         this.answerTable = answerTable;
     }
 }

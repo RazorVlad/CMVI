@@ -1,7 +1,7 @@
 package gui.methodsObjects;
 
 import Jama.Matrix;
-import gui.Methods;
+import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -141,7 +141,7 @@ public class KrylovObject {
         table2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table2.getTableHeader().resizeAndRepaint();
 
-        Methods.methodSolution = kr.getKrylov();
+        MainFrame.methodSolution = kr.getKrylov();
         this.table = table1;
         this.table2 = table2;
         this.answer = kr.getKrylov();

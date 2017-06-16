@@ -2,7 +2,7 @@ package gui.methodsObjects;
 
 import graphbuilder.math.Expression;
 import graphbuilder.math.ExpressionTree;
-import gui.Methods;
+import gui.mainPane.MainFrame;
 import gui.methodsPanes.NewtonPane;
 
 import javax.swing.*;
@@ -53,7 +53,7 @@ public class NewtonObject {
 //            scrollPane_5.setViewportView(table);
 
         }
-        nwt.setH(gui.Methods.Eps);
+        nwt.setH(MainFrame.Eps);
         c = nwt.solve();
 //        slider_2.setVisible(true);
 
@@ -72,7 +72,7 @@ public class NewtonObject {
         answerTable.getTableHeader().resizeAndRepaint();
 //        scrollPane_6.setViewportView(answerTable);
 
-        Methods.methodSolution = nwt.getNewton();
+        MainFrame.methodSolution = nwt.getNewton();
         this.answerTable = answerTable;
     }
 }

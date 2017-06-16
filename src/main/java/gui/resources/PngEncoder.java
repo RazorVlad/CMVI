@@ -1,4 +1,4 @@
-package gui;
+package gui.resources;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.zip.CRC32;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
+
 
 public class PngEncoder {
 
@@ -150,7 +151,7 @@ public class PngEncoder {
      * @see Image
      */
     public PngEncoder(Image image, boolean encodeAlpha, int whichFilter,
-            int compLevel) {
+                      int compLevel) {
         this.image = image;
         this.encodeAlpha = encodeAlpha;
         setFilter(whichFilter);

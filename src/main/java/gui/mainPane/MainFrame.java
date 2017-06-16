@@ -17,8 +17,8 @@ public class MainFrame extends JFrame {
 
     private int indexGroup;
     private int indexMethod;
-    protected int var;
-    protected JTextField EpsTextField;
+    int var;
+    JTextField EpsTextField;
 
     private Locale currentLocale;
     protected ResourceBundle bundle;
@@ -29,17 +29,17 @@ public class MainFrame extends JFrame {
 
     private JFileChooser dlg = new JFileChooser(".");
 
-    protected KrylovPane layeredPane_Krylov;
-    protected GaussMethodsPane gaussMethodsPane;
-    protected FrontPane frontPane;
-    protected ReverseMatrixPane reverseMatrixPane;
-    protected CalcMethodsPane calcMethodsPane;
-    protected InterpolationPane interpolationPane;
+    KrylovPane layeredPane_Krylov;
+    GaussMethodsPane gaussMethodsPane;
+    FrontPane frontPane;
+    ReverseMatrixPane reverseMatrixPane;
+    CalcMethodsPane calcMethodsPane;
+    InterpolationPane interpolationPane;
 
-    protected JLabel lblEps;
-    protected JLabel lblH;
+    JLabel lblEps;
+    JLabel lblH;
 
-    public static void SetSkin() {
+    private static void SetSkin() {
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -84,7 +84,7 @@ public class MainFrame extends JFrame {
                     return;
                 }
                 for (int i = 0; i < 100; i++) {
-                    renderSplashFrame(g, i);
+                    gui.resources.splash.renderSplashFrame(g, i);
                     splash.update();
                     try {
                         Thread.sleep(90);
@@ -154,7 +154,7 @@ public class MainFrame extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 try {
-                    Eps = Double.parseDouble(EpsTextField.getText().toString());
+                    Eps = Double.parseDouble(EpsTextField.getText());
                 } catch (Exception e1) {
 
                 }
@@ -192,14 +192,14 @@ public class MainFrame extends JFrame {
         });
     }
 
-    static void renderSplashFrame(Graphics2D g, int frame) {
-        final String[] comps = {"foo", "bar", "baz"};
-        g.setComposite(AlphaComposite.Clear);
-        g.fillRect(120, 140, 200, 40);
-        g.setPaintMode();
-        g.setColor(Color.BLACK);
-        g.drawString("Loading " + comps[(frame / 5) % 3] + "...", 120, 150);
-    }
+//    private static void renderSplashFrame(Graphics2D g, int frame) {
+//        final String[] comps = {"foo", "bar", "baz"};
+//        g.setComposite(AlphaComposite.Clear);
+//        g.fillRect(120, 140, 200, 40);
+//        g.setPaintMode();
+//        g.setColor(Color.BLACK);
+//        g.drawString("Loading " + comps[(frame / 5) % 3] + "...", 120, 150);
+//    }
 
     private void createMenuBar() {
 

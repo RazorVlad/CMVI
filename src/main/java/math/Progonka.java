@@ -189,19 +189,40 @@ public class Progonka {
 
 	// возвращает массив решений
 	public double[] solve() {
-		Progonka = "<h2><center>Решение методом Прогонки</center></h2>";
-		Progonka += "<br><h3>Исходные данные:</h3>";
-		Progonka += "<br>Интервал a=" + geta() + ",b=" + getb();
-		Progonka += "<br>Alfa(1)=" + getAlfai(0) + "; Alfa(2)=" + getAlfai(1)
-				+ "; A=" + getA();
-		Progonka += "<br>Beta(1)=" + getBetai(0) + "; Beta(2)=" + getBetai(1)
-				+ "; B=" + getB();
+		Progonka = "<h2><center>"
+		+"Решение методом Прогонки"
+		+"</center></h2>";
+		Progonka += "<br><h3>"
+		+"Исходные данные"
+		+":</h3>";
+		Progonka += "<br>"
+		+"Интервал"
+		+" a=" + geta() 
+		+ ",b=" + getb();
+		Progonka += "<br>Alfa(1)=" 
+		+ getAlfai(0) 
+		+ "; Alfa(2)=" 
+		+ getAlfai(1)
+		+ "; A=" 
+		+ getA();
+		Progonka += "<br>Beta(1)=" 
+		+ getBetai(0) 
+		+ "; Beta(2)=" 
+		+ getBetai(1)
+		+ "; B=" 
+		+ getB();
 		Progonka += "<br>p(x) = " + getP();
 		Progonka += "<br>q(x) = " + getQ();
 		Progonka += "<br>f(x) = " + getF();
-		Progonka += "<br><br><h3>Находим шаг h:</h3>";
-		Progonka += "<br>Делим интервал (" + getb() + " - " + geta()
-				+ ") на количество разбиений n = "+n;
+		Progonka += "<br><br><h3>"
+		+"Находим шаг h"
+		+":</h3>";
+		Progonka += "<br>"
+		+"Делим интервал"
+		+" (" + getb() + " - " + geta()
+				+ ") "
+				+"на количество разбиений"
+				+" n = "+n;
 		// int n = (int)getH();//(int) ((getb() - geta()) / h);
 		setH((getb() - geta()) / (n-1));
 		Progonka += "<br>h = " + h;
@@ -210,21 +231,33 @@ public class Progonka {
 		double[] b = new double[n];
 		double[] c = new double[n];
 		double[] d = new double[n];
-		Progonka += "<br><br><h3>Вычисляем коэфициенты a[0],b[0],c[0],d[0],V[0],U[0]</h3>";
+		Progonka += "<br><br><h3>"
+		+"Вычисляем коэфициенты"
+		+" a[0],b[0],c[0],d[0],V[0],U[0]</h3>";
 		a[0] = 0;
-		Progonka += "<br>Коэфициент a[0]=0";
+		Progonka += "<br>"
+		+"Коэфициент"
+		+" a[0]=0";
 		b[0] = getH() * getAlfai(0) - getAlfai(1);
-		Progonka += "<br>Коэфициент b[0]=h*Alfa0-alfa1 = " + h + "*"
+		Progonka += "<br>"
+		+"Коэфициент"
+		+" b[0]=h*Alfa0-alfa1 = " + h + "*"
 				+ getAlfai(0) + "-" + getAlfai(1) + " = " + b[0];
 		// System.out.println("b0 " + b[0]);
 		c[0] = getAlfai(1);
-		Progonka += "<br>Коэфициент c[0]=Alfa1=" + c[0];
+		Progonka += "<br>"
+		+"Коэфициент"
+		+" c[0]=Alfa1=" + c[0];
 		// System.out.println("c0 " + c[0]);
 		d[0] = getH() * getA();
-		Progonka += "<br>Коэфициент d[0]=h*A=" + h + "*" + getA() + " = "
+		Progonka += "<br>"
+		+"Коэфициент"
+		+" d[0]=h*A=" + h + "*" + getA() + " = "
 				+ d[0];
 		// System.out.println("d0 " + d[0]);
-		Progonka += "<br>Вычисляем V[0] и U[0]:";
+		Progonka += "<br>"
+		+"Вычисляем"
+		+" V[0] и U[0]:";
 		double[] v = new double[n];
 		v[0] = -c[0] / b[0];
 		double vn = Math.round(v[0] * 1000);
@@ -236,7 +269,10 @@ public class Progonka {
 		double un = Math.round(u[0] * 1000);
 		Progonka += "<br>U[0] = d[0] / b[0] = " + d[0] + "/" + b[0] + " = "
 				+ (un / 1000);
-		Progonka += "<br><br><h3>Вычисляем коэфициенты a[i],b[i],c[i],d[i],V[i],U[i], i изменяется от 1 до n-1:</h3>";
+		Progonka += "<br><br><h3>"
+		+"Вычисляем коэфициенты"
+		+" a[i],b[i],c[i],d[i],V[i],U[i], i "
+		+"изменяется от 1 до n-1"+":</h3>";
 		// System.out.println("u0 " + u[0]);
 		Progonka += "a[i] = 1 - h * p(i) / 2";
 		Progonka += "<br>b[i] = h * h * q(i) - 2";
@@ -274,7 +310,9 @@ public class Progonka {
 		// System.out.println("v" + i + " " + v[i]);
 		// System.out.println("u" + i + " " + u[i]);
 		// }
-		Progonka += "<br><h3>Вычисляем коэфициенты a[n],b[n],d[n]:</h3>";
+		Progonka += "<br><h3>"
+		+"Вычисляем коэфициенты"
+		+" a[n],b[n],d[n]:</h3>";
 		a[n - 1] = -getBetai(1);
 		Progonka += "<br>a[n]= - Beta2 = " + a[n - 1];
 		b[n - 1] = getH() * getBetai(0) + getBetai(1);
@@ -292,8 +330,12 @@ public class Progonka {
 			// System.out.println("v" + i + " " + v[i]);
 			// System.out.println("u" + i + " " + u[i]);
 		}
-		Progonka += "<br><br><h3>Вычисляем y[n]=y[" + (n - 1)
-				+ "] по формуле:</h3>";
+		Progonka += "<br><br><h3>"
+		+"Вычисляем"
+		+" y[n]=y[" + (n - 1)
+				+ "] "
+				+"по формуле"
+				+":</h3>";
 		double[] y = new double[n ];
 		y[n - 1] = (d[n - 1] - a[n - 1] * u[n - 2])
 				/ (a[n - 1] * v[n - 2] + b[n - 1]);
@@ -308,8 +350,14 @@ public class Progonka {
 				+ (ac / 1000) + "*" + (uc / 1000) + ")/(" + (ac / 1000) + "*"
 				+ (vc / 1000) + "+" + (bc / 1000) + ") = " + (yc / 1000);
 		System.out.println("y n-1" + (n - 1) + " " + y[n - 1]);
-		Progonka += "<br><br><h3>Вычисляем оставшиеся y[i] по формуле:</h3>";
-		Progonka += "<h3>y[i] = u[i] + v[i] * y[i + 1] , i изменяется от n-1 до 0</h3>";
+		Progonka += "<br><br><h3>"
+		+"Вычисляем оставшиеся"
+		+" y[i] "
+		+"по формуле"
+		+":</h3>";
+		Progonka += "<h3>y[i] = u[i] + v[i] * y[i + 1] , i "
+		+"изменяется от n-1 до 0"
+		+"</h3>";
 		for (int i = n - 2; i >= 0; i--) {
 			System.out.println("u" + i + " " + u[i]);
 			System.out.println("v" + i + " " + v[i]);

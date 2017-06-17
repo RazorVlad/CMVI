@@ -6,14 +6,16 @@ public class Lagrange {
 
 	private ArrayList<Double> x = new ArrayList<Double>();
 	private ArrayList<Double> y = new ArrayList<Double>();
-	String lagr="<h2><center>Интерполирование функции методом Лагранжа</h2></center>";
+	private String lagr="<h2><center>"+"Интерполирование функции методом Лагранжа"+"</h2></center>";
+	private ResourceBundle bundle;
 	public String getLagr() {
 		return lagr;
 	}
 
 
-	public Lagrange(double[]x,double[]y){
+	public Lagrange(double[]x,double[]y.ResourceBundle bundle){
 this.x =new ArrayList<Double>();
+this.bundle=bundle;
 		for (int i = 0; i < x.length; i++)
 			this.x.add(x[i]);
 		this.y = new ArrayList<Double>();
@@ -263,7 +265,9 @@ this.x =new ArrayList<Double>();
 
 	//возвращает строку с полиномом Лагранжа (не упрощенную)
 	public String getLagrString() {
-		lagr+="<h3>Заданы точки:</h3>";
+		lagr+="<h3>"
+		+"Заданы точки"
+		+":</h3>";
 		for(int i=0;i<xyCount();i++)lagr+="<br>x"+i+" = "+getXi(i)+"; y"+i+" = "+getYi(i);
 		String s = "";//"L = ";
 		for (int i = 0; i < xyCount(); i++) {
@@ -290,9 +294,13 @@ this.x =new ArrayList<Double>();
 			}}
 			s += ")";//]
 		}
-		lagr+="<h3>Получаем полином</h3>";
+		lagr+="<h3>"
+		+"Получаем полином"
+		+"</h3>";
 		lagr+=s;
-		lagr+="<h3>Упрощенный вид:</h3>L = " +this.PolToString(this.eqInfo());
+		lagr+="<h3>"
+		+"Упрощенный вид"
+		+":</h3>L = " +this.PolToString(this.eqInfo());
 		//System.out.println("Не упрощенный вид:\nL = "+this.getLagrString()
 		//+ "\nУпрощенный вид:\nL = " +this.PolToString(this.eqInfo()));
 		return s;

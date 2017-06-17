@@ -9,7 +9,9 @@ public class Krylov {
     double[] coef;
     double[][] vectors;// собственные векторы
     double[] numbers;// собственные значени€
-    String krylov = "<h2><center>Ќахождение собственных значений и собственного вектора матрицы с помощью метода  рылова</center></h2>";
+    private String krylov = "<h2><center>"
+    +"Ќахождение собственных значений и собственного вектора матрицы с помощью метода  рылова"
+    +"</center></h2>";
 
     public double[][] getVectors() {
         return vectors;

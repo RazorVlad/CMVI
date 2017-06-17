@@ -13,13 +13,15 @@ public class Progonka {
 	int n = 10;
 	int eps = 10;
 	private double[] alfa, beta;
-	String Progonka = "";
+	private String Progonka = "";
+	private ResourceBundle bundle;
 
 	public String getProgonka() {
 		return Progonka;
 	}
 
-	public Progonka() {
+	public Progonka(ResourceBundle bundle) {
+	this.bundle=bundle;
 		vm = new VarMap();
 		fm = new FuncMap();
 		vm.setValue("pi", Math.PI);
@@ -190,38 +192,40 @@ public class Progonka {
 	// возвращает массив решений
 	public double[] solve() {
 		Progonka = "<h2><center>"
-		+"Решение методом Прогонки"
+	//	+"Решение методом Прогонки"
+	+bundle.getString("report.solveProgonka")
 		+"</center></h2>";
 		Progonka += "<br><h3>"
-		+"Исходные данные"
+		//+"Исходные данные"
+		+ bundle.getString("report.initialData")
 		+":</h3>";
 		Progonka += "<br>"
-		+"Интервал"
+		//+"Интервал"
+		+bundle.getString("report.interval")
 		+" a=" + geta() 
 		+ ",b=" + getb();
-		Progonka += "<br>Alfa(1)=" 
-		+ getAlfai(0) 
-		+ "; Alfa(2)=" 
-		+ getAlfai(1)
-		+ "; A=" 
-		+ getA();
-		Progonka += "<br>Beta(1)=" 
-		+ getBetai(0) 
-		+ "; Beta(2)=" 
-		+ getBetai(1)
-		+ "; B=" 
-		+ getB();
+		
+		Progonka += "<br>Alfa(1)=" 	+ getAlfai(0) 
+		+ "; Alfa(2)=" 	+ getAlfai(1)
+		+ "; A=" + getA();
+		
+		Progonka += "<br>Beta(1)=" + getBetai(0) 
+		+ "; Beta(2)=" 	+ getBetai(1)
+		+ "; B=" + getB();
 		Progonka += "<br>p(x) = " + getP();
 		Progonka += "<br>q(x) = " + getQ();
 		Progonka += "<br>f(x) = " + getF();
 		Progonka += "<br><br><h3>"
-		+"Находим шаг h"
+		//+"Находим шаг h"
+		+bundle.getString("report.findStepH")
 		+":</h3>";
 		Progonka += "<br>"
-		+"Делим интервал"
+	//	+"Делим интервал"
+		+bundle.getString("report.splitInterval")
 		+" (" + getb() + " - " + geta()
 				+ ") "
-				+"на количество разбиений"
+				//+"на количество разбиений"
+				+bundle.getString("report.onNumberOfParts")
 				+" n = "+n;
 		// int n = (int)getH();//(int) ((getb() - geta()) / h);
 		setH((getb() - geta()) / (n-1));
@@ -232,47 +236,61 @@ public class Progonka {
 		double[] c = new double[n];
 		double[] d = new double[n];
 		Progonka += "<br><br><h3>"
-		+"Вычисляем коэфициенты"
+		//+"Вычисляем коэфициенты"
+		+bundle.getString("report.calculateCoefs");
 		+" a[0],b[0],c[0],d[0],V[0],U[0]</h3>";
 		a[0] = 0;
 		Progonka += "<br>"
-		+"Коэфициент"
+		//+"Коэфициент"
+		+bundle.getString("report.coefficient")
 		+" a[0]=0";
 		b[0] = getH() * getAlfai(0) - getAlfai(1);
 		Progonka += "<br>"
-		+"Коэфициент"
+		//+"Коэфициент"
+		+bundle.getString("report.coefficient")
 		+" b[0]=h*Alfa0-alfa1 = " + h + "*"
 				+ getAlfai(0) + "-" + getAlfai(1) + " = " + b[0];
 		// System.out.println("b0 " + b[0]);
 		c[0] = getAlfai(1);
 		Progonka += "<br>"
-		+"Коэфициент"
+		//+"Коэфициент"
+		+bundle.getString("report.coefficient")
 		+" c[0]=Alfa1=" + c[0];
 		// System.out.println("c0 " + c[0]);
 		d[0] = getH() * getA();
 		Progonka += "<br>"
-		+"Коэфициент"
+		//+"Коэфициент"
+		+bundle.getString("report.coefficient")
 		+" d[0]=h*A=" + h + "*" + getA() + " = "
 				+ d[0];
 		// System.out.println("d0 " + d[0]);
 		Progonka += "<br>"
-		+"Вычисляем"
+		//+"Вычисляем"
+		+bundle.getString("report.calculate")
 		+" V[0] и U[0]:";
 		double[] v = new double[n];
 		v[0] = -c[0] / b[0];
 		double vn = Math.round(v[0] * 1000);
-		Progonka += "<br>V[0] = -c[0] / b[0] = -" + c[0] + "/" + b[0] + " = "
-				+ (vn / 1000);
+		Progonka += "<br>V[0] = -c[0] / b[0] = -" 
+		+ c[0] + "/" + b[0] + " = "	+ (vn / 1000);
 		// System.out.println("v0 " + v[0]);
 		double[] u = new double[n];
 		u[0] = d[0] / b[0];
 		double un = Math.round(u[0] * 1000);
-		Progonka += "<br>U[0] = d[0] / b[0] = " + d[0] + "/" + b[0] + " = "
-				+ (un / 1000);
-		Progonka += "<br><br><h3>"
-		+"Вычисляем коэфициенты"
+		Progonka += "<br>U[0] = d[0] / b[0] = " 
+		+ d[0] + "/" + b[0] + " = "+ (un / 1000);
+		Progonka += "<br><br /><h3>"
+	//	+"Вычисляем коэфициенты"
+		+bundle.getString("report.calculateCoefs")
 		+" a[i],b[i],c[i],d[i],V[i],U[i], i "
-		+"изменяется от 1 до n-1"+":</h3>";
+		//+"изменяется от
+		 
+		+bundle.getString("report.changeFrom")
+		+" 1 "
+		+bundle.getString("report.till")
+		//+"до"
+		+" n-1"
+		+":</h3>";
 		// System.out.println("u0 " + u[0]);
 		Progonka += "a[i] = 1 - h * p(i) / 2";
 		Progonka += "<br>b[i] = h * h * q(i) - 2";
@@ -295,10 +313,18 @@ public class Progonka {
 			double dz = Math.round(d[i] * 1000);
 			double vz = Math.round(v[i] * 1000);
 			double uz = Math.round(u[i] * 1000);
-			Progonka += "<td>a[" + i + "]=" + (az / 1000) + ";  <td>b[" + i
-					+ "]=" + (bz / 1000) + ";  <td>c[" + i + "]=" + (cz / 1000)
-					+ ";  <td>d[" + i + "]=" + (dz / 1000) + ";  <td>v[" + i
-					+ "]=" + (vz / 1000) + ";  <td>u[" + i + "]=" + (uz / 1000);
+			Progonka += "<td>a[" + i + "]=" 
+			+ (az / 1000) + "; "
+			+" <td>b[" + i+ "]=" 
+			+ (bz / 1000) + "; "
+			+" <td>c[" + i + "]=" 
+			+ (cz / 1000)+ "; "
+			+" <td>d[" + i + "]=" 
+			+ (dz / 1000) + "; "
+			+" <td>v[" + i+ "]=" 
+			+ (vz / 1000) + "; "
+			+" <td>u[" + i + "]=" 
+			+ (uz / 1000);
 		}
 		Progonka += "</table>";
 		// for(int i = 1; i < n - 1; i++){
@@ -311,17 +337,19 @@ public class Progonka {
 		// System.out.println("u" + i + " " + u[i]);
 		// }
 		Progonka += "<br><h3>"
-		+"Вычисляем коэфициенты"
+		//+"Вычисляем коэфициенты"
+		+bundle.getString("report.calculateCoefs")
 		+" a[n],b[n],d[n]:</h3>";
 		a[n - 1] = -getBetai(1);
 		Progonka += "<br>a[n]= - Beta2 = " + a[n - 1];
 		b[n - 1] = getH() * getBetai(0) + getBetai(1);
-		Progonka += "<br>b[n]= h * Beta1 + Beta2 = " + getH() + "*"
-				+ getBetai(0) + "+" + getBetai(1) + " = " + b[n - 1];
+		Progonka += "<br>b[n]= h * Beta1 + Beta2 = " 
+		+ getH() + "*"+ getBetai(0) + "+" + getBetai(1) 
+		+ " = " + b[n - 1];
 		d[n - 1] = getH() * getB();
 		double dn = Math.round(d[n - 1] * 1000);
-		Progonka += "<br>d[n]= h*B = " + getH() + "*" + getB() + " = "
-				+ (dn / 1000);
+		Progonka += "<br>d[n]= h*B = " 
+		+ getH() + "*" + getB() + " = "+ (dn / 1000);
 		for (int i = n - 1; i < n; i++) {
 			System.out.println("a" + i + " " + a[i]);
 			System.out.println("b" + i + " " + b[i]);
@@ -331,11 +359,12 @@ public class Progonka {
 			// System.out.println("u" + i + " " + u[i]);
 		}
 		Progonka += "<br><br><h3>"
-		+"Вычисляем"
-		+" y[n]=y[" + (n - 1)
-				+ "] "
-				+"по формуле"
-				+":</h3>";
+		//+"Вычисляем"
+		+bundle.getString("report.calculate")
+		+" y[n]=y[" + (n - 1)	+ "] "
+				//+"по формуле"
+		+bundle.getString("report.byFormula")
+		+":</h3>";
 		double[] y = new double[n ];
 		y[n - 1] = (d[n - 1] - a[n - 1] * u[n - 2])
 				/ (a[n - 1] * v[n - 2] + b[n - 1]);
@@ -346,18 +375,30 @@ public class Progonka {
 		double bc = Math.round(b[n - 1] * 1000);
 		double yc = Math.round(y[n - 1] * 1000);
 		Progonka += "y[n] = (d[n] - a[n] * u[n - 1]) / (a[n] * v[n - 1] + b[n])";
-		Progonka += "<br>y[" + (n - 1) + "] = (" + (dc / 1000) + "-"
-				+ (ac / 1000) + "*" + (uc / 1000) + ")/(" + (ac / 1000) + "*"
-				+ (vc / 1000) + "+" + (bc / 1000) + ") = " + (yc / 1000);
+		Progonka += "<br />y[" 
+		+ (n - 1) + "] = (" 
+		+ (dc / 1000) + "-"
+		+ (ac / 1000) + "*" 
+		+ (uc / 1000) + ")/(" 
+		+ (ac / 1000) + "*"
+		+ (vc / 1000) + "+" 
+		+ (bc / 1000) + ") = " 
+		+ (yc / 1000);
 		System.out.println("y n-1" + (n - 1) + " " + y[n - 1]);
 		Progonka += "<br><br><h3>"
-		+"Вычисляем оставшиеся"
+		//+"Вычисляем оставшиеся"
+		+bundle.getstring("report.calculateLast")
 		+" y[i] "
-		+"по формуле"
+		//+"по формуле"
+		+bundle.getString("report.byFormula")
 		+":</h3>";
 		Progonka += "<h3>y[i] = u[i] + v[i] * y[i + 1] , i "
-		+"изменяется от n-1 до 0"
-		+"</h3>";
+		//+"изменяется от"
+	+bundle.getString("report.changeFrom")
+		+" n-1 "
+		//+"до"
+		+bundle.getString("report.till")
+		+" 0</h3>";
 		for (int i = n - 2; i >= 0; i--) {
 			System.out.println("u" + i + " " + u[i]);
 			System.out.println("v" + i + " " + v[i]);
@@ -367,8 +408,11 @@ public class Progonka {
 			double vz = Math.round(v[i] * 1000);
 			double y1z = Math.round(y[i + 1] * 1000);
 			double yz = Math.round(y[i] * 1000);
-			Progonka += "<br>y[" + i + "] = " + (uz / 1000) + " + "
-					+ (vz / 1000) + " * " + (y1z / 1000) + " = " + (yz / 1000);
+			Progonka += "<br>y[" + i + "] = " 
+			+ (uz / 1000) + " + "
+			+ (vz / 1000) + " * " 
+			+ (y1z / 1000) + " = " 
+			+ (yz / 1000);
 			System.out.println("y" + i + " " + y[i]);
 		}
 

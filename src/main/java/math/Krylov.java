@@ -9,9 +9,10 @@ public class Krylov {
     double[] coef;
     double[][] vectors;// собственные векторы
     double[] numbers;// собственные значени€
-    private String krylov = "<h2><center>"
-    +"Ќахождение собственных значений и собственного вектора матрицы с помощью метода  рылова"
-    +"</center></h2>";
+    private String krylov;
+    // = "<h2><center>"
+    //+"Ќахождение собственных значений и собственного вектора матрицы с помощью метода  рылова"
+    //+"</center></h2>";
 
     public double[][] getVectors() {
         return vectors;
@@ -63,8 +64,13 @@ public class Krylov {
         this.a = a;
     }
 
-    public Krylov(double[][] a) {
+    public Krylov(double[][] a,ResourceBundle bundle) {
         this.a = a;
+        this.bundle=bundle:
+        krylov = "<h2><center>"
+    //+"Ќахождение собственных значений и собственного вектора матрицы с помощью метода  рылова"
+    +bundle.getString("report.solveKrilov")
+    +"</center></h2>";
     }
 
     // строит вспомогательную систему, не трогать!

@@ -10,7 +10,8 @@ public class Newton {//Метод Ньютона(касательных)
 	private VarMap vm = new VarMap();
 	private FuncMap fm = new FuncMap();
 	private double h = 0.001;
-	String newton="";
+	private String newton="";
+	private ResourceBundle bundle;
 	public String getNewton() {
 		return newton;
 	}
@@ -19,13 +20,22 @@ public class Newton {//Метод Ньютона(касательных)
 	private ArrayList<Double> a = new ArrayList<Double>();
 	private ArrayList<Double> b = new ArrayList<Double>();
 
-	public Newton(Expression z, double[] a, double[] b) {
+	public Newton(Expression z, double[] a, double[] b,ResourceBundle bundle) {
 		this.z = z;
-		newton = "<h2><center>Pешение нелинейного уравнения с помощью метода Ньютона</center></h2>";
-		newton+="<h2>Задано уравнение"+z.toString()+"</h2>";
-		newton+="<br><h2>Заданы интервалы,в которых требуется искать корни:</h2>";
+		this.bundle=bundle;
+		newton = "<h2><center>"
+		+"Pешение нелинейного уравнения с помощью метода Ньютона"
+		+"</center></h2>";
+		newton+="<h2>"
+		+"Задано уравнение"
+		+z.toString()+"</h2>";
+		newton+="<br><h2>"
+		+"Заданы интервалы,в которых требуется искать корни"
+		+":</h2>";
 		for (int i = 0; i < a.length; i++) {
-			newton+="<br>Интервал "+(i+1)+" = ["+a[i]+";"+b[i]+"]";
+			newton+="<br>"
+			+"Интервал"
+			+" "+(i+1)+" = ["+a[i]+";"+b[i]+"]";
 			this.a.add(a[i]);
 			this.b.add(b[i]);
 		}
@@ -34,9 +44,12 @@ public class Newton {//Метод Ньютона(касательных)
 
 	public Newton(Expression z) {
 		this.z = z;
-		newton = "<h2><center>Pешение нелинейного уравнения с помощью метода Ньютона</center></h2>";
+		newton = "<h2><center>"
+		+"Pешение нелинейного уравнения с помощью метода Ньютона"
+		+"</center></h2>";
 		newton+="Задано уравнение"+z.toString();
-		newton+="<br>Находим интервалы в которых находятся корни:";
+		newton+="<br>"
+		+"Находим интервалы в которых находятся корни:";
 		findAB();
 	}
 
@@ -127,12 +140,16 @@ public class Newton {//Метод Ньютона(касательных)
 			if (y(i) * y(i + 0.5) < 0) {				
 				this.a.add(i);
 				this.b.add(i + 0.5);
-				newton+="<br>Интервал "+k+" = ["+i+";"+(i+0.5)+"]";k++;
+				newton+="<br>"
+				+"Интервал"
+				+" "+k+" = ["+i+";"+(i+0.5)+"]";k++;
 			}
 			if (y(i) * y(i + 0.5) == 0) {
 				this.a.add(i - 0.25);
 				this.b.add(i + 0.75);
-				newton+="<br>Интервал "+k+" = ["+(i - 0.25)+";"+(i + 0.75)+"]";k++;
+				newton+="<br>"
+				+"Интервал"
+				+" "+k+" = ["+(i - 0.25)+";"+(i + 0.75)+"]";k++;
 			}
 		}
 	}
@@ -140,7 +157,9 @@ public class Newton {//Метод Ньютона(касательных)
 	public double findRoot(double x0) {
 		// System.out.println("начали уточнять корень");
 		// System.out.println("начальный x0: " + x0);
-		newton+="<br>Выберем приближенное значение корня X0 = " + x0;
+		newton+="<br>"
+		+"Выберем приближенное значение корня"
+		+" X0 = " + x0;
 		double x1 = x0 - (y(x0) / deriv(x0));
 		// System.out.println("начальный x1: " + x1);
 		
@@ -150,7 +169,9 @@ public class Newton {//Метод Ньютона(касательных)
 			x1 = x0 - (y(x0) / deriv(x0));
 			// System.out.println(x1);
 		} while (Math.abs(Math.abs(x1) - Math.abs(x0)) >= getH());
-		newton+="<br>Уточненный корень X = " + x1;
+		newton+="<br>"
+		+"Уточненный корень"
+		+" X = " + x1;
 		return x1;
 	}
 
@@ -162,10 +183,14 @@ public class Newton {//Метод Ньютона(касательных)
 		fm.loadDefaultFunctions();
 		double[] x = new double[getA().size()];
 		for (int i = 0; i < getA().size(); i++){
-			newton+="<br><h3>Ищем корень на интервале [ "+getAi(i)+" ; "+getBi(i)+" ]</h3>";
+			newton+="<br><h3>"
+			+"Ищем корень на интервале"
+			+" [ "+getAi(i)+" ; "+getBi(i)+" ]</h3>";
 			x[i] = findRoot((getAi(i) + getBi(i)) / 2);}
 		// x[i] = findRoot(-0.1);
-		newton+="<br><h3>Решение:</h3>";
+		newton+="<br><h3>"
+		+"Решение"
+		+":</h3>";
 		for (int i = 0; i < x.length; i++){
 			newton+="<br>X"+(i+1)+" = "+x[i];
 			}

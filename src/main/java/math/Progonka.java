@@ -4,6 +4,8 @@ import graphbuilder.math.Expression;
 import graphbuilder.math.FuncMap;
 import graphbuilder.math.VarMap;
 
+import java.util.ResourceBundle;
+
 public class Progonka {
 
 	private Expression p, q, f;
@@ -237,7 +239,7 @@ public class Progonka {
 		double[] d = new double[n];
 		Progonka += "<br><br><h3>"
 		//+"Вычисляем коэфициенты"
-		+bundle.getString("report.calculateCoefs");
+		+bundle.getString("report.calculateCoefs")
 		+" a[0],b[0],c[0],d[0],V[0],U[0]</h3>";
 		a[0] = 0;
 		Progonka += "<br>"
@@ -387,7 +389,7 @@ public class Progonka {
 		System.out.println("y n-1" + (n - 1) + " " + y[n - 1]);
 		Progonka += "<br><br><h3>"
 		//+"Вычисляем оставшиеся"
-		+bundle.getstring("report.calculateLast")
+		+bundle.getString("report.calculateLast")
 		+" y[i] "
 		//+"по формуле"
 		+bundle.getString("report.byFormula")

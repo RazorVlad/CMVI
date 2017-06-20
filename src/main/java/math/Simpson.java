@@ -101,7 +101,7 @@ public class Simpson {
 
         //System.out.println("n: " + n);
         double h = (getB() - getA()) / n;
-        Simpson += "<br /><h3>"+bundle.getString("report.splitInterval")+" ";
+        Simpson += "<br /><h3>"+bundle.getString("report.splitIntervalBy")+" ";
         Simpson += n + " "+bundle.getString("report.equalParts")+" = " + h + "</h3>";
         Simpson += "<br /><h3>"
                 +bundle.getString("report.onEachPart")

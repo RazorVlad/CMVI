@@ -2,16 +2,19 @@ package math;
 
 import math.gauss.Gauss;
 
+import java.util.ResourceBundle;
+
 public class Krylov {
 
     private double[][] a, leftB;
     private double[] rightB;
     double[] coef;
-    double[][] vectors;// собственные векторы
-    double[] numbers;// собственные значения
+    double[][] vectors;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    double[] numbers;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private String krylov;
+    private ResourceBundle bundle;
     // = "<h2><center>"
-    //+"Нахождение собственных значений и собственного вектора матрицы с помощью метода Крылова"
+    //+"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
     //+"</center></h2>";
 
     public double[][] getVectors() {
@@ -64,16 +67,25 @@ public class Krylov {
         this.a = a;
     }
 
-    public Krylov(double[][] a,ResourceBundle bundle) {
-        this.a = a;
-        this.bundle=bundle:
-        krylov = "<h2><center>"
-    //+"Нахождение собственных значений и собственного вектора матрицы с помощью метода Крылова"
-    +bundle.getString("report.solveKrilov")
-    +"</center></h2>";
+    public Krylov(double[][] a, ResourceBundle bundle) {
+        this.bundle = bundle;
+        setKrylov(a);
     }
 
-    // строит вспомогательную систему, не трогать!
+    public Krylov(double[][] a) {
+        this.bundle = ResourceBundle.getBundle("MethodsBundle");
+        setKrylov(a);
+    }
+
+    public void setKrylov(double[][] a) {
+        this.a = a;
+        krylov = "<h2><center>"
+                //+"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+                + bundle.getString("report.solveKrilov")
+                + "</center></h2>";
+    }
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!
     private void makeBsystem() {
         int n = getA().length;
         double[] x0 = new double[n];
@@ -104,7 +116,7 @@ public class Krylov {
 
     }
 
-    // ищем собственные значения
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public void findNumbers(double[][] arr) {
         //makeBsystem();
         int arrl = arr.length;
@@ -167,13 +179,13 @@ public class Krylov {
         return max;
     }
 
-    // ищем собственные векторы, ГЛАВНАЯ, НАЙДЕТ ВСЕ
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
     public void findVectors() {
         //findNumbers();
         if (numbers.length == 0) {
-            System.out.println("У матрицы нет действительных "
-                    + "собственных значений и, соответственно,"
-                    + "мы не можем найти ее собственные векторы.");
+            System.out.println("пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "
+                    + "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,"
+                    + "пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
             vectors = null;
         } else if (numbers.length == 3 && numbers.length == getA().length) {
             int n = numbers.length;
@@ -231,7 +243,7 @@ public class Krylov {
             // y[i] = 0;
             // ///////////////////////////////////////////
             /*
-			 * for(int j = 0; j < m; j++) for(int k = 0; k < m-1; k++) y[] +=
+             * for(int j = 0; j < m; j++) for(int k = 0; k < m-1; k++) y[] +=
 			 * x[k][j];
 			 */
         }
@@ -239,7 +251,7 @@ public class Krylov {
 
     public static void main(String[] args) {
         double[][] a = {{2, 0, -1}, {1, 1, -1}, {-1, 0, 2}};
-        Krylov k = new Krylov(a);
+        Krylov k = new Krylov(a, ResourceBundle.getBundle("MethodsBundle"));
         //k.findNumbers();
 
     }

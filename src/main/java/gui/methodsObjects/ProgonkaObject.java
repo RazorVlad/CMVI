@@ -26,7 +26,7 @@ public class ProgonkaObject {
     private math.Progonka progonka;
 
     public ProgonkaObject(ProgonkaPane progonkaPane) {
-        progonka = new math.Progonka();
+        progonka = new math.Progonka(MainFrame.bundle);
 
         progonka.setN((int) MainFrame.Eps);
         try {

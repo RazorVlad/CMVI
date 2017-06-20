@@ -32,7 +32,7 @@ public class SimpsonObject {
                     JOptionPane.INFORMATION_MESSAGE);
         }
 
-        simp = new math.Simpson(z, a, b);
+        simp = new math.Simpson(z, a, b,MainFrame.bundle);
         simp.setEps(MainFrame.Eps);
         c = simp.integral();
         JTable answerTable = new JTable(1, 1);

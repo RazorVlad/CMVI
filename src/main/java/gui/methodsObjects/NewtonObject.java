@@ -37,9 +37,9 @@ public class NewtonObject {
                 JOptionPane.showMessageDialog(null, "Проверьте вводимые данные!", "Ошибка",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            nwt = new math.Newton(z, a, b);
+            nwt = new math.Newton(z, a, b, MainFrame.bundle);
         } else {
-            nwt = new math.Newton(z);
+            nwt = new math.Newton(z, MainFrame.bundle);
             JTable table = new JTable(2, nwt.getA().size());
             for (int i = 0; i < nwt.getA().size(); i++) {
                 table.getColumnModel().getColumn(i).setMinWidth(50);

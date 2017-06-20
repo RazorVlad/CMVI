@@ -205,8 +205,7 @@ public class FuncMap {
 	public String[] getFunctionNames() {
 		String[] arr = new String[numFunc];
 
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = name[i];
+		System.arraycopy(name, 0, arr, 0, arr.length);
 
 		return arr;
 	}
@@ -218,8 +217,7 @@ public class FuncMap {
 	public Function[] getFunctions() {
 		Function[] arr = new Function[numFunc];
 
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = func[i];
+		System.arraycopy(func, 0, arr, 0, arr.length);
 
 		return arr;
 	}

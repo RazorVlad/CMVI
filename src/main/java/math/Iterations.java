@@ -92,8 +92,7 @@ int iter[];
 
 	public void setA(double[] a) {
 		this.a.clear();
-		for (int i = 0; i < a.length; i++) 
-			this.a.add(a[i]);
+		for (double anA : a) this.a.add(anA);
 	}
 
 	public ArrayList<Double> getB() {
@@ -106,8 +105,7 @@ int iter[];
 
 	public void setB(double[] b) {
 		this.b.clear();
-		for (int i = 0; i < b.length; i++) 
-			this.b.add(b[i]);
+		for (double aB : b) this.b.add(aB);
 	}
 
 	public Expression getZ() {

@@ -109,8 +109,7 @@ public class Krylov {
             transLeft[i] = MatrixActions.vectMatrMultiplication(powA[n - i - 2],
                     x0);
         }
-        for (int i = 0; i < n; i++)
-            transLeft[n - 1][i] = x0[i];
+        System.arraycopy(x0, 0, transLeft[n - 1], 0, n);
         setLeftB(MatrixActions.transMatrix(transLeft));
         setRightB(MatrixActions.vectMatrMultiplication(powA[n - 1], x0));
 
@@ -163,9 +162,9 @@ public class Krylov {
         if (numbers.length == 0)
             return 0.0;
         double min = numbers[0];
-        for (int i = 0; i < numbers.length; i++)
-            if (numbers[i] < min)
-                min = numbers[i];
+        for (double number : numbers)
+            if (number < min)
+                min = number;
         return min;
     }
 
@@ -173,9 +172,9 @@ public class Krylov {
         if (numbers.length == 0)
             return 0.0;
         double max = numbers[0];
-        for (int i = 0; i < numbers.length; i++)
-            if (numbers[i] > max)
-                max = numbers[i];
+        for (double number : numbers)
+            if (number > max)
+                max = number;
         return max;
     }
 

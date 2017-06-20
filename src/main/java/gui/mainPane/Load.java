@@ -1,16 +1,10 @@
 package gui.mainPane;
 
-import gui.resources.Constants;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 /**

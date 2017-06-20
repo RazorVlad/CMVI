@@ -175,7 +175,7 @@ public class InterpolationPane extends JLayeredPane {
             public void actionPerformed(ActionEvent e) {
                 double y = 0;
                 try {
-                    y = l.getLagrY(Double.parseDouble(textFieldValueX.getText().toString()));
+                    y = l.getLagrY(Double.parseDouble(textFieldValueX.getText()));
                     y = Math.round(y * 1000);
                     textFieldValueY.setText(Double.toString(y / 1000));
                 } catch (Exception exc) {

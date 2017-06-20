@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import gui.mainPane.MainFrame;
 import gui.resources.PngEncoder;
 
 import math.Lagrange;
@@ -50,22 +51,22 @@ public class InterpolationGraphPane extends JPanel {
 	}
 
 	public void Graf_paint(Graphics g){
-		Lagrange l = new Lagrange(xy,yx);
+		Lagrange l = new Lagrange(xy,yx, MainFrame.bundle);
 
 		int xStep = 1; // Крок сітки по X. Змінюємо крок, якщо це потрібно:
 		int yStep = xStep; // shag X.
 		double mxx=xy[0];
 		double xMax=Math.abs(xy[0]);
 		double mnx=xy[0];
-		for(int i=0;i<xy.length;i++){
-			if(Math.abs(xy[i])>xMax)xMax=Math.abs(xy[i]);
+		for (double aXy : xy) {
+			if (Math.abs(aXy) > xMax) xMax = Math.abs(aXy);
 		}
-		for(int i=0;i<xy.length;i++){
-			if(xy[i]>mxx)mxx=(xy[i]);
+		for (double aXy : xy) {
+			if (aXy > mxx) mxx = (aXy);
 		}
-		for(int i=0;i<xy.length;i++){
-			if(xy[i]<mnx)mnx=xy[i];
-		}	//max znach x
+		for (double aXy : xy) {
+			if (aXy < mnx) mnx = aXy;
+		}    //max znach x
 		//max znach y
 		xMax+=1;
 		double xMin=-1*xMax;	//min znach x
@@ -77,8 +78,8 @@ public class InterpolationGraphPane extends JPanel {
 		double h = (mxx*2)/100;
 
 		double yMax=Math.abs(yx[0]);
-		for(int i=0;i<yx.length;i++){
-			if(Math.abs(yx[i])>yMax)yMax=Math.abs(yx[i]);
+		for (double aYx : yx) {
+			if (Math.abs(aYx) > yMax) yMax = Math.abs(aYx);
 		}
 		for(double d = mnx;d<mxx;d+=h){
 			if(Math.abs(l.getLagrY(d))>yMax)yMax=Math.abs(l.getLagrY(d));
@@ -146,11 +147,11 @@ public class InterpolationGraphPane extends JPanel {
 			x = (xGraph-x0Graph)/xScale; // пересчитать из xGraph в x
 		}
 		//точки
-		for(int i=0;i<xy.length;i++){
+		for (double aXy : xy) {
 			g.setColor(BLUE);
-			g.fillOval((int)(xy[i] * xScale+169-3), (int)(y0Graph - l.getLagrY(xy[i])* yScale-3), 7, 7);
+			g.fillOval((int) (aXy * xScale + 169 - 3), (int) (y0Graph - l.getLagrY(aXy) * yScale - 3), 7, 7);
 			g.setColor(white);
-			g.fillOval((int)(xy[i] * xScale+169-2), (int)(y0Graph - l.getLagrY(xy[i])* yScale-2), 5, 5);
+			g.fillOval((int) (aXy * xScale + 169 - 2), (int) (y0Graph - l.getLagrY(aXy) * yScale - 2), 5, 5);
 		}
 	}
 	public void saveToFile(String fileName) throws IOException {

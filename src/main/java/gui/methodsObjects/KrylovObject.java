@@ -92,8 +92,8 @@ public class KrylovObject {
         krylov_text += "<table>";
         for (int i = 0; i < x1.length; i++) {
             krylov_text += "<tr>" + "X" + (i + 1);
-            for (int j = 0; j < x1.length; j++) {
-                krylov_text += "<td>" + x1[j][i] + " ; ";
+            for (double[] aX1 : x1) {
+                krylov_text += "<td>" + aX1[i] + " ; ";
             }
         }
         krylov_text += "</table>";

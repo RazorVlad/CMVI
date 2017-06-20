@@ -31,8 +31,7 @@ public final class PascalsTriangle {
 			else
 				pt2 = new double[d + 1][];
 
-			for (int i = 0; i < pt.length; i++)
-				pt2[i] = pt[i];
+			System.arraycopy(pt, 0, pt2, 0, pt.length);
 
 			for (int i = pt.length; i < pt2.length; i++) {
 				pt2[i] = new double[(i / 2) + 1];

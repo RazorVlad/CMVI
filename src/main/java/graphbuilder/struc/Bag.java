@@ -27,8 +27,7 @@ public class Bag {
 
 		ensureCapacity(size + 1);
 
-		for (int j = size; j > i; j--)
-			data[j] = data[j - 1];
+		System.arraycopy(data, i, data, i + 1, size - i);
 
 		data[i] = o;
 		size++;
@@ -43,8 +42,7 @@ public class Bag {
 
 			Object[] arr = new Object[x];
 
-			for (int i = 0; i < size; i++)
-				arr[i] = data[i];
+			System.arraycopy(data, 0, arr, 0, size);
 
 			data = arr;
 		}
@@ -100,8 +98,7 @@ public class Bag {
 
 		Object o = data[i];
 
-		for (int j = i + 1; j < size; j++)
-			data[j-1] = data[j];
+		System.arraycopy(data, i + 1, data, i + 1 - 1, size - (i + 1));
 
 		data[--size] = null;
 		return o;

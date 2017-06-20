@@ -159,8 +159,7 @@ public class Gauss {
         String decisionMatrix = "";
         decisionMatrix += "<br /><h3>Матрица решений:</h3><br />";
         decisionMatrix += "<table border=1>";
-        for (int i = 0; i < n; i++)
-            x[i] = b[i];
+        System.arraycopy(b, 0, x, 0, n);
         decisionMatrix += "<tr>";
         for (int i = 0; i < n; i++) {
             decisionMatrix += "<td>";

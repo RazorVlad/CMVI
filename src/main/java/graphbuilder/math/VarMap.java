@@ -84,8 +84,7 @@ public class VarMap {
 	public String[] getVariableNames() {
 		String[] arr = new String[numVars];
 
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = name[i];
+		System.arraycopy(name, 0, arr, 0, arr.length);
 
 		return arr;
 	}
@@ -97,8 +96,7 @@ public class VarMap {
 	public double[] getValues() {
 		double[] arr = new double[numVars];
 
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = value[i];
+		System.arraycopy(value, 0, arr, 0, arr.length);
 
 		return arr;
 	}

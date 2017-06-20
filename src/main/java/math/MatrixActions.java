@@ -118,8 +118,7 @@ public class MatrixActions {
         double[] rightPart = new double[m];
         double[][] transLeftPart = new double[m][m];
         for (int i = 0; i < m; i++)
-            for (int j = 0; j < n - 1; j++)
-                leftPart[i][j] = a[i][j];
+            System.arraycopy(a[i], 0, leftPart[i], 0, n - 1);
         for (int i = 0; i < m; i++) {
             rightPart[i] = a[i][n - 1];
             // System.out.println(rightPart[i]);

@@ -4,7 +4,6 @@ import gui.mainPane.MainFrame;
 
 import javax.swing.*;
 import java.math.BigDecimal;
-import java.util.ResourceBundle;
 
 /**
  * Created by razor on 08.06.2017.

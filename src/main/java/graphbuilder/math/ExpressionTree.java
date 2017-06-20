@@ -133,7 +133,7 @@ public class ExpressionTree {
 						else break;
 					}
 
-					double d = 0;
+					double d;
 					String _d = s.substring(i, j);
 
 					try {

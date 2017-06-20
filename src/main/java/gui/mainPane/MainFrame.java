@@ -98,7 +98,7 @@ public class MainFrame extends JFrame {
         });
 
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         bundle = ResourceBundle.getBundle("MethodsBundle");
         setTitle(bundle.getString("title"));
@@ -165,7 +165,7 @@ public class MainFrame extends JFrame {
         contentPane.add(EpsTextField);
         EpsTextField.setColumns(10);
 
-        gaussMethodsPane = new GaussMethodsPane(var,bundle);
+        gaussMethodsPane = new GaussMethodsPane(var, bundle);
         gaussMethodsPane.setVisible(false);
         gaussMethodsPane.setBounds(6, 6, 499, 470);
         panel.add(gaussMethodsPane);
@@ -203,7 +203,7 @@ public class MainFrame extends JFrame {
 
     private void createMenuBar() {
 
-        menuBar = new Menu(this,bundle);
+        menuBar = new Menu(this, bundle);
         setJMenuBar(menuBar);
         menuBar.menuSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -257,7 +257,9 @@ public class MainFrame extends JFrame {
                     desktop = Desktop.getDesktop();
                 }
                 try {
-                    desktop.open(new File("html/Contents.html"));
+                    ClassLoader classLoader = getClass().getClassLoader();
+                    File file = new File(classLoader.getResource("html/Contents.html").getFile());
+                    desktop.open(file);
                 } catch (IOException ioe) {
                 }
             }

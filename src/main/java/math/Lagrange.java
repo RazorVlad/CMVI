@@ -1,7 +1,6 @@
 package math;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 public class Lagrange {

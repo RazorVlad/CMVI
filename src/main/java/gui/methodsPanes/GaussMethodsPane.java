@@ -1,6 +1,5 @@
 package gui.methodsPanes;
 
-import gui.mainPane.MainFrame;
 import gui.methodsObjects.DetObject;
 import gui.methodsObjects.GaussObject;
 import gui.methodsObjects.GaussSeidelObject;

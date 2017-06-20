@@ -52,7 +52,7 @@ public class CalcMethodsPane extends JLayeredPane {
         slider_2.setBounds(6, 411, 89, 23);
         slider_2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                int i = 0;
+                int i;
                 if (var == 13) i = 1;
                 for (i = 0; i < table2.getColumnCount(); i++) {
                     table2.getColumnModel().getColumn(i).setPreferredWidth(slider_2.getValue());

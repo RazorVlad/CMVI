@@ -27,11 +27,11 @@ public class FrontPane extends JLayeredPane {
         setLayout(null);
 
         PUSH = new JButton("");
-        PUSH.setRolloverIcon(new ImageIcon("button/move.jpg"));
-        PUSH.setPressedIcon(new ImageIcon("button/press.jpg"));
+        PUSH.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("button/move.jpg")));
+        PUSH.setPressedIcon(new ImageIcon(getClass().getClassLoader().getResource("button/press.jpg")));
         PUSH.setDebugGraphicsOptions(DebugGraphics.NONE_OPTION);
         PUSH.setBorder(null);
-        PUSH.setIcon(new ImageIcon("button/main.jpg"));
+        PUSH.setIcon(new ImageIcon(getClass().getClassLoader().getResource("button/main.jpg")));
         PUSH.setBounds(173, 300, 155, 121);
         add(PUSH);
 

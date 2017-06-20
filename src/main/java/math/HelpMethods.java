@@ -37,9 +37,9 @@ public class HelpMethods {
 
     public static boolean thereAreZeros(double[][] a) {
         int n = a.length;
-        for (int ii = 0; ii < n; ii++) {
+        for (double[] anA : a) {
             for (int k = 0; k < n; k++)
-                if (a[ii][k] == 0)
+                if (anA[k] == 0)
                     return true;
         }
         return false;

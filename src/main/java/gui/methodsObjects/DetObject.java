@@ -29,7 +29,7 @@ public class DetObject {
                 a[i][j] = Double.parseDouble(table.getValueAt(i, j).toString());
             }
         }
-        double det = g.det(a);// Получение значения определителя
+        double det = g.det(a, MainFrame.bundle);// Получение значения определителя
         JTable answerTable = new JTable(1, 1);// Создание таблицы для вывода определителя
         answerTable.setBounds(0, 0, 500, 473);
         answerTable.getColumnModel().getColumn(0).setHeaderValue("det");// подпись столбца определителя

@@ -185,8 +185,8 @@ public class MainFrame extends JFrame {
 
         frontPane.PUSH.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                indexGroup = frontPane.comboBoxMethod.getSelectedIndex();// индекс выбранной группы методов
-                indexMethod = frontPane.comboBoxGroup.getSelectedIndex();// индекс выбранного метода
+                indexGroup = frontPane.comboBoxMethodGroup.getSelectedIndex();// индекс выбранной группы методов
+                indexMethod = frontPane.comboBoxMethod.getSelectedIndex();// индекс выбранного метода
                 setVisible(indexGroup, indexMethod);
             }
         });

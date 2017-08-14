@@ -16,8 +16,8 @@ public class FrontPane extends JLayeredPane {
     private JLabel labelChooseMethodGroup;
     private JLabel labelChooseMethod;
     protected final JButton PUSH;
-    protected JComboBox comboBoxGroup;
-    protected final JComboBox comboBoxMethod;
+    protected JComboBox comboBoxMethod;
+    protected final JComboBox comboBoxMethodGroup;
 
     public FrontPane(ResourceBundle bundle) {
         this.bundle = bundle;
@@ -35,42 +35,42 @@ public class FrontPane extends JLayeredPane {
         PUSH.setBounds(173, 300, 155, 121);
         add(PUSH);
 
-        comboBoxGroup = new JComboBox();// выбор метода
-        comboBoxGroup.addMouseListener(new MouseAdapter() {
+        comboBoxMethod = new JComboBox();// выбор метода
+        comboBoxMethod.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 PUSH.setEnabled(true);
             }
         });
-        comboBoxGroup.setToolTipText("");
-        comboBoxGroup.setModel(new DefaultComboBoxModel(getComboBoxModel(0)));
-        comboBoxGroup.setSelectedIndex(0);
-        comboBoxGroup.setBounds(11, 123, 477, 32);
-        add(comboBoxGroup);
+        comboBoxMethod.setToolTipText("");
+        comboBoxMethod.setModel(new DefaultComboBoxModel(getComboBoxModel(0)));
+        comboBoxMethod.setSelectedIndex(0);
+        comboBoxMethod.setBounds(11, 123, 477, 32);
+        add(comboBoxMethod);
 
-        comboBoxMethod = new JComboBox();// выбор группы методов
+        comboBoxMethodGroup = new JComboBox();// выбор группы методов
 
         String[] model = new String[Constants.methodGroupsNames.length];
         for (int i = 0; i < model.length; i++) {
             model[i] = bundle.getString(Constants.methodGroupsNames[i]);
         }
-        comboBoxMethod.setModel(new DefaultComboBoxModel(model));
-        comboBoxMethod.setSelectedIndex(0);
-        comboBoxMethod.setBounds(11, 56, 477, 32);
-        add(comboBoxMethod);
-        comboBoxMethod.setToolTipText("");
-        comboBoxMethod.addItemListener(new ItemListener() {// считывание выбранной
+        comboBoxMethodGroup.setModel(new DefaultComboBoxModel(model));
+        comboBoxMethodGroup.setSelectedIndex(0);
+        comboBoxMethodGroup.setBounds(11, 56, 477, 32);
+        add(comboBoxMethodGroup);
+        comboBoxMethodGroup.setToolTipText("");
+        comboBoxMethodGroup.addItemListener(new ItemListener() {// считывание выбранной
             // группыметодов
             public void itemStateChanged(ItemEvent arg0) {
-                int selectedIndex = comboBoxMethod.getSelectedIndex();
-                comboBoxGroup.setModel(new DefaultComboBoxModel(getComboBoxModel(selectedIndex)));
+                int selectedIndex = comboBoxMethodGroup.getSelectedIndex();
+                comboBoxMethod.setModel(new DefaultComboBoxModel(getComboBoxModel(selectedIndex)));
             }
         });
 
 //        PUSH.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent arg0) {
-//                int indexGroup = comboBoxMethod.getSelectedIndex();// индекс выбранной группы методов
-//                int indexMethod = comboBoxGroup.getSelectedIndex();// индекс выбранного метода
+//                int indexGroup = comboBoxMethodGroup.getSelectedIndex();// индекс выбранной группы методов
+//                int indexMethod = comboBoxMethod.getSelectedIndex();// индекс выбранного метода
 //                setVisible(indexGroup, indexMethod);
 //            }
 //        });
